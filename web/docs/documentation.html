@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+    @(#) $Id: documentation.html 815 2011-10-26 06:10:12Z gfis $
+    2009-04-06: Dr. Georg Fischer
+-->
+<!--
+ * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Documentation</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+</head>
+<body>
+    <h2>Overview</h2>
+    <p>
+    <p><a href="../index.jsp"><strong>numword</strong></a> 
+    deals with the number words in 
+    natural languages. You can enter a sequence of digits, and the program
+    will write the number word as it is spelled in the desired language.
+    Likewise, a number word can be entered and the program will write
+    the corresponding number as a sequence of digits.
+    </p>
+    <p>
+    Furthermore, the module maps numbers to a few calendar-related sets of words
+    in natural languages:
+    <ul>
+    <li>1..7 to weekday names (Monday ... Sunday) and their abbreviations</li>
+    <li>1..12 to month names (January ... December)</li>
+    <li>1..4 to words for seasons (spring, summer, autumn, winter)</li>
+    </ul>
+    </p>
+    
+    <h2>Applications</h2>
+    <p>
+    <ul>
+    <li>Fun for children</li>
+    <li>eLearning</li>
+    <li>Printing of the amount in words on checks</li>
+    <li>Internationalized calendar</li>
+    <li>Extraction of numbers and dates from long texts like the bible </li>
+    </ul>
+    </p>
+
+    <h2>Possible Future Extensions</h2>
+    <p>
+    <ul>
+    <li>angle to compass direction (north, east ...)
+    <li>Ordinal numbers (second, third, fourth ...)</li>
+    <li>Fractions (half, third, quarter ...) </li>
+    <li>Multiples (twice, three times ...), or threefold</li>
+    <li>Prefixes for positive (deca, hecto, kilo ...) and negative powers of 10 (dezi, centi, milli ...)</li>
+    <li>Genealogical hierarchy</li>
+    <li>More languages</li>
+	<li>Braille output</li>
+    <li>Declination of number words (especially ordinal numbers)</li>
+    <li>Evangelists/Gospels</li>
+    <li>Apostel/Disciples</li>
+    <li>Bible books</li>
+    <li>Astrological periods (Sagittarius, Cancer ...), link to <em>churchcal</em></li>
+    <li>Planets of the sun (Mercure = 1, Venus = 2, Earth = 3 ...)</li>
+    <li>Euro countries</li>
+    <li>Unicode characters</li>
+    <li>RGB color values</li>
+    <li>Nebulae (M-number) with their galactical positions</li>
+    <li>International telephone prefix numbers and corresponding country names (49 = Germany)</li>
+    <li>numerical country codes</li>
+	<li>Towns by their postal codes</li>
+	<li>ISBN book seller prefixes</li>
+    <li>Hexadecimal, binary, octal converter</li>
+	<li>Text -> SMS digits (multiple or T9)</li>
+	<li>reference to Wikipedia article for the number, in specified language (done)</li>
+	<li>show on Abacus</li>
+    </ul>
+    </p>
+
+    <h2>Problems</h2>
+    <p>
+    <ul>
+    <li>For right-to-left languages (Arabic) the lists are not always displayed properly.</li>
+    <li>Testing is rather difficult if you are not a native speaker of the language.</li>
+    <li>Some languages declinate words for small numbers (1,2,3). 
+    The current implementation
+    doesn't attempt to handle variations for gender, numerus and case properly, 
+    except for singular/plural of million, milliard, billion etc.
+    Dual is also not yet supported.</li>
+    <li>It is an interesting fact that the numbering schemes in most languages 
+    use powers of 1000, but there are exceptions where special words for 
+    (powers of) 10000 are used (Klingon, <em>SinoSpeller</em>).
+    </li>
+    <li>For the languages based on powers of 1000, a fixed set of Latin prefixes
+    is used for numbers >= 1 million (c.f. <em>BaseSpeller.wordN000</em>). 
+    For some languages these prefixes must be modified (cyrillic character set,
+    c -&gt; k in German).</li>
+    <li>Some languages still use different number word sets for living entities, cattle,
+    money etc. There is currently no attempt to handle these variations.</li>
+    </ul>
+    </p>
+
+    <p>
+    See also the <a href="developer.html">hints for developers</a>.
+    <br />
+    Back to <a href="../index.jsp">numword input form</a>
+    </p>
+</body>
+</html>

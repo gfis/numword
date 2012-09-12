@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+    @(#) $Id: developer.html 113 2009-04-06 14:57:07Z gfis $
+    2009-04-06: Dr. Georg Fischer
+-->
+<!--
+ * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hints for Developers</title>
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+</head>
+<body>
+    <h2>Hints for Developers</h2>
+    <p><a href="../index.jsp"><strong>numword</strong></a> 
+    handles numbers only in a limited number of 
+    western european languages, and though English, German and French 
+    were tested rather thoroughly, there may be remaining mistakes in all
+    language classes.
+    </p>
+    <p>
+    You are strongly encouraged to:
+    <ul>
+    <li>play with the language modules,</li>
+    <li>email any hints for improvement,</li>
+    <li>contribute patches for corrections,</li>
+    <li>contribute new language classes.</li>
+    </ul>
+    </p>
+    <p>
+    Please try to remain close to the current programming style:
+    <ul>
+    <li>Determine the correct 3-letter ISO 636 code for the language,
+    and name the new Java class accordingly. Also look out for 
+    a 2-letter language code, and enter both codes in the call of method
+    <em>setIso636</em> in the constructor.</li>
+    <li>Copy the Java source file for an existing language
+    which is close to the new language.</li>
+    <li>Extend <em>BaseSpeller</em> or one of the generic subclasses
+    like <em>SlavicSpeller</em>.</li>
+    <li>Enter the new language class in the
+    constructor of <em>NumberSpeller</em>. It will automatically appear in the
+    list box of the web application.</li>
+    <li>Try to put any fixed strings for parts of number words in
+    the arrays <em>wordN...</em> or put them into the morphem hashmap
+    with <em>putMorphem</em>. In that way you will automatically 
+    get the parsing of number words as soon as you finish the generation of 
+    number words for the language.</li>
+    <li>Write Javadoc comments before all methods and public members.</li>
+    <li>Note that all Java sources for this application are compiled with:
+<pre>
+    &lt;javac  srcdir="${src.home}" destdir="${build.classes}" listfiles="yes"
+            encoding="utf8"
+            source="1.4" target="1.4"
+            debug="${javac.debug}" debuglevel="${javac.debuglevel}"&gt;
+</pre>
+    Determine the proper accents and non-ASCII characters, and write them
+    in Unicode in the Java source files. 
+    Have a look at the <a href="/numword/unicode.jsp?unicode=01">Unicode
+    tables</a> as they are displayed in your browser.
+    Use an Unicode enabled editor that handles 
+    UTF-8 properly. Write some Unicode characters in the header comment 
+    such that the editor can detect the UTF-8 encoding.</li>
+    <li>Use reliable sources for the word lists (much of the current material is from
+    Wikipedia). Avoid dialects.
+    Pick the number words for 3,4,5,6,7,8,9,10 and search for them altogether 
+    in the Internet to get pages with number word lists.
+    </li>
+    <li>Determine whether the language
+    uses the million, milliard ... (French) or the million, billion ... (American) scheme.
+    Make sure how spaces, hyphens, particles like "and" etc. 
+    are inserted in the wording for bigger numbers. 
+    Decide whether to use "one hundred, one thousand" or "hundred, thousand" only.
+    </li>
+    <li>Generate the list of all test numbers and check whether parsing them 
+    yields the same numbers.
+    </li>
+    </ul>
+    back to <a href="../index.jsp">numword input form</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	WSDL created by Apache Axis version: 1.4
+	Built on Apr 22, 2006 (06:55:48 PDT)
+    @(#) $Id: numword.wsdl 121 2009-04-24 19:31:37Z gfis $
+    2009-04-24, URL:8080
+    2009-04-06: Dr. Georg Fischer
+-->
+<!--
+ * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/NumwordService" 
+		xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+		xmlns:impl="http://localhost:8080/axis/services/NumwordService" 
+		xmlns:intf="http://localhost:8080/axis/services/NumwordService" 
+		xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+		xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+		xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <wsdl:message name="convertRequest">
+      <wsdl:part name="language" type="xsd:string"/>
+      <wsdl:part name="function" type="xsd:string"/>
+      <wsdl:part name="digits" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="convertResponse">
+      <wsdl:part name="convertReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:portType name="NumwordService">
+      <wsdl:operation name="convert" parameterOrder="language function digits">
+         <wsdl:input message="impl:convertRequest" name="convertRequest"/>
+         <wsdl:output message="impl:convertResponse" name="convertResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="NumwordServiceSoapBinding" type="impl:NumwordService">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="convert">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="convertRequest">
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://numword.teherba.org" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="convertResponse">
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/NumwordService" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="NumwordServiceService">
+      <wsdl:port binding="impl:NumwordServiceSoapBinding" name="NumwordService">
+         <wsdlsoap:address location="http://localhost:8080/axis/services/NumwordService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
+

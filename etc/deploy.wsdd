@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    @(#) $Id: deploy.wsdd 113 2009-04-06 14:57:07Z gfis $
+    2009-04-06: Dr. Georg Fischer
+-->
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+            xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="NumwordService" provider="java:RPC">
+		<parameter name="className" value="org.teherba.numword.NumwordService"/>
+		<parameter name="allowedMethods" value="convert"/>
+	<!-- for Trace with SOAPMonitor 
+		<requestFlow>
+			<handler type="soapmonitor"/>
+		</requestFlow>
+		<responseFlow>
+			<handler type="soapmonitor"/>
+		</responseFlow>
+	-->
+	</service>
+</deployment>

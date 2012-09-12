@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    @(#) $Id: undeploy.wsdd 113 2009-04-06 14:57:07Z gfis $
+    2009-04-06: Dr. Georg Fischer
+-->
+<undeployment xmlns="http://xml.apache.org/axis/wsdd/">
+	<service name="NumwordService"/>
+</undeployment>

@@ -1,0 +1,29 @@
+/*	numword.css - Cascaded Style Sheet
+	@(#) $Id: stylesheet.css 819 2011-11-01 14:06:06Z gfis $
+	2011-11-01: fonts for unicode tables; -> G&ouml;rlitz
+	2009-11-25: .large
+	2005-08-18: copied from html/gfis.css
+	2003-07-25:	body font-family
+	2003-03-22:	without HTML comments and tags
+	2000-11-20,	Georg Fischer
+*/
+.large
+	{ font-weight:bold; font-size:x-large }
+.glyph
+	{ font-size:xx-large }
+.code 	
+	{ font-size:smaller }
+body,p,h1,h2,h3,h4,dl,dd,dt,ul,ol,li,div,td,th,address,blockquote,nobr,b,i,a,br,img
+	{ font-family:Verdana,Arial,sans-serif; }
+table
+	{ background:white; border-collapse:collapse; margin-top:3mm; }
+td,th
+	{ vertical-align:top; margin:0px; 
+	  padding-top:0px; padding-bottom: 0px;padding-left:4px; padding-right:4px; 
+	  border:1px solid #aaa; }
+tr
+	{ background:lightyellow } /* or lemonchiffon} */
+dt	
+	{ font-weight: bold }
+tt
+	{ font-family:Courier; }
