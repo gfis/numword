@@ -2,7 +2,7 @@
     spoken in Spain, all countries of Middle and South America (except Brasilia),
     the Philipines and other former Spanish colonies
     @(#) $Id: SpaSpeller.java 820 2011-11-07 21:59:07Z gfis $
-	2011-11-06: spellClock; Dresden -> 
+    2011-11-06: spellClock; Dresden -> 
     2006-01-01: weekdays and months
     2005-06-07, Georg Fischer
     
@@ -285,79 +285,79 @@ public class SpaSpeller extends BaseSpeller {
     } // spellWeekDay
 
     /** Returns a denotation of the day's time, possibly in several variants
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
-     *	@param variant the code behind the commandline option "-h":
-     *	empty or 0 (official), 1,2,3 for  a language specific variant.
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
+     *  @param variant the code behind the commandline option "-h":
+     *  empty or 0 (official), 1,2,3 for  a language specific variant.
      *  @return phrase corresponding to the denotation of the time, for example
-     *	<ul>
-     *	<li>Français, variant "1": 18:15 =&gt; "six et quart"</li>
-     *	</ul> 
+     *  <ul>
+     *  <li>Français, variant "1": 18:15 =&gt; "six et quart"</li>
+     *  </ul> 
      */
     public String spellClock(int hour, int minute, String variant) {
-    	String result = String.valueOf(hour   + 100).substring(1) + ':' 
-		          	  + String.valueOf(minute + 100).substring(1);
-		int hour12 = hour + (minute > 30 ? 1 : 0);
-		hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
-		String spellHour = (spellCardinal(String.valueOf(hour12))
-				+ " hora"
-				+ (hour12 > 1 ? "s" : "") 
-				).replaceAll("uno horas?", "una hora");
-		if (false) {
-		} else if (variant.length() == 0 || variant.equals("0")) {
-			result  = (spellCardinal(String.valueOf(hour)).replace("zero", "zéro")
-					+ " hora"
-					+ (hour > 1 ? "s" : "")
-				).replaceAll("uno horas?", "una hora");
-			if (minute > 0) {
-				result += " " + spellCardinal(String.valueOf(minute)); 
-			}
-		} else if (variant.equals("1")) { 
-			if (minute % 15 == 0) {
-				switch (minute / 15) {
-					default:
-					case 0:
-						result  = spellHour;
-						break;
-					case 1:
-						result  = spellHour + " y quarto";
-						break;
-					case 2:
-						result  = spellHour + " y media";
-						break;
-					case 3:
-						result  = spellHour + " minus quarto";
-						break;
-				} // switch 0..3
-			} else {
-				result  = spellHour 
-						+ (minute < 30 	? " y "     + spellCardinal(String.valueOf(     minute))
-					 					: " minus " + spellCardinal(String.valueOf(60 - minute))) 
-					 	;
-			}
-		} // switch variant
+        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+                      + String.valueOf(minute + 100).substring(1);
+        int hour12 = hour + (minute > 30 ? 1 : 0);
+        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
+        String spellHour = (spellCardinal(String.valueOf(hour12))
+                + " hora"
+                + (hour12 > 1 ? "s" : "") 
+                ).replaceAll("uno horas?", "una hora");
+        if (false) {
+        } else if (variant.length() == 0 || variant.equals("0")) {
+            result  = (spellCardinal(String.valueOf(hour)).replace("zero", "zéro")
+                    + " hora"
+                    + (hour > 1 ? "s" : "")
+                ).replaceAll("uno horas?", "una hora");
+            if (minute > 0) {
+                result += " " + spellCardinal(String.valueOf(minute)); 
+            }
+        } else if (variant.equals("1")) { 
+            if (minute % 15 == 0) {
+                switch (minute / 15) {
+                    default:
+                    case 0:
+                        result  = spellHour;
+                        break;
+                    case 1:
+                        result  = spellHour + " y quarto";
+                        break;
+                    case 2:
+                        result  = spellHour + " y media";
+                        break;
+                    case 3:
+                        result  = spellHour + " minus quarto";
+                        break;
+                } // switch 0..3
+            } else {
+                result  = spellHour 
+                        + (minute < 30  ? " y "     + spellCardinal(String.valueOf(     minute))
+                                        : " minus " + spellCardinal(String.valueOf(60 - minute))) 
+                        ;
+            }
+        } // switch variant
         return result;
     } // spellClock(3)
 
-	//================================================================
+    //================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		String result = super.spellPlanet(planet);
-		switch (planet) {
-			case -1:	result = "Luna"; 		break;
-			case 0:		result = "Sol"; 		break;
-			case 1:		result = "Mercurio";	break;
-			case 2:		result = "Venus";		break;
-			case 3:		result = "Tierra";		break;
-			case 4:		result = "Marte";		break;
-			case 5:		result = "Jupiter";		break;
-			case 6:		result = "Saturno";		break;
-			case 7:		result = "Urano";		break;
-			case 8:		result = "Neptuno";		break;
-		} // switch
+        String result = super.spellPlanet(planet);
+        switch (planet) {
+            case -1:    result = "Luna";        break;
+            case 0:     result = "Sol";         break;
+            case 1:     result = "Mercurio";    break;
+            case 2:     result = "Venus";       break;
+            case 3:     result = "Tierra";      break;
+            case 4:     result = "Marte";       break;
+            case 5:     result = "Jupiter";     break;
+            case 6:     result = "Saturno";     break;
+            case 7:     result = "Urano";       break;
+            case 8:     result = "Neptuno";     break;
+        } // switch
         return result;
     } // spellPlanet(int)
 

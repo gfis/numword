@@ -1337,7 +1337,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
 
 	//================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {

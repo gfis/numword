@@ -4,7 +4,7 @@
     former french colonies
     @(#) $Id: FraSpeller.java 820 2011-11-07 21:59:07Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
-	2011-10-26: spellClock
+    2011-10-26: spellClock
     2009-11-24: spellGreeting
     2006-01-04: UTF-8 précédé
     2005-06-14, Georg Fischer
@@ -312,154 +312,154 @@ public class FraSpeller extends BaseSpeller {
         return result;
     } // spellWeekDay
     
-	//================================================================
+    //================================================================
     /** Returns a denotation of the day's time, possibly in several variants
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
-     *	@param variant the code behind the commandline option "-h":
-     *	empty or 0 (official), 1,2,3 for  a language specific variant.
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
+     *  @param variant the code behind the commandline option "-h":
+     *  empty or 0 (official), 1,2,3 for  a language specific variant.
      *  @return phrase corresponding to the denotation of the time, for example
-     *	<ul>
-     *	<li>Français, variant "1": 18:15 =&gt; "six et quart"</li>
-     *	</ul> 
+     *  <ul>
+     *  <li>Français, variant "1": 18:15 =&gt; "six et quart"</li>
+     *  </ul> 
      */
     public String spellClock(int hour, int minute, String variant) {
-    	String result = String.valueOf(hour   + 100).substring(1) + ':' 
-		          	  + String.valueOf(minute + 100).substring(1);
-		int hour12 = hour + (minute > 30 ? 1 : 0);
-		hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
-		String spellHour = (spellCardinal(String.valueOf(hour12))
-				+ " heure"
-				+ (hour12 > 1 ? "s" : "") 
-				).replaceAll("un heures?", "une heure");
-		if (false) {
-		} else if (variant.length() == 0 || variant.equals("0")) {
-			result  = (spellCardinal(String.valueOf(hour)).replace("zero", "zéro")
-					+ " heure"
-					+ (hour > 1 ? "s" : "")
-					).replaceAll("un heures?", "une heure");
-			if (minute > 0) {
-				result += " " + spellCardinal(String.valueOf(minute)); 
-			}
-		} else if (variant.equals("1")) { 
-			if (minute % 15 == 0) {
-				switch (minute / 15) {
-					default:
-					case 0:
-						result  = spellHour;
-						break;
-					case 1:
-						result  = spellHour + " et quart";
-						break;
-					case 2:
-						result  = spellHour + " et demi";
-						break;
-					case 3:
-						result  = spellHour + " moins quart";
-						break;
-				} // switch 0..3
-			} else {
-				result  = spellHour 
-						+ (minute < 30 	? " et "    + spellCardinal(String.valueOf(     minute))
-					 					: " moins " + spellCardinal(String.valueOf(60 - minute))) 
-					 	;
-			}
-		} // switch variant
+        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+                      + String.valueOf(minute + 100).substring(1);
+        int hour12 = hour + (minute > 30 ? 1 : 0);
+        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
+        String spellHour = (spellCardinal(String.valueOf(hour12))
+                + " heure"
+                + (hour12 > 1 ? "s" : "") 
+                ).replaceAll("un heures?", "une heure");
+        if (false) {
+        } else if (variant.length() == 0 || variant.equals("0")) {
+            result  = (spellCardinal(String.valueOf(hour)).replace("zero", "zéro")
+                    + " heure"
+                    + (hour > 1 ? "s" : "")
+                    ).replaceAll("un heures?", "une heure");
+            if (minute > 0) {
+                result += " " + spellCardinal(String.valueOf(minute)); 
+            }
+        } else if (variant.equals("1")) { 
+            if (minute % 15 == 0) {
+                switch (minute / 15) {
+                    default:
+                    case 0:
+                        result  = spellHour;
+                        break;
+                    case 1:
+                        result  = spellHour + " et quart";
+                        break;
+                    case 2:
+                        result  = spellHour + " et demi";
+                        break;
+                    case 3:
+                        result  = spellHour + " moins quart";
+                        break;
+                } // switch 0..3
+            } else {
+                result  = spellHour 
+                        + (minute < 30  ? " et "    + spellCardinal(String.valueOf(     minute))
+                                        : " moins " + spellCardinal(String.valueOf(60 - minute))) 
+                        ;
+            }
+        } // switch variant
         return result;
     } // spellClock(3)
     
-	//================================================================
-	/** Get a word for one the 4 cardinal directions, 
-	 * 	and for the particle for 32th fractions
-	 *	@param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
-	 */
-	protected String getCompassWord(int cardDir) {
-		String result = "";
-		switch (cardDir) {
-			case 0:	result = "nord"		; break;
-			case 1:	result = "est"		; break;
-			case 2:	result = "sud"		; break;
-			case 3:	result = "ouest"	; break;
-			case 4:	result = "à"		; break;
-		} // switch
-		return result;
-	} // getCompassWord
-	
-	/** Standard separator for the cardinal direction words */
-	protected String getCompassSeparator() {
-		return "-"; // none for abbreviations	
-	} // getCompassSeparator
+    //================================================================
+    /** Get a word for one the 4 cardinal directions, 
+     *  and for the particle for 32th fractions
+     *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
+     */
+    protected String getCompassWord(int cardDir) {
+        String result = "";
+        switch (cardDir) {
+            case 0: result = "nord"     ; break;
+            case 1: result = "est"      ; break;
+            case 2: result = "sud"      ; break;
+            case 3: result = "ouest"    ; break;
+            case 4: result = "à"        ; break;
+        } // switch
+        return result;
+    } // getCompassWord
+    
+    /** Standard separator for the cardinal direction words */
+    protected String getCompassSeparator() {
+        return "-"; // none for abbreviations   
+    } // getCompassSeparator
 
     /** Returns the language specific words for a cardinal direction 
-     *	@param code abbreviation, a sequence of the letters N,E,S,W.
+     *  @param code abbreviation, a sequence of the letters N,E,S,W.
 <pre>
 from http://fr.wikipedia.org/wiki/Point_cardinal:
 
-Abréviation 	Point 	Azimut 	Radians
-N 	nord 	0° 	0
-NNE 	nord-nord-est 	22,5° 	π/8
-NE 	nord-est 	45° 	π/4
-ENE 	est-nord-est 	67,5° 	3π/8
-E 	est 	90° 	π/2
-ESE 	est-sud-est 	112,5° 	5π/8
-SE 	sud-est 	135° 	3π/4
-SSE 	sud-sud-est 	157,5° 	7π/8
-S 	sud 	180° 	π
-SSO 	sud-sud-ouest 	202,5° 	9π/8
-SO 	sud-ouest 	225° 	5π/4
-OSO 	ouest-sud-ouest 	247,5° 	11π/8
-O 	ouest 	270° 	3π/2
-ONO 	ouest-nord-ouest 	292,5° 	13π/8
-NO 	nord-ouest 	315° 	7π/4
-NNO 	nord-nord-ouest 	337,5° 	15π/8
-N 	nord 	360° 	2π    
+Abréviation     Point   Azimut  Radians
+N   nord    0°  0
+NNE     nord-nord-est   22,5°   π/8
+NE  nord-est    45°     π/4
+ENE     est-nord-est    67,5°   3π/8
+E   est     90°     π/2
+ESE     est-sud-est     112,5°  5π/8
+SE  sud-est     135°    3π/4
+SSE     sud-sud-est     157,5°  7π/8
+S   sud     180°    π
+SSO     sud-sud-ouest   202,5°  9π/8
+SO  sud-ouest   225°    5π/4
+OSO     ouest-sud-ouest     247,5°  11π/8
+O   ouest   270°    3π/2
+ONO     ouest-nord-ouest    292,5°  13π/8
+NO  nord-ouest  315°    7π/4
+NNO     nord-nord-ouest     337,5°  15π/8
+N   nord    360°    2π    
 </pre>
      */
     protected String spellCompassCode(String code) {
-		String result = super.spellCompassCode(code);
-		result = result.substring(0, 1).toLowerCase() + result.substring(1);
-		if (code.length() == 4) {
-			// result += "en";
-		}
-		return result;
-	} // spellCompassCode
+        String result = super.spellCompassCode(code);
+        result = result.substring(0, 1).toLowerCase() + result.substring(1);
+        if (code.length() == 4) {
+            // result += "en";
+        }
+        return result;
+    } // spellCompassCode
    
-	//================================================================
+    //================================================================
     /** Returns a greeting corresponding to the parameter time:
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
-		String result = "Bonjour";
-		timeOfDay /= 6; 
-		if (timeOfDay >= 0 && timeOfDay <= 4) {
-			result = (new String[]
-					{ "Au revoir"
-					, "Bon matin"
-					, "Bonjour"
-					, "Bonsoir"
-					, "Bonne nuit"
-					}
-					)[timeOfDay];
-		} // in range
+        String result = "Bonjour";
+        timeOfDay /= 6; 
+        if (timeOfDay >= 0 && timeOfDay <= 4) {
+            result = (new String[]
+                    { "Au revoir"
+                    , "Bon matin"
+                    , "Bonjour"
+                    , "Bonsoir"
+                    , "Bonne nuit"
+                    }
+                    )[timeOfDay];
+        } // in range
         return result;
     } // spellGreeting(int)
 
-	//================================================================
+    //================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		String result = super.spellPlanet(planet);
-		switch (planet) {
-			case -1:	result = "Lune"; 		break;
-			case 0:		result = "Soleil"; 		break;
-			case 1:		result = "Mercure";		break;
-			case 2:		result = "Vénus";		break;
-			case 3:		result = "Terre";		break;
-			case 6:		result = "Saturne";		break;
-			case 8:		result = "Neptune";		break;
-		} // switch
+        String result = super.spellPlanet(planet);
+        switch (planet) {
+            case -1:    result = "Lune";        break;
+            case 0:     result = "Soleil";      break;
+            case 1:     result = "Mercure";     break;
+            case 2:     result = "Vénus";       break;
+            case 3:     result = "Terre";       break;
+            case 6:     result = "Saturne";     break;
+            case 8:     result = "Neptune";     break;
+        } // switch
         return result;
     } // spellPlanet(int)
 

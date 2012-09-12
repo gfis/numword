@@ -2,7 +2,7 @@
     spoken in Germany, Austria
     and parts of Switzerland, France (Alsace), Italy (Southern Tyrol)
     @(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $
-	2011-10-26: spellClock; Mar.L. = 92
+    2011-10-26: spellClock; Mar.L. = 92
     2009-11-24: spellGreeting
     2006-07-27: alias morphems for "drit", 5, 12, 15, 30, 50 (expanded umlauts)
                 overlay of method 'parseString' for equalized declination endings
@@ -215,7 +215,7 @@ public class DeuSpeller extends BaseSpeller {
         } // thousands ...
     } // spellTuple
 
-	//================================================================
+    //================================================================
     /** Pairs of German month numbers, month names and their abbreviations */
     private String months[] = new String[] 
             { "00", "Monat"       // 0
@@ -270,7 +270,7 @@ public class DeuSpeller extends BaseSpeller {
                 : Integer.toString(month);
     } // spellMonth
 
-	//================================================================
+    //================================================================
     /** Returns the season's name
      *  @param season number of the quarter in the year:
      *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
@@ -290,7 +290,7 @@ public class DeuSpeller extends BaseSpeller {
         return result;
     } // spellSeason
 
-	//================================================================
+    //================================================================
     /** Pairs of German weekday numbers, weekday names and their abbreviations */
     private String weekdays[] = new String[] 
             { "00", "Wochentag"
@@ -332,141 +332,141 @@ public class DeuSpeller extends BaseSpeller {
         return result;
     } // spellWeekDay
 
-	//================================================================
+    //================================================================
     /** Returns a denotation of the day's time, possibly in several variants
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
-     *	@param variant the code behind the commandline option "-h":
-     *	empty or 0 (official), 1,2,3 for  a language specific variant.
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
+     *  @param variant the code behind the commandline option "-h":
+     *  empty or 0 (official), 1,2,3 for  a language specific variant.
      *  @return phrase corresponding to the denotation of the time, for example
-     *	<ul>
-     *	<li>German, variant "1" = western:  18:45 =&gt; "viertel vor sieben"</li>
-     *	<li>German, variant "2" = southern: 18:45 =&gt; "dreiviertel sieben"</li>
-     *	</ul> 
+     *  <ul>
+     *  <li>German, variant "1" = western:  18:45 =&gt; "viertel vor sieben"</li>
+     *  <li>German, variant "2" = southern: 18:45 =&gt; "dreiviertel sieben"</li>
+     *  </ul> 
      */
     public String spellClock(int hour, int minute, String variant) {
-    	String result = String.valueOf(hour   + 100).substring(1) + ':' 
-		          	  + String.valueOf(minute + 100).substring(1);
-		int hour12 = hour + (minute >= 30 ? 1 : 0);
-		hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12));
-		String spellHour = spellCardinal(String.valueOf(hour12));
-		if (false) {
-		} else if (variant.length() == 0 || variant.equals("0")) {
-			result  = spellCardinal(String.valueOf(hour)).replace("eins", "ein") 
-					+ " Uhr";
-			if (minute > 0) {
-				result += " " +spellCardinal(String.valueOf(minute)); 
-			}
-		} else if (variant.equals("1")) { // Western Germany, north/west of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
-			if (minute % 15 == 0) {
-				switch (minute / 15) {
-					default:
-					case 0:
-						result  = spellHour;
-						break;
-					case 1:
-						result  = "viertel nach " 	+ spellHour;
-						break;
-					case 2:
-						result  = "halb " 			+ spellHour;
-						break;
-					case 3:
-						result  = "viertel vor " 	+ spellHour;
-						break;
-				} // switch 0..3
-			} else {
-				result  = (minute < 30 	? spellCardinal(String.valueOf(     minute)) + " nach " 
-					 					: spellCardinal(String.valueOf(60 - minute)) + " vor ") 
-					 	+ spellHour;
-			}
-		} else if (variant.equals("2")) { // Southern Germany, south/east of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
-			if (minute % 15 == 0) {
-				switch (minute / 15) {
-					default:
-					case 0:
-						result  = spellHour;
-						break;
-					case 1:
-						hour12 ++;
-						spellHour = spellCardinal(String.valueOf(hour12));
-						result  = "viertel " 		+ spellHour;
-						break;
-					case 2:
-						result  = "halb " 			+ spellHour;
-						break;
-					case 3:
-						result  = "dreiviertel " 	+ spellHour;
-						break;
-				} // switch 0..3
-			} else {
-				result  = (minute < 30 	? spellCardinal(String.valueOf(     minute)) + " nach " 
-					 					: spellCardinal(String.valueOf(60 - minute)) + " vor ") 
-					 	+ spellHour;
-			}
-		} // switch variant
+        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+                      + String.valueOf(minute + 100).substring(1);
+        int hour12 = hour + (minute >= 30 ? 1 : 0);
+        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12));
+        String spellHour = spellCardinal(String.valueOf(hour12));
+        if (false) {
+        } else if (variant.length() == 0 || variant.equals("0")) {
+            result  = spellCardinal(String.valueOf(hour)).replace("eins", "ein") 
+                    + " Uhr";
+            if (minute > 0) {
+                result += " " +spellCardinal(String.valueOf(minute)); 
+            }
+        } else if (variant.equals("1")) { // Western Germany, north/west of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
+            if (minute % 15 == 0) {
+                switch (minute / 15) {
+                    default:
+                    case 0:
+                        result  = spellHour;
+                        break;
+                    case 1:
+                        result  = "viertel nach "   + spellHour;
+                        break;
+                    case 2:
+                        result  = "halb "           + spellHour;
+                        break;
+                    case 3:
+                        result  = "viertel vor "    + spellHour;
+                        break;
+                } // switch 0..3
+            } else {
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach " 
+                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ") 
+                        + spellHour;
+            }
+        } else if (variant.equals("2")) { // Southern Germany, south/east of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
+            if (minute % 15 == 0) {
+                switch (minute / 15) {
+                    default:
+                    case 0:
+                        result  = spellHour;
+                        break;
+                    case 1:
+                        hour12 ++;
+                        spellHour = spellCardinal(String.valueOf(hour12));
+                        result  = "viertel "        + spellHour;
+                        break;
+                    case 2:
+                        result  = "halb "           + spellHour;
+                        break;
+                    case 3:
+                        result  = "dreiviertel "    + spellHour;
+                        break;
+                } // switch 0..3
+            } else {
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach " 
+                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ") 
+                        + spellHour;
+            }
+        } // switch variant
         return result;
     } // spellClock(3)
 
-	//================================================================
-	/** Get a word for one the 4 cardinal directions, 
-	 * 	and for the particle for 32th fractions
-	 *	@param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
-	 */
-	protected String getCompassWord(int cardDir) {
-		String result = "";
-		switch (cardDir) {
-			case 0:	result = "nord"		; break;
-			case 1:	result = "ost"		; break;
-			case 2:	result = "süd"		; break;
-			case 3:	result = "west"		; break;
-			case 4:	result = "zu"		; break;
-		} // switch
-		return result;
-	} // getCompassWord
-	
+    //================================================================
+    /** Get a word for one the 4 cardinal directions, 
+     *  and for the particle for 32th fractions
+     *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
+     */
+    protected String getCompassWord(int cardDir) {
+        String result = "";
+        switch (cardDir) {
+            case 0: result = "nord"     ; break;
+            case 1: result = "ost"      ; break;
+            case 2: result = "süd"      ; break;
+            case 3: result = "west"     ; break;
+            case 4: result = "zu"       ; break;
+        } // switch
+        return result;
+    } // getCompassWord
+    
     /** Returns the language specific words for a cardinal direction 
-     *	@param code abbreviation, a sequence of the letters N,E,S,W.
+     *  @param code abbreviation, a sequence of the letters N,E,S,W.
      */
     protected String spellCompassCode(String code, String words[]) {
-		String result = super.spellCompassCode(code);
-		if (code.length() == 4) {
-			// result += "en";
-		}
-		return result;
-	} // spellCompassCode
-	
+        String result = super.spellCompassCode(code);
+        if (code.length() == 4) {
+            // result += "en";
+        }
+        return result;
+    } // spellCompassCode
+    
     /** Returns a greeting corresponding to the parameter time:
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
-		String result = "Guten Tag";
-		timeOfDay /= 6;
-		if (timeOfDay >= 0 && timeOfDay <= 4) {
-			result = (new String[]
-					{ "Auf Wiedersehen"
-					, "Guten Morgen"
-					, "Guten Tag"
-					, "Guten Abend"
-					, "Gute Nacht"
-					}
-					)[timeOfDay];
-		} // in range
+        String result = "Guten Tag";
+        timeOfDay /= 6;
+        if (timeOfDay >= 0 && timeOfDay <= 4) {
+            result = (new String[]
+                    { "Auf Wiedersehen"
+                    , "Guten Morgen"
+                    , "Guten Tag"
+                    , "Guten Abend"
+                    , "Gute Nacht"
+                    }
+                    )[timeOfDay];
+        } // in range
         return result;
     } // spellGreeting(int)
 
-	//================================================================
+    //================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		String result = super.spellPlanet(planet);
-		switch (planet) {
-			case -1:	result = "Mond"; 		break;
-			case 0:		result = "Sonne"; 		break;
-			case 1:		result = "Merkur";		break;
-			case 3:		result = "Erde";		break;
-		} // switch
+        String result = super.spellPlanet(planet);
+        switch (planet) {
+            case -1:    result = "Mond";        break;
+            case 0:     result = "Sonne";       break;
+            case 1:     result = "Merkur";      break;
+            case 3:     result = "Erde";        break;
+        } // switch
         return result;
     } // spellPlanet(int)
 

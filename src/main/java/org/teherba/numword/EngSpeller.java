@@ -4,7 +4,7 @@
     and throughout the world as modern "lingua franca"
     @(#) $Id: EngSpeller.java 820 2011-11-07 21:59:07Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
-	2011-10-26: spellClock
+    2011-10-26: spellClock
     2009-11-24: spellGreeting
     2006-01-06: super()
     2005-07-23: with word parsing
@@ -224,112 +224,112 @@ public class EngSpeller extends BaseSpeller {
         return result;
     } // spellWeekDay
 
-	//================================================================
+    //================================================================
     /** Returns a denotation of the day's time, possibly in several variants
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
-     *	@param variant the code behind the commandline option "-h":
-     *	empty or 0 (official), 1,2,3 for  a language specific variant.
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
+     *  @param variant the code behind the commandline option "-h":
+     *  empty or 0 (official), 1,2,3 for  a language specific variant.
      *  @return phrase corresponding to the denotation of the time, for example
-     *	<ul>
-     *	<li>English, variant "1": 18:15 =&gt; "quarter past six"</li>
-     *	</ul> 
+     *  <ul>
+     *  <li>English, variant "1": 18:15 =&gt; "quarter past six"</li>
+     *  </ul> 
      */
     public String spellClock(int hour, int minute, String variant) {
-    	String result = String.valueOf(hour   + 100).substring(1) + ':' 
-		          	  + String.valueOf(minute + 100).substring(1);
-		int hour12 = hour + (minute > 30 ? 1 : 0);
-		hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
-		String spellHour = spellCardinal(String.valueOf(hour12));
-		if (false) {
-		} else if (variant.length() == 0 || variant.equals("0")) {
-			result  = spellCardinal(String.valueOf(hour)).replace("zero", "twelve")
-					+ " o'clock ";
-			if (minute > 0) {
-				result += " " +spellCardinal(String.valueOf(minute)); 
-			}
-		} else if (variant.equals("1")) { 
-			if (minute % 15 == 0) {
-				switch (minute / 15) {
-					default:
-					case 0:
-						if (hour == 24) {
-							result = "midnight";
-						} else {
-							result  = spellHour	+ " o'clock";
-						}
-						break;
-					case 1:
-						result  = "quarter past " 	+ spellHour;
-						break;
-					case 2:
-						result  = "half past " 		+ spellHour;
-						break;
-					case 3:
-						result  = "quarter to " 	+ spellHour;
-						break;
-				} // switch 0..3
-			} else {
-				result  = (minute < 30 	? spellCardinal(String.valueOf(     minute)) + " past " 
-					 					: spellCardinal(String.valueOf(60 - minute)) + " to ") 
-					 	+ spellHour;
-			}
-		} // switch variant
+        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+                      + String.valueOf(minute + 100).substring(1);
+        int hour12 = hour + (minute > 30 ? 1 : 0);
+        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
+        String spellHour = spellCardinal(String.valueOf(hour12));
+        if (false) {
+        } else if (variant.length() == 0 || variant.equals("0")) {
+            result  = spellCardinal(String.valueOf(hour)).replace("zero", "twelve")
+                    + " o'clock ";
+            if (minute > 0) {
+                result += " " +spellCardinal(String.valueOf(minute)); 
+            }
+        } else if (variant.equals("1")) { 
+            if (minute % 15 == 0) {
+                switch (minute / 15) {
+                    default:
+                    case 0:
+                        if (hour == 24) {
+                            result = "midnight";
+                        } else {
+                            result  = spellHour + " o'clock";
+                        }
+                        break;
+                    case 1:
+                        result  = "quarter past "   + spellHour;
+                        break;
+                    case 2:
+                        result  = "half past "      + spellHour;
+                        break;
+                    case 3:
+                        result  = "quarter to "     + spellHour;
+                        break;
+                } // switch 0..3
+            } else {
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " past " 
+                                        : spellCardinal(String.valueOf(60 - minute)) + " to ") 
+                        + spellHour;
+            }
+        } // switch variant
         return result;
     } // spellClock(3)
     
-	//================================================================
-	/** Get a word for one the 4 cardinal directions, 
-	 * 	and for the particle for 32th fractions
-	 *	@param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
-	 */
-	protected String getCompassWord(int cardDir) {
-		String result = "";
-		switch (cardDir) {
-			case 0:	result = "north"	; break;
-			case 1:	result = "east"		; break;
-			case 2:	result = "south"	; break;
-			case 3:	result = "west"		; break;
-			case 4:	result = "to"		; break;
-		} // switch
-		return result;
-	} // getCompassWord
-	
-	//================================================================
+    //================================================================
+    /** Get a word for one the 4 cardinal directions, 
+     *  and for the particle for 32th fractions
+     *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
+     */
+    protected String getCompassWord(int cardDir) {
+        String result = "";
+        switch (cardDir) {
+            case 0: result = "north"    ; break;
+            case 1: result = "east"     ; break;
+            case 2: result = "south"    ; break;
+            case 3: result = "west"     ; break;
+            case 4: result = "to"       ; break;
+        } // switch
+        return result;
+    } // getCompassWord
+    
+    //================================================================
     /** Returns a greeting corresponding to the parameter time:
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
-		String result = "Hello";
-		timeOfDay /= 6;
-		if (timeOfDay >= 0 && timeOfDay <= 4) {
-			result = (new String[]
-					{ "Good bye"
-					, "Good morning"
-					, "Hello"
-					, "Good evening"
-					, "Good night"
-					}
-					)[timeOfDay];
-		} // in range
+        String result = "Hello";
+        timeOfDay /= 6;
+        if (timeOfDay >= 0 && timeOfDay <= 4) {
+            result = (new String[]
+                    { "Good bye"
+                    , "Good morning"
+                    , "Hello"
+                    , "Good evening"
+                    , "Good night"
+                    }
+                    )[timeOfDay];
+        } // in range
         return result;
     } // spellGreeting(int)
 
-	//================================================================
+    //================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		String result = super.spellPlanet(planet);
-		switch (planet) {
-			case -1:	result = "Moon"; 		break;
-			case 0:		result = "Sun"; 		break;
-			case 1:		result = "Mercury";		break;
-			case 3:		result = "Earth";		break;
-		} // switch
+        String result = super.spellPlanet(planet);
+        switch (planet) {
+            case -1:    result = "Moon";        break;
+            case 0:     result = "Sun";         break;
+            case 1:     result = "Mercury";     break;
+            case 3:     result = "Earth";       break;
+        } // switch
         return result;
     } // spellPlanet(int)
 
-	//================================================================
+    //================================================================
 } // EngSpeller

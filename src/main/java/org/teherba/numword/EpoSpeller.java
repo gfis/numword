@@ -207,25 +207,25 @@ public class EpoSpeller extends BaseSpeller {
         return result;
     } // spellWeekDay
 
-	//================================================================
+    //================================================================
     /** Returns a planet
-     *  @param number of the planet (3 = earth, 0 = sun, -1 = moon)
+     *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		String result = super.spellPlanet(planet);
-		switch (planet) {
-			case -1:	result = "Luno"; 		break;
-			case 0:		result = "Suno"; 		break;
-			case 1:		result = "Merkuro";		break;
-			case 2:		result = "Venuso";		break;
-			case 3:		result = "Tero";		break;
-			case 4:		result = "Marso";		break;
-			case 5:		result = "Jupitero";	break;
-			case 6:		result = "Saturno";		break;
-			case 7:		result = "Urano";		break;
-			case 8:		result = "Neptuno";		break;
-		} // switch
+        String result = super.spellPlanet(planet);
+        switch (planet) {
+            case -1:    result = "Luno";        break;
+            case 0:     result = "Suno";        break;
+            case 1:     result = "Merkuro";     break;
+            case 2:     result = "Venuso";      break;
+            case 3:     result = "Tero";        break;
+            case 4:     result = "Marso";       break;
+            case 5:     result = "Jupitero";    break;
+            case 6:     result = "Saturno";     break;
+            case 7:     result = "Urano";       break;
+            case 8:     result = "Neptuno";     break;
+        } // switch
         return result;
     } // spellPlanet(int)
 
