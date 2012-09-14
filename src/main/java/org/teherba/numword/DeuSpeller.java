@@ -1,6 +1,6 @@
 /*  Spelling of numbers in Deutsch (German)
     spoken in Germany, Austria
-    and parts of Switzerland, France (Alsace), Italy (Southern Tyrol)
+    and parts of Switzerland(Deutsch-Schweiz), France (Elsaß), Italy (Südtirol)
     @(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $
     2011-10-26: spellClock; Mar.L. = 92
     2009-11-24: spellGreeting
@@ -41,7 +41,7 @@ public class DeuSpeller extends BaseSpeller {
      */
     public DeuSpeller() {
         super();
-        setIso639("ger,deu,de");
+        setIso639("deu,ger,de");
         setDescription("German (Deutsch)");
         setMaxLog(true);
         setSeparator(false);
@@ -217,7 +217,7 @@ public class DeuSpeller extends BaseSpeller {
 
     //================================================================
     /** Pairs of German month numbers, month names and their abbreviations */
-    private String months[] = new String[] 
+    private String months[] = new String[]
             { "00", "Monat"       // 0
             , "01", "Januar"      // 1
             , "02", "Februar"     // 2
@@ -232,24 +232,24 @@ public class DeuSpeller extends BaseSpeller {
             , "11", "November"    // 11
             , "12", "Dezember"    // 12
             // abbreviations (3 letters)
-            , "01", "Jan"         
-            , "02", "Feb"         
-            , "03", "Mär"         
-            , "04", "Apr"         
-            , "05", "Mai"         
-            , "06", "Jun"         
-            , "07", "Jul"         
-            , "08", "Aug"         
-            , "09", "Sep"         
-            , "10", "Okt"         
-            , "11", "Nov"         
+            , "01", "Jan"
+            , "02", "Feb"
+            , "03", "Mär"
+            , "04", "Apr"
+            , "05", "Mai"
+            , "06", "Jun"
+            , "07", "Jul"
+            , "08", "Aug"
+            , "09", "Sep"
+            , "10", "Okt"
+            , "11", "Nov"
             , "12", "Dez"
-            // aliases and other abbreviations         
-            , "01", "Jänner"      
-            , "01", "Jaenner"     
-            , "03", "Maerz"       
-            , "02", "Febr"        
-            , "09", "Sept"        
+            // aliases and other abbreviations
+            , "01", "Jänner"
+            , "01", "Jaenner"
+            , "03", "Maerz"
+            , "02", "Febr"
+            , "09", "Sept"
             };
 
     /** Returns the month's number as String (between "01" and "12")
@@ -259,13 +259,13 @@ public class DeuSpeller extends BaseSpeller {
     public String parseMonth(String name) {
         return lookupWord(name, months);
     } // parseMonth
-    
+
     /** Returns the month's name
      *  @param month month's number, >= 1 and <= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
-        return (month >= 0 && month <= 12) 
+        return (month >= 0 && month <= 12)
                 ? months[month * 2 + 1]
                 : Integer.toString(month);
     } // spellMonth
@@ -292,7 +292,7 @@ public class DeuSpeller extends BaseSpeller {
 
     //================================================================
     /** Pairs of German weekday numbers, weekday names and their abbreviations */
-    private String weekdays[] = new String[] 
+    private String weekdays[] = new String[]
             { "00", "Wochentag"
             , "01", "Montag"
             , "02", "Dienstag"
@@ -342,20 +342,20 @@ public class DeuSpeller extends BaseSpeller {
      *  <ul>
      *  <li>German, variant "1" = western:  18:45 =&gt; "viertel vor sieben"</li>
      *  <li>German, variant "2" = southern: 18:45 =&gt; "dreiviertel sieben"</li>
-     *  </ul> 
+     *  </ul>
      */
     public String spellClock(int hour, int minute, String variant) {
-        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+        String result = String.valueOf(hour   + 100).substring(1) + ':'
                       + String.valueOf(minute + 100).substring(1);
         int hour12 = hour + (minute >= 30 ? 1 : 0);
         hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12));
         String spellHour = spellCardinal(String.valueOf(hour12));
         if (false) {
         } else if (variant.length() == 0 || variant.equals("0")) {
-            result  = spellCardinal(String.valueOf(hour)).replace("eins", "ein") 
+            result  = spellCardinal(String.valueOf(hour)).replace("eins", "ein")
                     + " Uhr";
             if (minute > 0) {
-                result += " " +spellCardinal(String.valueOf(minute)); 
+                result += " " +spellCardinal(String.valueOf(minute));
             }
         } else if (variant.equals("1")) { // Western Germany, north/west of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
             if (minute % 15 == 0) {
@@ -375,8 +375,8 @@ public class DeuSpeller extends BaseSpeller {
                         break;
                 } // switch 0..3
             } else {
-                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach " 
-                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ") 
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach "
+                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ")
                         + spellHour;
             }
         } else if (variant.equals("2")) { // Southern Germany, south/east of a line Luebeck/Saaarbruecken (c.f. de.wikipedia: Uhrzeit)
@@ -399,8 +399,8 @@ public class DeuSpeller extends BaseSpeller {
                         break;
                 } // switch 0..3
             } else {
-                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach " 
-                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ") 
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " nach "
+                                        : spellCardinal(String.valueOf(60 - minute)) + " vor ")
                         + spellHour;
             }
         } // switch variant
@@ -408,7 +408,7 @@ public class DeuSpeller extends BaseSpeller {
     } // spellClock(3)
 
     //================================================================
-    /** Get a word for one the 4 cardinal directions, 
+    /** Get a word for one the 4 cardinal directions,
      *  and for the particle for 32th fractions
      *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
      */
@@ -423,8 +423,8 @@ public class DeuSpeller extends BaseSpeller {
         } // switch
         return result;
     } // getCompassWord
-    
-    /** Returns the language specific words for a cardinal direction 
+
+    /** Returns the language specific words for a cardinal direction
      *  @param code abbreviation, a sequence of the letters N,E,S,W.
      */
     protected String spellCompassCode(String code, String words[]) {
@@ -434,7 +434,7 @@ public class DeuSpeller extends BaseSpeller {
         }
         return result;
     } // spellCompassCode
-    
+
     /** Returns a greeting corresponding to the parameter time:
      *  @return greeting corresponding to the time of the day
      */
@@ -465,7 +465,13 @@ public class DeuSpeller extends BaseSpeller {
             case -1:    result = "Mond";        break;
             case 0:     result = "Sonne";       break;
             case 1:     result = "Merkur";      break;
+			case 2:		result = "Venus";		break;
             case 3:     result = "Erde";        break;
+			case 4:		result = "Mars";		break;
+			case 5:		result = "Jupiter";		break;
+			case 6:		result = "Saturn";		break;
+			case 7:		result = "Uranus";		break;
+			case 8:		result = "Neptun";		break;
         } // switch
         return result;
     } // spellPlanet(int)

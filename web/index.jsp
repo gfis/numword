@@ -96,7 +96,7 @@
     <h2>Number Words</h2>
     <form action="servlet" method="post">
         <input type = "hidden" name="view" value="index" />
-        <table cellpadding="8"> 
+        <table cellpadding="8">
             <tr>
                 <td width="100">Language<br />
                     <select name="language" size="<%= factory.getCount() %>"> <%-- 16 --%>
@@ -135,11 +135,11 @@
                     <br /><a href="docs/developer.html">Developer Hints, </a>
                           <a href="docs/bugs.html">Bugs</a>
                     <br /><a href="servlet?view=uniblock&digits=01">Unicode Tables</a>
-				    <br /><a href="metaInf.jsp?view=manifest">Manifest</a>, 
+				    <br /><a href="metaInf.jsp?view=manifest">Manifest</a>,
 				          <a href="metaInf.jsp?view=license" >License</a>
           			<br /><a href="metaInf.jsp?view=notice"  >References</a>
                     <p  />If the <em>Digits/Word</em> field is left empty, all months, weekdays etc. are shown,
-                    and for "Digits as Words" a list of representative test numbers is spelled.
+                    and for "Digits as Word" a list of representative test numbers is spelled.
                 </td>
 
                 <td width="100" valign="top">Digits / Word<br />
@@ -149,7 +149,7 @@
 					<p />
     <%
 		// this is the result output code
-	    NumwordCommand command = new NumwordCommand(); 
+	    NumwordCommand command = new NumwordCommand();
         String commandLine = "-l " + language + " -" + function + " " + digits;
 	    command.setMode(command.MODE_HTML_EM);
         if (digits.equals("") && "ch".indexOf(function.substring(0,1)) >= 0) {
