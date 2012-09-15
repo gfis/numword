@@ -1,6 +1,7 @@
 /*  Spell Numbers in Different Languages (write the number words)
     @(#) $Id: NumwordCommand.java 820 2011-11-07 21:59:07Z gfis $
-	2011-10-14: spellClock, spellCompass
+    2012-09-15: WikipediaHelper extracted from SpellerFactory
+    2011-10-14: spellClock, spellCompass
     2009-12-04: append additional words on commandline
     2009-11-24: spellGreeting; mode dependant output, log4j
     2007-02-08: use SpellerFactory
@@ -9,7 +10,6 @@
     2005-06-09, Georg Fischer
 
     The language specific modules are named according to the
-    common 2-letter language/country codes and the
     3-letter language codes of ISO 639-2T (for "terminological" use).
 
     pure ASCII encoding
@@ -33,18 +33,17 @@
 package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
 import  org.teherba.numword.SpellerFactory;
+import  org.teherba.numword.WikipediaHelper;
 import  java.io.StringWriter;
 import  java.io.Writer;
 import  java.text.DecimalFormat;
 import  java.text.NumberFormat;
-import  java.util.Arrays; // asList
 import  java.util.Iterator;
 import  java.util.regex.Matcher;
 import  java.util.regex.Pattern;
 import  org.apache.log4j.Logger;
 
-/**
- *  Spell a number in some language.
+/** Spells a number (or some other enumerable word) in some language.
  *  This class is the commandline interface to <em>BaseSpeller</em>.
  *  @author Dr. Georg Fischer
  */
@@ -91,101 +90,101 @@ final public class NumwordCommand {
         setMode(MODE_PLAIN);
     } // Constructor()
 
-	/** Puts an error message
-	 *	@param out writer, where to print the message
-	 *	@param text text for the error message
-	 */
-	public void error(Writer out, String text) {
-		try {
-			out.write(text + nl);
+    /** Puts an error message
+     *  @param out writer, where to print the message
+     *  @param text text for the error message
+     */
+    public void error(Writer out, String text) {
+        try {
+            out.write(text + nl);
         } catch (Exception exc) {
-            log.error(exc.getMessage(), exc);	
-        } // try                             	
+            log.error(exc.getMessage(), exc);
+        } // try
     } // error
-        
+
     /** Puts an output table row with a number and a word.
-	 *	@param out writer, where to print the row
-	 *	@param number number to be shown in the first  column
-	 *	@param word   word   to be shown in the second column
-	 */
-	public void printRow(Writer out, String number, String word) {
-		StringBuffer row = new StringBuffer(128);
-		try {
-			switch (mode) {
-				default:
-				case MODE_PLAIN:
-				case MODE_TSV:
-					row.append(number);
-					row.append("\t");
-					row.append(word);
-					break;
-				case MODE_XML:
-				case MODE_HTML:
-					row.append("<tr><td align=\"right\">");
-					row.append(number);
-					row.append("</td><td>");
-					row.append(word);
-					row.append("</td></tr>");
-					break;
-				case MODE_HTML_EM:
-					row.append("<tr>");
-					row.append("<td align=\"right\" class=\"large\">");
-					row.append(number);
-					row.append("</td>");
-					row.append("<td class=\"large\">");
-					row.append(word);
-					row.append("</td></tr>");
-					break;
-			} // switch mode
-			row.append(nl);
-			out.write(row.toString());
+     *  @param out writer, where to print the row
+     *  @param number number to be shown in the first  column
+     *  @param word   word   to be shown in the second column
+     */
+    public void printRow(Writer out, String number, String word) {
+        StringBuffer row = new StringBuffer(128);
+        try {
+            switch (mode) {
+                default:
+                case MODE_PLAIN:
+                case MODE_TSV:
+                    row.append(number);
+                    row.append("\t");
+                    row.append(word);
+                    break;
+                case MODE_XML:
+                case MODE_HTML:
+                    row.append("<tr><td align=\"right\">");
+                    row.append(number);
+                    row.append("</td><td>");
+                    row.append(word);
+                    row.append("</td></tr>");
+                    break;
+                case MODE_HTML_EM:
+                    row.append("<tr>");
+                    row.append("<td align=\"right\" class=\"large\">");
+                    row.append(number);
+                    row.append("</td>");
+                    row.append("<td class=\"large\">");
+                    row.append(word);
+                    row.append("</td></tr>");
+                    break;
+            } // switch mode
+            row.append(nl);
+            out.write(row.toString());
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } // try
-	} // printRow
-	
-	/** Puts the start of an output table.
-	 *	@param out writer, where to print the tag
-	 */
-	public void printStartTable(Writer out) {
-		try {
-			switch (mode) {
-				default:
-				case MODE_PLAIN:
-				case MODE_TSV:
-					break;
-				case MODE_XML:
-				case MODE_HTML:
-				case MODE_HTML_EM:
-					out.write("<table>" + nl);
-					break;
-			} // switch mode
+    } // printRow
+
+    /** Puts the start of an output table.
+     *  @param out writer, where to print the tag
+     */
+    public void printStartTable(Writer out) {
+        try {
+            switch (mode) {
+                default:
+                case MODE_PLAIN:
+                case MODE_TSV:
+                    break;
+                case MODE_XML:
+                case MODE_HTML:
+                case MODE_HTML_EM:
+                    out.write("<table>" + nl);
+                    break;
+            } // switch mode
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } // try
-	} // printStartTable
-	
-	/** Puts the end   of an output table.
-	 *	@param out writer, where to print the tag
-	 */
-	public void printEndTable(Writer out) {
-		try {
-			switch (mode) {
-				default:
-				case MODE_PLAIN:
-				case MODE_TSV:
-					break;
-				case MODE_XML:
-				case MODE_HTML:
-				case MODE_HTML_EM:
-					out.write("</table>" + nl);
-					break;
-			} // switch mode
+    } // printStartTable
+
+    /** Puts the end   of an output table.
+     *  @param out writer, where to print the tag
+     */
+    public void printEndTable(Writer out) {
+        try {
+            switch (mode) {
+                default:
+                case MODE_PLAIN:
+                case MODE_TSV:
+                    break;
+                case MODE_XML:
+                case MODE_HTML:
+                case MODE_HTML_EM:
+                    out.write("</table>" + nl);
+                    break;
+            } // switch mode
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } // try
-	} // printEndTable
-	
+    } // printEndTable
+
     /** Convenience overlay method with a single string argument instead
      *  of an array of strings.
      *  @param commandLine all parameters of the commandline in one string
@@ -196,9 +195,9 @@ final public class NumwordCommand {
         return process(commandLine.split("\\s+"));
     } // process(String)
 
-	/** Pattern for splitting of day times */
-   	private static Pattern clockPattern = Pattern.compile("(\\d+)\\D+(\\d+)");
-   	
+    /** Pattern for splitting of day times */
+    private static Pattern clockPattern = Pattern.compile("(\\d+)\\D+(\\d+)");
+
     /** Evaluates the arguments of the command line, and processes them.
      *  @param args Arguments; if missing, print the following:
      *  <pre>
@@ -217,7 +216,7 @@ final public class NumwordCommand {
      *    -s   print 4 seasons of the year
      *    -w   print 7 weekdays
      *    -w2  print 7 weekdays' abbreviations (2 letters)
-	 *
+     *
      *    -C   parse number word, return digits
      *    -t   test against file consisting of lines with: digits tab number-word
      *    -l   language code: de, fr, en, tlh ...
@@ -232,6 +231,7 @@ final public class NumwordCommand {
         /** internal buffer for the string to be output */
         StringWriter out = new StringWriter(16384);
         SpellerFactory factory = new SpellerFactory();
+        WikipediaHelper helper = new WikipediaHelper();
         String word = "";
         try {
             int iarg = 0; // index for command line arguments
@@ -274,7 +274,7 @@ final public class NumwordCommand {
                 boolean greeting= false;
                 boolean test    = false;
                 boolean weekDay = false;
-                int abbrevLen 	= 0; // no abbreviation
+                int abbrevLen   = 0; // no abbreviation
                 String variant  = ""; // rest behind "-h"
 
                 // get all options
@@ -309,35 +309,35 @@ final public class NumwordCommand {
                         variant  = option.substring(2);
                     }
                     if (option.startsWith("-m")) {
-                    	if (option.equals("-mode")) {
-	                        if (iarg < args.length) {
-    	                        arg = args[iarg ++];
-        	                    if (arg.equals("-")) {
-            	                    arg = "plain";
-            	                    iarg --;
-                	            }
-                	            if (false) {
-                	            } else if (arg.equals("html")) {
-                	            	setMode(MODE_HTML);	
-                	            } else if (arg.equals("plain")) {
-                	            	setMode(MODE_PLAIN);	
-                	            } else if (arg.equals("tsv")) {
-                	            	setMode(MODE_TSV);	
-                	            } else if (arg.equals("xml")) {
-                	            	setMode(MODE_XML);	
-                	            } else {
-                	            	out.write("invalid mode \"" + arg + "\"");
-                	            	setMode(MODE_PLAIN);	
-                	            }
-                        	} else {
-                        		setMode(MODE_PLAIN);
-                        	}
-                    	} else {
-	                        month = true;
-    	                    if  (option.indexOf("3") >= 0) {
-        	                    abbrevLen = 3;
-            	            }
-            	        } // -m
+                        if (option.equals("-mode")) {
+                            if (iarg < args.length) {
+                                arg = args[iarg ++];
+                                if (arg.equals("-")) {
+                                    arg = "plain";
+                                    iarg --;
+                                }
+                                if (false) {
+                                } else if (arg.equals("html")) {
+                                    setMode(MODE_HTML);
+                                } else if (arg.equals("plain")) {
+                                    setMode(MODE_PLAIN);
+                                } else if (arg.equals("tsv")) {
+                                    setMode(MODE_TSV);
+                                } else if (arg.equals("xml")) {
+                                    setMode(MODE_XML);
+                                } else {
+                                    out.write("invalid mode \"" + arg + "\"");
+                                    setMode(MODE_PLAIN);
+                                }
+                            } else {
+                                setMode(MODE_PLAIN);
+                            }
+                        } else {
+                            month = true;
+                            if  (option.indexOf("3") >= 0) {
+                                abbrevLen = 3;
+                            }
+                        } // -m
                     }
                     if (option.startsWith("-C")) {
                         parse = true;
@@ -370,14 +370,14 @@ final public class NumwordCommand {
                     }
                 } // while options
 
-				printStartTable(out);
+                printStartTable(out);
                 BaseSpeller speller = factory.getSpeller(language);
                 if (speller != null) { // language code was found
                     if (iarg < args.length) { // with argument
                         String number = args[iarg ++];
                         while (iarg < args.length) { // append additional words on commandline
-                        	number += " " + args[iarg ++];
-                        } 
+                            number += " " + args[iarg ++];
+                        }
                         int inum;
                         try {
                             inum = Integer.parseInt(number);
@@ -390,28 +390,28 @@ final public class NumwordCommand {
                             for (inum = 0; inum <= highNumber; inum ++) {
                                 number = Integer.toString(inum);
                                 word = speller.spellCardinal(number);
-                 				printRow(out, factory.getWikipediaLink(speller, number, word), word);
+                                printRow(out, helper.getWikipediaLink(speller, number, word), word);
                             } // for inum
                         } else { // a single, positive number
                             if (false) {
                             } else if (clock   ) {
-                            	Matcher mat = clockPattern.matcher(number);
-		                        int hour = 0;
-		                        int minute = 0;
-		                        if (mat.matches()) {
-			                        try {
-			                            hour	= Integer.parseInt(mat.group(1));
-			                            minute	= Integer.parseInt(mat.group(2));
-			                        } catch (Exception exc) {
-			                        }
-			                    } // if matches
+                                Matcher mat = clockPattern.matcher(number);
+                                int hour = 0;
+                                int minute = 0;
+                                if (mat.matches()) {
+                                    try {
+                                        hour    = Integer.parseInt(mat.group(1));
+                                        minute  = Integer.parseInt(mat.group(2));
+                                    } catch (Exception exc) {
+                                    }
+                                } // if matches
                                 printRow(out, number, speller.spellClock(hour, minute, variant));
                             } else if (compass) {
-                            	float angle = 0;
-                            	try {
-                            		angle = Float.parseFloat(number + "f");
-                            	} catch (Exception exc) {
-                            	}
+                                float angle = 0;
+                                try {
+                                    angle = Float.parseFloat(number + "f");
+                                } catch (Exception exc) {
+                                }
                                 printRow(out, number, speller.spellCompass (angle));
                             } else if (greeting) {
                                 printRow(out, number, speller.spellGreeting(inum));
@@ -427,10 +427,10 @@ final public class NumwordCommand {
                                 printRow(out, number, speller.spellWeekDay(inum, abbrevLen));
                             } else { // cardinal
                                 word = speller.spellCardinal(number);
-                 				printRow(out, factory.getWikipediaLink(speller, number, word), word);
+                                printRow(out, helper.getWikipediaLink(speller, number, word), word);
                             }
                         }
-                    	// with argument
+                        // with argument
                     } else { // no argument - take predefined test cases
                             String fileString = fileName.toString();
                             if (false) {
@@ -467,7 +467,7 @@ final public class NumwordCommand {
                             } else if (test) {
                                 speller.testFile(fileString);
                             } else if (greeting || month || season || planet || weekDay) {
-                            	if (false) {
+                                if (false) {
                                 } else if (greeting) {
                                     for (int inum = 0; inum <= 24; inum += 6) {
                                         printRow(out, String.valueOf(inum), speller.spellGreeting(inum));
@@ -490,57 +490,57 @@ final public class NumwordCommand {
                                     } // for inum
                                 }
                             } else if (clock   ) {
-                                int inum = 0; 
+                                int inum = 0;
                                 while (inum       < BaseSpeller.TESTTIMES.length) {
                                     String number = BaseSpeller.TESTTIMES[inum];
-	                            	Matcher mat = clockPattern.matcher(number);
-			                        int hour = 0;
-			                        int minute = 0;
-			                        if (mat.matches()) {
-				                        try {
-				                            hour	= Integer.parseInt(mat.group(1));
-				                            minute	= Integer.parseInt(mat.group(2));
-				                        } catch (Exception exc) {
-				                        }
-				                    } // if matches
-	                                printRow(out, number, speller.spellClock(hour, minute, variant));
+                                    Matcher mat = clockPattern.matcher(number);
+                                    int hour = 0;
+                                    int minute = 0;
+                                    if (mat.matches()) {
+                                        try {
+                                            hour    = Integer.parseInt(mat.group(1));
+                                            minute  = Integer.parseInt(mat.group(2));
+                                        } catch (Exception exc) {
+                                        }
+                                    } // if matches
+                                    printRow(out, number, speller.spellClock(hour, minute, variant));
                                     inum ++;
                                 } // while inum
                                 // clock
                             } else if (compass) {
-                                int inum = 0; 
+                                int inum = 0;
                                 DecimalFormat form = (DecimalFormat) DecimalFormat.getInstance();
-                                form.applyPattern("##0.00");                              
+                                form.applyPattern("##0.00");
                                 while (inum <= 32) {
-	                            	float angle = 11.250001f * inum;	                    			
-	                            	String number = Float.toString(angle);
-	                                printRow(out, form.format(angle), speller.spellCompass(angle));
+                                    float angle = 11.250001f * inum;
+                                    String number = Float.toString(angle);
+                                    printRow(out, form.format(angle), speller.spellCompass(angle));
                                     inum += 2; // print 1/16 only
                                 } // while inum
                                 // compass
                             } else { // cardinal
-                                int inum = 0; 
+                                int inum = 0;
                                 while (inum       < BaseSpeller.TESTNUMBERS.length) {
                                     String number = BaseSpeller.TESTNUMBERS[inum];
                                     String temp = (number.length() >= 12)
-                                    		? number.replaceAll("\\.",  " ")
-                                    		: number.replaceAll("\\.",  "");
+                                            ? number.replaceAll("\\.",  " ")
+                                            : number.replaceAll("\\.",  "");
                                     if (temp.length() <= speller.getMaxLog()) {
-		                                word = speller.spellCardinal(number);
-		                                if (number.length() <= 2) {
-	        		         				printRow(out, factory.getWikipediaLink(speller, number, word), word);
-	        		         			} else {
-                                        	printRow(out, temp, word);
+                                        word = speller.spellCardinal(number);
+                                        if (number.length() <= 2) {
+                                            printRow(out, helper.getWikipediaLink(speller, number, word), word);
+                                        } else {
+                                            printRow(out, temp, word);
                                         }
                                     } else {
-                                    	inum = BaseSpeller.TESTNUMBERS.length; // leave loop
+                                        inum = BaseSpeller.TESTNUMBERS.length; // leave loop
                                     }
                                     inum ++;
                                 } // while inum
                                 // cardinal
                             }
                     } // predefined test cases
-					printEndTable(out);
+                    printEndTable(out);
                 } // language was found
                 else {
                     error(out, "unknown language code \"" + language + "\"");

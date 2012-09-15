@@ -28,13 +28,22 @@
     <property name="app.version"        value="1.7"/>
     <property name="app.main-class"     value="org.teherba.numword.NumwordCommand"/>
     <import file="build-import.xml" />
-    
+
     <target name="generate">
     	<mkdir dir="web/braille" />
-        <java classname="org.teherba.numword.BrailleSpeller" 
+   		<!-- create files web/braille/braille_nnnnnn.svg for all Braille characters -->
+        <java classname="org.teherba.numword.BrailleSpeller"
         		classpathref="compile.classpath" fork="true" dir="web/braille">
         </java>
-    </target>                                               
+    </target>
+
+    <target name="only_once">
+        <copy todir="${src.home}/org/teherba/dbat">
+            <fileset dir="../dbat/src/main/java/org/teherba/dbat">
+                <include name="URIReader.java" />
+            </fileset>
+        </copy>
+    </target>
 
     <target name="test" depends="deploy,test.command,test.servlet,test.service" />
     <target name="test.command"><!-- run the program from the commandline -->
