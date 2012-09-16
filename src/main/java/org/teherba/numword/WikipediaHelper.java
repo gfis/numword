@@ -21,6 +21,8 @@ package org.teherba.numword;
 import  org.teherba.dbat.URIReader;
 import  java.io.BufferedReader;
 import  java.io.InputStreamReader;
+import  java.text.SimpleDateFormat;
+import  java.util.Date;
 import  java.util.HashMap;
 import  java.util.StringTokenizer;
 import  java.util.regex.Matcher;
@@ -41,6 +43,8 @@ public class WikipediaHelper {
 
     /** Map of 2-letter ISO codes to Wikipedia links */
     private HashMap<String, String> wikiLinks;
+    /** ISO timestamp without milliseconds */
+    public static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
 
     /** No-args Constructor.
      *  The order of the languages here defines the order in the user interfaces.
@@ -62,51 +66,84 @@ public class WikipediaHelper {
      *  the {@link main} method from the English Wikipedia page for "18_(number)".
      */
     private void fillWikiLinks () {
-        wikiLinks.put("pt", "Dezoito"); // Portuguese
+// START OF REPLACEMENT
+// by org.teherba.numword.WikipediaHelper at 2012-09-16 12:48:02
+        wikiLinks.put("ab", "%D0%96%D3%99%D0%B0%D0%B0"); // Аҧсшәа
         wikiLinks.put("ar", "18_(%D8%B9%D8%AF%D8%AF)"); // العربية
+        wikiLinks.put("gn", "Papoapy"); // Avañe'ẽ
+        wikiLinks.put("az", "18_(%C9%99d%C9%99d)"); // Azərbaycanca
+        wikiLinks.put("bg", "18_(%D1%87%D0%B8%D1%81%D0%BB%D0%BE)"); // Български
+        wikiLinks.put("bo", "%E0%BC%A1%E0%BC%A8_(%E0%BD%82%E0%BE%B2%E0%BD%84%E0%BD%A6%E0%BC%8B%E0%BD%80%E0%BC%8D)"); // བོད་ཡིག
         wikiLinks.put("ca", "Divuit"); // Català
-        wikiLinks.put("co", "18_(numeru)"); // Corsu
         wikiLinks.put("cv", "18_(%D1%85%D0%B8%D1%81%D0%B5%D0%BF)"); // Чӑвашла
+        wikiLinks.put("cs", "18_(%C4%8D%C3%ADslo)"); // Česky
+        wikiLinks.put("ny", "Khumi_n%27zisanu_n%27zitatu"); // Chi-Chewa
+        wikiLinks.put("sn", "Gumi_nesere"); // ChiShona
+        wikiLinks.put("tum", "Khumi_na_vikhondi_na_vitutatu"); // ChiTumbuka
         wikiLinks.put("cy", "Un_deg_wyth"); // Cymraeg
         wikiLinks.put("da", "18_(tal)"); // Dansk
         wikiLinks.put("de", "Achtzehn"); // Deutsch
-        wikiLinks.put("en", "18_(number)"); // English
-        wikiLinks.put("eo", "Dek_ok"); // Esperanto
+        wikiLinks.put("myv", "18_(%D0%BB%D0%BE%D0%B2%D0%BE%D0%BC%D0%B0_%D0%B2%D0%B0%D0%BB)"); // Эрзянь
         wikiLinks.put("es", "Dieciocho"); // Español
+        wikiLinks.put("eo", "Dek_ok"); // Esperanto
         wikiLinks.put("eu", "Hemezortzi"); // Euskara
         wikiLinks.put("fa", "%DB%B1%DB%B8_(%D8%B9%D8%AF%D8%AF)"); // فارسی
-        wikiLinks.put("fi", "18_(luku)"); // Suomi
         wikiLinks.put("fr", "18_(nombre)"); // Français
-        wikiLinks.put("gn", "Papoapy"); // Avañe'ẽ
-        wikiLinks.put("he", "18_(%D7%9E%D7%A1%D7%A4%D7%A8)"); // עברית
-        wikiLinks.put("ht", "18_(nonm)"); // Kreyòl ayisyen
-        wikiLinks.put("hu", "18_(sz%C3%A1m)"); // Magyar
-        wikiLinks.put("ia", "18_(numero)"); // Interlingua
-        wikiLinks.put("id", "18_(angka)"); // Bahasa Indonesia
+        wikiLinks.put("ff", "Sappo_e_joweetati"); // Fulfulde
+        wikiLinks.put("gan", "18"); // 贛語
+        wikiLinks.put("ko", "18"); // 한국어
         wikiLinks.put("ig", "Iri_na_asat%E1%BB%8D"); // Igbo
+        wikiLinks.put("id", "18_(angka)"); // Bahasa Indonesia
+        wikiLinks.put("ia", "18_(numero)"); // Interlingua
+        wikiLinks.put("ik", "Akimiaq_pi%C5%8Basut"); // Iñupiak
+        wikiLinks.put("xh", "Ishumi_elinesibhozo"); // IsiXhosa
         wikiLinks.put("is", "18_(tala)"); // Íslenska
         wikiLinks.put("it", "18_(numero)"); // Italiano
-        wikiLinks.put("ja", "18"); // 日本語
-        wikiLinks.put("ko", "18"); // 한국어
-        wikiLinks.put("ku", "Hejde"); // Kurdî / كوردی
+        wikiLinks.put("he", "18_(%D7%9E%D7%A1%D7%A4%D7%A8)"); // עברית
+        wikiLinks.put("rn", "Cumi_na_munani"); // Kirundi
+        wikiLinks.put("ht", "18_(nonm)"); // Kreyòl ayisyen
+        wikiLinks.put("ku", "Hejde"); // Kurdî
+        wikiLinks.put("lbe", "%D0%90%D1%86%D3%80%D0%BD%D0%B8%D1%8F_%D0%BC%D1%8F%D0%B9%D0%B2%D0%B0"); // Лакку
         wikiLinks.put("la", "Duodeviginti"); // Latina
-        wikiLinks.put("lt", "18_(skai%C4%8Dius)"); // Lietuvių
         wikiLinks.put("lv", "18_(skaitlis)"); // Latviešu
+        wikiLinks.put("lt", "18_(skai%C4%8Dius)"); // Lietuvių
+        wikiLinks.put("ln", "Z%C3%B3mi_na_mwambe"); // Lingála
+        wikiLinks.put("lg", "Kkumi_na_munaana"); // Luganda
+        wikiLinks.put("lmo", "N%C3%BCmar_18"); // Lumbaart
+        wikiLinks.put("hu", "18_(sz%C3%A1m)"); // Magyar
         wikiLinks.put("mk", "18_(%D0%B1%D1%80%D0%BE%D1%98)"); // Македонски
         wikiLinks.put("ms", "18_(nombor)"); // Bahasa Melayu
+        wikiLinks.put("nah", "Caxt%C5%8Dlon%C4%93yi"); // Nāhuatl
         wikiLinks.put("nl", "18_(getal)"); // Nederlands
-        wikiLinks.put("nn", "Talet_18"); // ‪Norsk (nynorsk)‬
-        wikiLinks.put("no", "18_(tall)"); // ‪Norsk (bokmål)‬
+        wikiLinks.put("ja", "18"); // 日本語
+        wikiLinks.put("nap", "Dici%C3%B2tte"); // Nnapulitano
+        wikiLinks.put("no", "18_(tall)"); // ‪norsk (bokmål)‬
+        wikiLinks.put("nn", "Talet_18"); // ‪norsk (nynorsk)‬
+        wikiLinks.put("uz", "18_(son)"); // Oʻzbekcha
+        wikiLinks.put("pnb", "18"); // پنجابی
         wikiLinks.put("pl", "18_(liczba)"); // Polski
+        wikiLinks.put("pt", "Dezoito"); // Português
         wikiLinks.put("ru", "18_(%D1%87%D0%B8%D1%81%D0%BB%D0%BE)"); // Русский
+        wikiLinks.put("nso", "18_(nomoro)"); // Sesotho sa Leboa
+        wikiLinks.put("scn", "Dicidottu"); // Sicilianu
+        wikiLinks.put("simple", "18_(number)"); // Simple English
         wikiLinks.put("sl", "18_(%C5%A1tevilo)"); // Slovenščina
+        wikiLinks.put("srn", "Numro_18"); // Sranantongo
+        wikiLinks.put("fi", "18_(luku)"); // Suomi
         wikiLinks.put("sv", "18_(tal)"); // Svenska
+        wikiLinks.put("tl", "18_(bilang)"); // Tagalog
         wikiLinks.put("th", "18"); // ไทย
+        wikiLinks.put("ti", "%E1%8B%93%E1%88%B0%E1%88%AD%E1%89%B0_%E1%88%BE%E1%88%98%E1%8A%95%E1%89%B0"); // ትግርኛ
+        wikiLinks.put("tr", "18_(say%C4%B1)"); // Türkçe
         wikiLinks.put("uk", "18_(%D1%87%D0%B8%D1%81%D0%BB%D0%BE)"); // Українська
+        wikiLinks.put("za", "Cib_bat"); // Vahcuengh
+        wikiLinks.put("vep", "18_(lugu)"); // Vepsän kel’
         wikiLinks.put("vi", "18_(s%E1%BB%91)"); // Tiếng Việt
-        wikiLinks.put("xh", "Ishumi_elinesibhozo"); // isiXhosa
+        wikiLinks.put("vls", "18_(getal)"); // West-Vlams
+        wikiLinks.put("war", "18_(ihap)"); // Winaray
         wikiLinks.put("yi", "18_(%D7%A0%D7%95%D7%9E%D7%A2%D7%A8)"); // ייִדיש
         wikiLinks.put("zh", "18"); // 中文
+// END OF REPLACEMENT
     } // fillWikiLinks
 
     /** Gets a link to the Wikipedia article for a number, in the specified language.
@@ -174,8 +211,10 @@ public class WikipediaHelper {
             busy = true;
             while (busy && (jline = jin.readLine()) != null) { // copy part before fillWikiLinks
                 System.out.println(jline);
-                if (jline.startsWith("    private void fillWikiLinks () {")) {
+                if (jline.startsWith("// START OF REPLACEMENT")) {
                     busy = false;
+                    System.out.println("// by org.teherba.numword.WikipediaHelper at "
+                            + TIMESTAMP_FORMAT.format(new java.util.Date()));
                 }
             } // while part before
 
@@ -193,7 +232,7 @@ public class WikipediaHelper {
 
             busy = true;
             while (busy && (jline = jin.readLine()) != null) { // skip over old body of method fillWikiLink
-                if (jline.startsWith("    } // fillWikiLinks")) {
+                if (jline.startsWith("// END OF REPLACEMENT")) {
                     busy = false;
                     System.out.println(jline);
                 }

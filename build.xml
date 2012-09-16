@@ -30,19 +30,27 @@
     <import file="build-import.xml" />
 
     <target name="generate">
-    	<mkdir dir="web/braille" />
-   		<!-- create files web/braille/braille_nnnnnn.svg for all Braille characters -->
-        <java classname="org.teherba.numword.BrailleSpeller"
-        		classpathref="compile.classpath" fork="true" dir="web/braille">
-        </java>
     </target>
 
-    <target name="only_once">
+    <target name="gen_once">
         <copy todir="${src.home}/org/teherba/dbat">
             <fileset dir="../dbat/src/main/java/org/teherba/dbat">
                 <include name="URIReader.java" />
             </fileset>
         </copy>
+        <mkdir dir="web/braille" />
+        <!-- create files web/braille/braille_nnnnnn.svg for all Braille characters -->
+        <java classname="org.teherba.numword.BrailleSpeller"
+                classpathref="compile.classpath" fork="true" dir="web/braille">
+        </java>
+        <java classname="org.teherba.numword.WikipediaHelper"
+                classpathref="compile.classpath" fork="true" dir="."
+                input="${src.home}/org/teherba/numword/WikipediaHelper.java"
+                output="x.tmp"
+                >
+            <arg value="http://en.wikipedia.org/wiki/18_(number)" />
+        </java>
+        <copy file="x.tmp" tofile="${src.home}/org/teherba/numword/WikipediaHelper.java" />
     </target>
 
     <target name="test" depends="deploy,test.command,test.servlet,test.service" />
