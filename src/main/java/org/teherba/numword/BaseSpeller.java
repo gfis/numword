@@ -326,7 +326,7 @@ public abstract class BaseSpeller {
      */
     protected void putSeparator() {
         result.append(separator);
-    } // puSeparator
+    } // putSeparator
 
     /** Gets the description for the language.
      *  @return text describing the language of this speller
