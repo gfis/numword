@@ -23,10 +23,9 @@
  */
 package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
-import  java.util.ArrayList; // asList
+import  java.util.ArrayList;
 import  java.util.HashMap;
 import  java.util.Iterator;
-import  java.util.List;
 import  java.util.StringTokenizer;
 import  org.apache.log4j.Logger;
 
@@ -55,7 +54,7 @@ public class SpellerFactory {
             BaseSpeller speller = (BaseSpeller) Class.forName("org.teherba.numword." + lang + "Speller").newInstance();
             spellers.add(speller);
         } catch (Exception exc) {
-        	// ignore any error silently - this language will not be known
+            // ignore any error silently - this language will not be known
         }
     } // addSpeller
 
@@ -106,7 +105,7 @@ public class SpellerFactory {
             addSpeller("Braille");
             addSpeller("Roman");
         } catch (Exception exc) {
-        	log.error(exc.getMessage(), exc);
+            log.error(exc.getMessage(), exc);
         }
     } // Constructor(0)
 
@@ -114,8 +113,7 @@ public class SpellerFactory {
      *  @return list iterator over <em>allSpellers</em>
      */
     public Iterator<BaseSpeller> getIterator() {
-        Iterator<BaseSpeller> result = spellers.iterator();
-        return result;
+        return spellers.iterator();
     } // getIterator
 
     /** Gets the number of available spellers
