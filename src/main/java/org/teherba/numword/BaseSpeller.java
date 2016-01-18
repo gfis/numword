@@ -1,5 +1,6 @@
 /*  Abstract class for spelling of numbers in different languages
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2016-01-18: parseString.liard depends on m3="void"
     2011-10-14: spellClock
     2011-03-14: private -> protected
     2009-11-24: spellGreeting
@@ -397,10 +398,10 @@ public abstract class BaseSpeller {
      *  <tr><td>"mh"</td><td>optional morphem for 100 Mio (Sino)</td></tr>
      *  <tr><td>"l1"</td><td>morphem for    1 million  (pre- and postfix)</td></tr>
      *  <tr><td>"l2"</td><td>morphem for >= 2 millions (pre- and postfix)</td></tr>
-     *  <tr><td>"m0"</td><td>morphem for one million (prefix, special treatment if same as "t1")</td></tr>
-     *  <tr><td>"m1"</td><td>morphem for one million, billion, trillion ... (only the postfix)</td></tr>
+     *  <tr><td>"m0"</td><td>morphem for one     million (prefix, special treatment if same as "t1")</td></tr>
+     *  <tr><td>"m1"</td><td>morphem for one     million, billion, trillion ... (only the postfix)</td></tr>
      *  <tr><td>"m2"</td><td>morphem for several millions ... (same as "m1" if not set)</td></tr>
-     *  <tr><td>"m3"</td><td>morphem for one milliard (US counting with billions ... if missing)</td></tr>
+     *  <tr><td>"m3"</td><td>morphem for one     milliard (US counting with billions ... if = "void")</td></tr>
      *  <tr><td>"m4"</td><td>morphem for several milliards (same as "m3" if not set)</td></tr>
      *  <tr><td>"pi"</td><td>i=0,1,2,... "meaningless" connecting morphems like e, und, et, s, ...</td></tr>
      *  <tr><td>"wm"</td><td>word for "month" (Sino)</td></tr>
@@ -487,7 +488,8 @@ public abstract class BaseSpeller {
         result.delete(0, result.length()); // clear buffer
         StringBuffer particle = new StringBuffer(32);
         boolean found = false;
-        boolean liard = morphMap.get("m3") != null; // whether there is a special postfix "liard"yy
+        String morphM3 = morphMap.get("m3");
+        boolean liard  = morphM3 != null && ! morphM3.equals("NO_LIARDS"); // whether there is a special postfix "liard"yy
         int prefixLen = 1;
         while (prefixLen > 0) { // any number morphem found
             prefixLen = 0;

@@ -1,9 +1,9 @@
-/*  Spelling of numbers in English,
+/*  Spelling of numbers in modern English,
     spoken in USA, Great Britain, Australia,
     parts of Canada, former English colonies
-    and throughout the world as modern "lingua franca"
+    and throughout the world as "lingua franca"
     @(#) $Id: EngSpeller.java 820 2011-11-07 21:59:07Z gfis $
-    Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
+    2016-01-18: set m3="NO_LIARDS" for US counting: million, billion ...
     2011-10-26: spellClock
     2009-11-24: spellGreeting
     2006-01-06: super()
@@ -87,9 +87,7 @@ public class EngSpeller extends BaseSpeller {
         setMorphem("t1", "thousand");
         setMorphem("m1", "lion");
         setMorphem("m2", "lions");
-        // the next 2 were detected by "Nino Svonja" <nino@lumanetix.com>
-        setMorphem("m3", "");
-        setMorphem("m4", "");
+        setMorphem("m3", "NO_LIARDS"); // US counting: millions, billions ... (thanks to Nino Svonja <nino@lumanetix.com>)
         setMorphem("p0", " ");
         setMorphem("p1", "-");
         setMorphem("p2", "s");
