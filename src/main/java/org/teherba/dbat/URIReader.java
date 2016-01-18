@@ -1,5 +1,6 @@
 /*  Reader for a URL or data URI source
     @(#) $Id: URIReader.java 860 2012-01-17 11:58:39Z gfis $
+    2016-01-18: remove Javadoc link to TayloredTable and SQLAction
 	2011-08-06: extended to InputStream interface
     2011-07-15, Dr. Georg Fischer: copied from SeparatedTable
 */
@@ -53,9 +54,9 @@ import  org.apache.log4j.Logger;
  *  <p  />
  *	This class is used in
  *	<ul>
- *	<li>{@link org.teherba.dbat.format.TayloredTable} for the -u pattern file</li>
- *	<li>{@link SQLAction#execSQLfromURI}</li>
- *	<li>{@link SQLAction#insertFromURI} for the reading of (B|C)LOB values</li>
+ *	<li><em>org.teherba.dbat.format.TayloredTable</em> for the -u pattern file</li>
+ *	<li><em>SQLAction#execSQLfromURI</em></li>
+ *	<li><em>SQLAction#insertFromURI</em> for the reading of (B|C)LOB values</li>
  *	</ul>
  *  @author Dr. Georg Fischer
  */
