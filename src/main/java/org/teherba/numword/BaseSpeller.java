@@ -810,7 +810,7 @@ public abstract class BaseSpeller {
     } // parseFile
 
     /** Reads a text file consisting of tuples
-     *	number, tab, number words, tries to recognize
+     *  number, tab, number words, tries to recognize
      *  the number words, and prints the result.
      *  @param fileName name of the file to be parsed,
      *  or read from STDIN if null or empty
@@ -1015,31 +1015,31 @@ public abstract class BaseSpeller {
                 :   result.toString());
     } // spellCardinal
 
-	//================================================================
+    //================================================================
     /** Returns a denotation of the day's time, possibly in several variants
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
-     *	@param variant the code behind the commandline option "-h":
-     *	empty or 0 (official), 1,2,3 for  a language specific variant.
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
+     *  @param variant the code behind the commandline option "-h":
+     *  empty or 0 (official), 1,2,3 for  a language specific variant.
      *  @return phrase corresponding to the denotation of the time, for example
-     *	<ul>
-     *	<li>English, default: 18:15 =&gt; "quarter past six"</li>
-     *	<li>German, variant "1" = southern: 18:45 =&gt; "dreiviertel sieben"</li>
-     *	</ul>
+     *  <ul>
+     *  <li>English, default: 18:15 =&gt; "quarter past six"</li>
+     *  <li>German, variant "1" = southern: 18:45 =&gt; "dreiviertel sieben"</li>
+     *  </ul>
      */
     public String spellClock(int hour, int minute, String variant) {
         return String.valueOf(hour   + 100).substring(1) + ':'
-        	+  String.valueOf(minute + 100).substring(1);
+            +  String.valueOf(minute + 100).substring(1);
     } // spellClock(3)
 
     /** Returns a denotation of the day's time, official variant
-     *	@param hour hour 0..24
-     *	@param minute minute 0..59
+     *  @param hour hour 0..24
+     *  @param minute minute 0..59
      *  @return phrase corresponding to the official denotation of the time, for example
-     *	<ul>
-     *	<li>English,: 18:15 =&gt; "quarter past six"</li>
-     *	<li>German: 18:44 =&gt; "achtzehn Uhr vierundvierzig"</li>
-     *	</ul>
+     *  <ul>
+     *  <li>English,: 18:15 =&gt; "quarter past six"</li>
+     *  <li>German: 18:44 =&gt; "achtzehn Uhr vierundvierzig"</li>
+     *  </ul>
      */
     public String spellClock(int hour, int minute) {
         return spellClock(hour, minute, "0");
@@ -1053,42 +1053,42 @@ public abstract class BaseSpeller {
             ,  "23:30", "23:45", "23:55", "24:00"
             };
 
-	//================================================================
-	private static String[] CARDDIRS = new String[]
-			{ "N" 		//	00000b  0 		Noord
-			, "NNNE" 	//	00001b  11¼ 	Noord ten oosten
-			, "NNE" 	//	00010b  22½ 	Noordnoordoost
-			, "ENNE" 	//	00011b  33¾ 	Noordoost ten noorden
-			, "NE" 		//	00100b  45 		Noordoost
-			, "NENE" 	//	00101b  56¼ 	Noordoost ten oosten
-			, "ENE" 	//	00110b  67½ 	Oostnoordoost
-			, "EENE" 	//	00111b  78¾ 	Oost ten noorden
-			, "E" 		//	01000b  90 		Oost
-			, "EESE" 	//	01001b  101¼ 	Oost ten zuiden
-			, "ESE" 	//	01010b  112½ 	Oostzuidoost
-			, "SESE" 	//	01011b  123¾ 	Zuidoost ten oosten
-			, "SE" 		//	01100b  135 	Zuidoost
-			, "ESSE" 	//	01101b  146¼ 	Zuidoost ten zuiden
-			, "SSE" 	//	01110b  157½ 	Zuidzuidoost
-			, "SSSE" 	//	01111b  168¾ 	Zuid ten oosten
-			, "S" 		//	10000b  180 	Zuid
-			, "SSSW" 	//	10001b  191¼ 	Zuid ten westen
-			, "SSW" 	//	10010b  202½ 	Zuidzuidwest
-			, "WSSW" 	//	10011b  213¾ 	Zuidwest ten zuiden
-			, "SW" 		//	10100b  225 	Zuidwest
-			, "SWSW" 	//	10101b  236¼ 	Zuidwest ten westen
-			, "WSW" 	//	10110b  247½ 	Westzuidwest
-			, "WWSW" 	//	10111b  258¾ 	West ten zuiden
-			, "W" 		//	11000b  270 	West
-			, "WWNW" 	//	11001b  281¼ 	West ten noorden
-			, "WNW" 	//	11010b  292½ 	Westnoordwest
-			, "NWNW" 	//	11011b  303¾ 	Noordwest ten westen
-			, "NW" 		//	11100b  315 	Noordwest
-			, "WNNW" 	//	11101b  326¼ 	Noordwest ten noorden
-			, "NNW" 	//	11110b  337½ 	Noordnoordwest
-			, "NNNW" 	//	11111b  348¾ 	Noord ten westen
-			, "N" 		// 100000b  360  	Noord
-			};
+    //================================================================
+    private static String[] CARDDIRS = new String[]
+            { "N"       //  00000b  0       Noord
+            , "NNNE"    //  00001b  11¼     Noord ten oosten
+            , "NNE"     //  00010b  22½     Noordnoordoost
+            , "ENNE"    //  00011b  33¾     Noordoost ten noorden
+            , "NE"      //  00100b  45      Noordoost
+            , "NENE"    //  00101b  56¼     Noordoost ten oosten
+            , "ENE"     //  00110b  67½     Oostnoordoost
+            , "EENE"    //  00111b  78¾     Oost ten noorden
+            , "E"       //  01000b  90      Oost
+            , "EESE"    //  01001b  101¼    Oost ten zuiden
+            , "ESE"     //  01010b  112½    Oostzuidoost
+            , "SESE"    //  01011b  123¾    Zuidoost ten oosten
+            , "SE"      //  01100b  135     Zuidoost
+            , "ESSE"    //  01101b  146¼    Zuidoost ten zuiden
+            , "SSE"     //  01110b  157½    Zuidzuidoost
+            , "SSSE"    //  01111b  168¾    Zuid ten oosten
+            , "S"       //  10000b  180     Zuid
+            , "SSSW"    //  10001b  191¼    Zuid ten westen
+            , "SSW"     //  10010b  202½    Zuidzuidwest
+            , "WSSW"    //  10011b  213¾    Zuidwest ten zuiden
+            , "SW"      //  10100b  225     Zuidwest
+            , "SWSW"    //  10101b  236¼    Zuidwest ten westen
+            , "WSW"     //  10110b  247½    Westzuidwest
+            , "WWSW"    //  10111b  258¾    West ten zuiden
+            , "W"       //  11000b  270     West
+            , "WWNW"    //  11001b  281¼    West ten noorden
+            , "WNW"     //  11010b  292½    Westnoordwest
+            , "NWNW"    //  11011b  303¾    Noordwest ten westen
+            , "NW"      //  11100b  315     Noordwest
+            , "WNNW"    //  11101b  326¼    Noordwest ten noorden
+            , "NNW"     //  11110b  337½    Noordnoordwest
+            , "NNNW"    //  11111b  348¾    Noord ten westen
+            , "N"       // 100000b  360     Noord
+            };
 
     /** Returns a cardinal direction corresponding to the parameter angle:
      *    0 = north,
@@ -1099,13 +1099,13 @@ public abstract class BaseSpeller {
      *  @return words corresponding to the cardinal direction (of the compass)
      */
     public String spellCompass(float angle) {
-		String result = Float.toString(angle); // an abbreviation consisting of the letters N, E, S, W
+        String result = Float.toString(angle); // an abbreviation consisting of the letters N, E, S, W
         int d32 = Float.valueOf(angle * 4.0f + 0.0001f).intValue() / 45; // we divide down to 360 / 32 = 45 / 4 = 11.25 degree segments
-		if (d32 < 0 || d32 > 32) {
-			// error - return the number unchanged
-		} else { // in range
-			result = CARDDIRS[d32 % 32];
-		}
+        if (d32 < 0 || d32 > 32) {
+            // error - return the number unchanged
+        } else { // in range
+            result = CARDDIRS[d32 % 32];
+        }
         return spellCompassCode(result);
     } // spellCompass(float)
 
@@ -1118,90 +1118,90 @@ public abstract class BaseSpeller {
      *  @return words corresponding to the cardinal direction (of the compass)
      */
     private String spellCompass2(float angle) {
-		String result = Float.toString(angle); // an abbreviation consisting of the letters N, E, S, W
-		String compassSep = getCompassSeparator();
+        String result = Float.toString(angle); // an abbreviation consisting of the letters N, E, S, W
+        String compassSep = getCompassSeparator();
         int d32 = Float.valueOf(angle * 4.0f + 0.0001f).intValue() / 45; // we divide down to 360 / 32 = 45 / 4 = 11.25 degree segments
-		if (d32 < 0 || d32 > 32) {
-			// error - return the number unchanged
-		} else { // in range
-			int d16 = d32 >> 1;
-			int d8	= d16 >> 1;
-			int d4	= d8  >> 1;
-			int d2	= d4  >> 1;
-			if (d32 % 2 != 0) { // for /32 - is there a cute formula?
-			/*  ddd13
-				24862
-				00000b  0 		N 		Noord
-				00001b  11¼ 	NNNO 	Noord ten oosten
-				00010b  22½ 	NNO 	Noordnoordoost
-				00011b  33¾ 	ONNO 	Noordoost ten noorden
-				00100b  45 		NO 		Noordoost
-				00101b  56¼ 	NONO 	Noordoost ten oosten
-				00110b  67½ 	ONO 	Oostnoordoost
-				00111b  78¾ 	OONO 	Oost ten noorden
-				01000b  90 		O 		Oost
-				01001b  101¼ 	OOZO 	Oost ten zuiden
-				01010b  112½ 	OZO 	Oostzuidoost
-				01011b  123¾ 	ZOZO 	Zuidoost ten oosten
-				01100b  135 	ZO 		Zuidoost
-				01101b  146¼ 	OZZO 	Zuidoost ten zuiden
-				01110b  157½ 	ZZO 	Zuidzuidoost
-				01111b  168¾ 	ZZZO 	Zuid ten oosten
-				10000b  180 	Z 		Zuid
-				10001b  191¼ 	ZZZW 	Zuid ten westen
-				10010b  202½ 	ZZW 	Zuidzuidwest
-				10011b  213¾ 	WZZW 	Zuidwest ten zuiden
-				10100b  225 	ZW 		Zuidwest
-				10101b  236¼ 	ZWZW 	Zuidwest ten westen
-				10110b  247½ 	WZW 	Westzuidwest
-				10111b  258¾ 	WWZW 	West ten zuiden
-				11000b  270 	W 		West
-				11001b  281¼ 	WWNW 	West ten noorden
-				11010b  292½ 	WNW 	Westnoordwest
-				11011b  303¾ 	NWNW 	Noordwest ten westen
-				11100b  315 	NW 		Noordwest
-				11101b  326¼ 	WNNW 	Noordwest ten noorden
-				11110b  337½ 	NNW 	Noordnoordwest
-				11111b  348¾ 	NNNW 	Noord ten westen
-			   100000b  360  	N 		Noord
-				24862
-			*/
-				result 	= 				compassLetters[((d8 % 4 + d16 % 2) >> 1) % 4]
-						+ compassSep  + compassLetters[(d4 % 4 +  d8 % 2) % 4]
-						+ compassSep  + compassLetters[(d4 + 1) & 2]
-						+ compassSep  + compassLetters[((d2 % 2) << 1) + 1];
-			} else { // d32 even
-				if (d16 % 2 != 0) { // d16 odd
-					// d16 = NNE = 0001b, ENE = 0011b, ESE = 0101b, SSE = 0111b, SSW = 1001b, WSW = 1011b, WNW = 1101b, NNW = 1111b
-					//       NE           NE           SE           SE           SW           SW           NW           NW
-					result 	= 				compassLetters[(d4 % 4 + d8 % 2) % 4]
-							+ compassSep  + compassLetters[(d4 + 1) & 2]
-							+ compassSep  + compassLetters[((d2 % 2) << 1) + 1];
-				} else { // d16 even
-					if (d8 % 2 != 0) { // d8 odd
-						// d8 = NE = 001b, SE = 011b, SW = 101b, NW = 111b
-						result 	= 				compassLetters[(d4 + 1) & 2]
-								+ compassSep  + compassLetters[((d2 % 2) << 1) + 1];
-					} else { // d8 even, d4
-						// d4 = N = 00b, E = 01b, S = 10b, W = 11b
-						result = compassLetters[d4 % 4];
-					} // d8 % 2 == 0
-				} // d16 % 2 == 0
-			} // d32 % 2 =0 0
-		} // in range
+        if (d32 < 0 || d32 > 32) {
+            // error - return the number unchanged
+        } else { // in range
+            int d16 = d32 >> 1;
+            int d8  = d16 >> 1;
+            int d4  = d8  >> 1;
+            int d2  = d4  >> 1;
+            if (d32 % 2 != 0) { // for /32 - is there a cute formula?
+            /*  ddd13
+                24862
+                00000b  0       N       Noord
+                00001b  11¼     NNNO    Noord ten oosten
+                00010b  22½     NNO     Noordnoordoost
+                00011b  33¾     ONNO    Noordoost ten noorden
+                00100b  45      NO      Noordoost
+                00101b  56¼     NONO    Noordoost ten oosten
+                00110b  67½     ONO     Oostnoordoost
+                00111b  78¾     OONO    Oost ten noorden
+                01000b  90      O       Oost
+                01001b  101¼    OOZO    Oost ten zuiden
+                01010b  112½    OZO     Oostzuidoost
+                01011b  123¾    ZOZO    Zuidoost ten oosten
+                01100b  135     ZO      Zuidoost
+                01101b  146¼    OZZO    Zuidoost ten zuiden
+                01110b  157½    ZZO     Zuidzuidoost
+                01111b  168¾    ZZZO    Zuid ten oosten
+                10000b  180     Z       Zuid
+                10001b  191¼    ZZZW    Zuid ten westen
+                10010b  202½    ZZW     Zuidzuidwest
+                10011b  213¾    WZZW    Zuidwest ten zuiden
+                10100b  225     ZW      Zuidwest
+                10101b  236¼    ZWZW    Zuidwest ten westen
+                10110b  247½    WZW     Westzuidwest
+                10111b  258¾    WWZW    West ten zuiden
+                11000b  270     W       West
+                11001b  281¼    WWNW    West ten noorden
+                11010b  292½    WNW     Westnoordwest
+                11011b  303¾    NWNW    Noordwest ten westen
+                11100b  315     NW      Noordwest
+                11101b  326¼    WNNW    Noordwest ten noorden
+                11110b  337½    NNW     Noordnoordwest
+                11111b  348¾    NNNW    Noord ten westen
+               100000b  360     N       Noord
+                24862
+            */
+                result  =               compassLetters[((d8 % 4 + d16 % 2) >> 1) % 4]
+                        + compassSep  + compassLetters[(d4 % 4 +  d8 % 2) % 4]
+                        + compassSep  + compassLetters[(d4 + 1) & 2]
+                        + compassSep  + compassLetters[((d2 % 2) << 1) + 1];
+            } else { // d32 even
+                if (d16 % 2 != 0) { // d16 odd
+                    // d16 = NNE = 0001b, ENE = 0011b, ESE = 0101b, SSE = 0111b, SSW = 1001b, WSW = 1011b, WNW = 1101b, NNW = 1111b
+                    //       NE           NE           SE           SE           SW           SW           NW           NW
+                    result  =               compassLetters[(d4 % 4 + d8 % 2) % 4]
+                            + compassSep  + compassLetters[(d4 + 1) & 2]
+                            + compassSep  + compassLetters[((d2 % 2) << 1) + 1];
+                } else { // d16 even
+                    if (d8 % 2 != 0) { // d8 odd
+                        // d8 = NE = 001b, SE = 011b, SW = 101b, NW = 111b
+                        result  =               compassLetters[(d4 + 1) & 2]
+                                + compassSep  + compassLetters[((d2 % 2) << 1) + 1];
+                    } else { // d8 even, d4
+                        // d4 = N = 00b, E = 01b, S = 10b, W = 11b
+                        result = compassLetters[d4 % 4];
+                    } // d8 % 2 == 0
+                } // d16 % 2 == 0
+            } // d32 % 2 =0 0
+        } // in range
         return spellCompassCode(result);
     } // spellCompass2(float)
 
     /** Returns the language specific words for a cardinal direction
-     *	@param code abbreviation, a sequence of the following letters:
-     *	<ul>
+     *  @param code abbreviation, a sequence of the following letters:
+     *  <ul>
      *  <li>N = north</li>
      *  <li>E = east</li>
      *  <li>S = south</li>
      *  <li>W = west</li>
-     *	</ul>
-	 *  They may be combined to NE, NNE or even NNNE.
-	<pre>
+     *  </ul>
+     *  They may be combined to NE, NNE or even NNNE.
+    <pre>
 from: http://de.wikipedia.org/wiki/Himmelsrichtung
 
 === Systematik der Benennung {{Anker|Systematik}} ===
@@ -1217,97 +1217,97 @@ from: http://de.wikipedia.org/wiki/Himmelsrichtung
   Zum Beispiel: Nord ein halb Ost (N&nbsp;1/2&nbsp;E = 5,625&nbsp;Grad) oder SüdOst ein halb Ost (SE&nbsp;1/2&nbsp;E) = 129,375&nbsp;Grad).
 Seit längerer Zeit zieht man aber die Angabe von [[Grad (Winkel)|Gradzahlen]] vor,
 die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° entspricht etwa der Genauigkeit, mit der ein kleines Schiff gesteuert werden kann.
-	</pre>
+    </pre>
      */
     protected String spellCompassCode(String code) {
-		String result = code;
-		String compassSep = getCompassSeparator();
-		switch (code.length()) {
-			case 44: // not yet
-				result = code.substring(0, 3) + " " + getCompassWord(4) + " " + code.substring(3,4);
-				// fall thru
-			case 1:
-			case 2:
-			case 3:
-				result = result
-						.replaceAll("N", getCompassWord(0) + compassSep)
-						.replaceAll("E", getCompassWord(1) + compassSep)
-						.replaceAll("S", getCompassWord(2) + compassSep)
-						.replaceAll("W", getCompassWord(3) + compassSep)
-						;
-				break;
-			default: // return the abbreviation unchanged
-				break;
-		} // switch length
-		result = result.substring(0, 1).toUpperCase() + result.substring(1);
-		if (compassSep.length() > 0 && result.endsWith(compassSep)) {
-			result = result.substring(0, result.length() - 1);
-		}
-		if (false && code.length() == 4) {
-			int pos = result.indexOf("zu ");
-			result  = result.substring(0, pos + 3)
-					+ result.substring(pos + 3, pos + 4).toUpperCase()
-					+ result.substring(pos + 4);
-		}
-		return result;
-	} // spellCompassCode
+        String result = code;
+        String compassSep = getCompassSeparator();
+        switch (code.length()) {
+            case 44: // not yet
+                result = code.substring(0, 3) + " " + getCompassWord(4) + " " + code.substring(3,4);
+                // fall thru
+            case 1:
+            case 2:
+            case 3:
+                result = result
+                        .replaceAll("N", getCompassWord(0) + compassSep)
+                        .replaceAll("E", getCompassWord(1) + compassSep)
+                        .replaceAll("S", getCompassWord(2) + compassSep)
+                        .replaceAll("W", getCompassWord(3) + compassSep)
+                        ;
+                break;
+            default: // return the abbreviation unchanged
+                break;
+        } // switch length
+        result = result.substring(0, 1).toUpperCase() + result.substring(1);
+        if (compassSep.length() > 0 && result.endsWith(compassSep)) {
+            result = result.substring(0, result.length() - 1);
+        }
+        if (false && code.length() == 4) {
+            int pos = result.indexOf("zu ");
+            result  = result.substring(0, pos + 3)
+                    + result.substring(pos + 3, pos + 4).toUpperCase()
+                    + result.substring(pos + 4);
+        }
+        return result;
+    } // spellCompassCode
 
-	/** Standard letters for the 4 cardinal directions */
-	protected String[] compassLetters = new String[]
-			{ "N"	//   0 degrees = 360
-			, "E"	//  90
-			, "S"	// 180
-			, "W"	// 270
-			};
-	/** Standard words (here: abbreviations) for the 4 cardinal directions,
-	 * 	and for the particle for 32th fractions
-	 */
-	protected String[] compassWords = new String[]
-			{ "N"	//   0 degrees = 360
-			, "E"	//  90
-			, "S"	// 180
-			, "W"	// 270
-			, " "
-			};
+    /** Standard letters for the 4 cardinal directions */
+    protected String[] compassLetters = new String[]
+            { "N"   //   0 degrees = 360
+            , "E"   //  90
+            , "S"   // 180
+            , "W"   // 270
+            };
+    /** Standard words (here: abbreviations) for the 4 cardinal directions,
+     *  and for the particle for 32th fractions
+     */
+    protected String[] compassWords = new String[]
+            { "N"   //   0 degrees = 360
+            , "E"   //  90
+            , "S"   // 180
+            , "W"   // 270
+            , " "
+            };
 
-	/** Get a standard word (here: abbreviation) for one the 4 cardinal directions,
-	 * 	and for the particle for 32th fractions
-	 *	@param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
-	 */
-	protected String getCompassWord(int cardDir) {
-		String result = "";
-		switch (cardDir) {
-			case 0:	result = "N"; break;
-			case 1:	result = "E"; break;
-			case 2:	result = "S"; break;
-			case 3:	result = "W"; break;
-		} // switch
-		return result;
-	} // getCompassWord
+    /** Get a standard word (here: abbreviation) for one the 4 cardinal directions,
+     *  and for the particle for 32th fractions
+     *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
+     */
+    protected String getCompassWord(int cardDir) {
+        String result = "";
+        switch (cardDir) {
+            case 0: result = "N"; break;
+            case 1: result = "E"; break;
+            case 2: result = "S"; break;
+            case 3: result = "W"; break;
+        } // switch
+        return result;
+    } // getCompassWord
 
-	/** Standard separator for the cardinal direction words */
-	protected String getCompassSeparator() {
-		return ""; // none for abbreviations
-	} // getCompassSeparator
+    /** Standard separator for the cardinal direction words */
+    protected String getCompassSeparator() {
+        return ""; // none for abbreviations
+    } // getCompassSeparator
 
-	//================================================================
+    //================================================================
     /** Returns a greeting corresponding to the parameter time (hour):
-     *	<pre>
+     *  <pre>
      *   0 = Good bye
-     *	 6 = Good morning
+     *   6 = Good morning
      *  12 = Hello
      *  18 = Good evening
      *  24 = Good night
-     *	</pre>
+     *  </pre>
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
         return (timeOfDay == 0)
-        		? "Good bye"
-        		: "Hello"; // String.valueOf(timeOfDay);
+                ? "Good bye"
+                : "Hello"; // String.valueOf(timeOfDay);
     } // spellGreeting(int)
 
-	//================================================================
+    //================================================================
     /** Returns the month's name
      *  @param month month's number, >= 1 and <= 12
      *  @return word denoting the month
@@ -1335,41 +1335,41 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
         return result;
     } // spellMonth(int, int)
 
-	//================================================================
+    //================================================================
     /** Returns a planet
      *  @param planet number of the planet (3 = earth, 0 = sun, -1 = moon)
      *  @return planet's name
      */
     public String spellPlanet(int planet) {
-		int result = 0x263e;
-		switch (planet) {
-			case 0:		result -= 2;		break; // sun
-			case -1:	result -= 0;		break; // moon
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-						result += planet;	break;
-		} // switch
-	/*
-		String.valueOf(planet);
-		switch (planet) {
-			case 2:		result = "Venus";		break;
-			case 4:		result = "Mars";		break;
-			case 5:		result = "Jupiter";		break;
-			case 6:		result = "Saturn";		break;
-			case 7:		result = "Uranus";		break;
-			case 8:		result = "Neptun";		break;
-		} // switch
-	*/
+        int result = 0x263e;
+        switch (planet) {
+            case 0:     result -= 2;        break; // sun
+            case -1:    result -= 0;        break; // moon
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                        result += planet;   break;
+        } // switch
+    /*
+        String.valueOf(planet);
+        switch (planet) {
+            case 2:     result = "Venus";       break;
+            case 4:     result = "Mars";        break;
+            case 5:     result = "Jupiter";     break;
+            case 6:     result = "Saturn";      break;
+            case 7:     result = "Uranus";      break;
+            case 8:     result = "Neptun";      break;
+        } // switch
+    */
         return Character.toString((char) result);
     } // spellPlanet(int)
 
-	//================================================================
+    //================================================================
     /** Returns the season's name
      *  @param season number of the quarter in the year:
      *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
@@ -1379,7 +1379,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
         return String.valueOf(season);
     } // spellSeason(int)
 
-	//================================================================
+    //================================================================
     /** Returns the week day's name
      *  @param weekDay number of day in week, >= 0 and <= 7,
      *  1 -> Monday, 7 (and 0) -> Sunday

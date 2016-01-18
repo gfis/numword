@@ -1,6 +1,6 @@
 /*  Spelling of numbers in English,
     spoken in USA, Great Britain, Australia,
-    parts of Canada, former English colonies 
+    parts of Canada, former English colonies
     and throughout the world as modern "lingua franca"
     @(#) $Id: EngSpeller.java 820 2011-11-07 21:59:07Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
@@ -34,7 +34,7 @@ import  org.teherba.numword.BaseSpeller;
  */
 public class EngSpeller extends BaseSpeller {
     public final static String CVSID = "@(#) $Id: EngSpeller.java 820 2011-11-07 21:59:07Z gfis $";
-    
+
     /**
      *  Constructor
      */
@@ -69,7 +69,7 @@ public class EngSpeller extends BaseSpeller {
         , "eighty"
         , "ninety"
         };
-    
+
         word1N = new String[]
         { "ten"
         , "eleven"
@@ -87,15 +87,18 @@ public class EngSpeller extends BaseSpeller {
         setMorphem("t1", "thousand");
         setMorphem("m1", "lion");
         setMorphem("m2", "lions");
+        // the next 2 were detected by "Nino Svonja" <nino@lumanetix.com>
+        setMorphem("m3", "");
+        setMorphem("m4", "");
         setMorphem("p0", " ");
         setMorphem("p1", "-");
         setMorphem("p2", "s");
         setMorphem("p3", "and");
         enumerateMorphems();
-    }
-    
+    } // Constructor
+
     /**
-     *  Appends the wording for a triple of digits, 
+     *  Appends the wording for a triple of digits,
      *  plus the remaining power of 1000
      *  @param number the remaining part of the whole number
      */
@@ -112,19 +115,19 @@ public class EngSpeller extends BaseSpeller {
                 }
                 break;
         } // switch 100
-        
+
         // tens and ones
         switch (digitN0) {
             case 0:
                 if (nullOnly) {
                     spellN(0); // lonely 0
                 }
-                else 
+                else
                 if (digitN > 0) {
                     spellN(digitN);
                 }
-                break; 
-            case 1: 
+                break;
+            case 1:
                 spell1N(digitN);
                 break;
             default:
@@ -135,7 +138,7 @@ public class EngSpeller extends BaseSpeller {
                 }
                 break;
         } // switch digitN0
-        
+
         if (! zeroTuple) { // append thousand, million ... */
             switch (logTuple) {
                 case 0: // no thousands
@@ -162,7 +165,7 @@ public class EngSpeller extends BaseSpeller {
     public String spellMonth(int month) {
         String result = Integer.toString(month);
         if (month >= 0 && month <= 12) {
-            result = (new String [] 
+            result = (new String []
                     { "Month"
                     , "January"
                     , "February"
@@ -179,7 +182,7 @@ public class EngSpeller extends BaseSpeller {
                     })[month];
         }
         return result;
-    }
+    } // SpellMonth
 
     /**
      *  Returns the season's name
@@ -190,7 +193,7 @@ public class EngSpeller extends BaseSpeller {
     public String spellSeason(int season) {
         String result = Integer.toString(season);
         if (season >= 0 && season <= 4) {
-            result = (new String [] 
+            result = (new String []
                     { "Season"
                     , "Spring"
                     , "Summer"
@@ -199,7 +202,7 @@ public class EngSpeller extends BaseSpeller {
                     })[season];
         }
         return result;
-    }
+    } // spellSeason
 
     /**
      *  Returns the week day's name
@@ -210,7 +213,7 @@ public class EngSpeller extends BaseSpeller {
     public String spellWeekDay(int weekDay) {
         String result = Integer.toString(weekDay);
         if (weekDay >= 0 && weekDay <= 7) {
-            result = (new String [] 
+            result = (new String []
                     { "Weekday"
                     , "Monday"
                     , "Tuesday"
@@ -233,22 +236,22 @@ public class EngSpeller extends BaseSpeller {
      *  @return phrase corresponding to the denotation of the time, for example
      *  <ul>
      *  <li>English, variant "1": 18:15 =&gt; "quarter past six"</li>
-     *  </ul> 
+     *  </ul>
      */
     public String spellClock(int hour, int minute, String variant) {
-        String result = String.valueOf(hour   + 100).substring(1) + ':' 
+        String result = String.valueOf(hour   + 100).substring(1) + ':'
                       + String.valueOf(minute + 100).substring(1);
         int hour12 = hour + (minute > 30 ? 1 : 0);
-        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12)); 
+        hour12 = (hour12 == 0 ? 12 : (hour12 >= 13 ? hour12 - 12 : hour12));
         String spellHour = spellCardinal(String.valueOf(hour12));
         if (false) {
         } else if (variant.length() == 0 || variant.equals("0")) {
             result  = spellCardinal(String.valueOf(hour)).replace("zero", "twelve")
                     + " o'clock ";
             if (minute > 0) {
-                result += " " +spellCardinal(String.valueOf(minute)); 
+                result += " " +spellCardinal(String.valueOf(minute));
             }
-        } else if (variant.equals("1")) { 
+        } else if (variant.equals("1")) {
             if (minute % 15 == 0) {
                 switch (minute / 15) {
                     default:
@@ -270,16 +273,16 @@ public class EngSpeller extends BaseSpeller {
                         break;
                 } // switch 0..3
             } else {
-                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " past " 
-                                        : spellCardinal(String.valueOf(60 - minute)) + " to ") 
+                result  = (minute < 30  ? spellCardinal(String.valueOf(     minute)) + " past "
+                                        : spellCardinal(String.valueOf(60 - minute)) + " to ")
                         + spellHour;
             }
         } // switch variant
         return result;
     } // spellClock(3)
-    
+
     //================================================================
-    /** Get a word for one the 4 cardinal directions, 
+    /** Get a word for one the 4 cardinal directions,
      *  and for the particle for 32th fractions
      *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
      */
@@ -294,7 +297,7 @@ public class EngSpeller extends BaseSpeller {
         } // switch
         return result;
     } // getCompassWord
-    
+
     //================================================================
     /** Returns a greeting corresponding to the parameter time:
      *  @return greeting corresponding to the time of the day
