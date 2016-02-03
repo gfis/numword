@@ -86,7 +86,7 @@ Bidi: ON (Other Neutrals)
     } // describe_99
 
     /** Gets up to 5 lines of descriptive information about the character,
-     *  as a replacement for the deprecated method {@link describe_99}.
+     *  as a replacement for the deprecated method {@link #describe_99}.
      *  @param code hexadecimal character code
      *  @return sample output (only the first line is currently implemented):
      *  <pre>
@@ -102,11 +102,11 @@ Bidi: ON (Other Neutrals)
         int iline = 0;
         int unicode = 0;
         try {
-			unicode = Integer.parseInt(code, 16);
+            unicode = Integer.parseInt(code, 16);
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } // try
-		result[iline ++] = "U+" + code + " " + Character.getName(unicode);
+        result[iline ++] = "U+" + code + " " + Character.getName(unicode);
         return result;
     } // describe
 
