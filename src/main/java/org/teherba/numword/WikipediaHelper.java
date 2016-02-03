@@ -1,6 +1,6 @@
 /*  Gets language designations and links from a Wikipedia article
     @(#) $Id: WikipediaHelper.java 657 2011-03-17 07:56:38Z gfis $
-    2016-01-18: Javadoc links corrected
+    2016-01-18: Javadoc links corrected; URIReader moved to org.teherba.common
     2012-09-15: extracted from org.teherba.numword.SpellerFactory
 */
 /*
@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 package org.teherba.numword;
-import  org.teherba.dbat.URIReader;
+import  org.teherba.common.URIReader;
 import  java.io.BufferedReader;
 import  java.io.InputStreamReader;
 import  java.text.SimpleDateFormat;

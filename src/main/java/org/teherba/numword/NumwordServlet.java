@@ -1,10 +1,11 @@
-/*  Spell Numbers in Different Languages 
+/*  Spell Numbers in Different Languages
     (write the number words, weekday, month and season names)
     @(#) $Id: NumwordServlet.java 820 2011-11-07 21:59:07Z gfis $
-	2011-10-17: spellClock
-	2009-04-06: renamed from NumberServlet
+    2016-02-03: JSPs replaced by teherba.numword.view.*View.java; UTF-8 response
+    2011-10-17: spellClock
+    2009-04-06: renamed from NumberServlet
     2007-02-08: use SpellerFactory
-    2005-07-27, Dr. Georg Fischer 
+    2005-07-27, Dr. Georg Fischer
 
     The language specific modules are named according to the
     common 2-letter language/country codes and the
@@ -31,6 +32,12 @@ import  org.teherba.numword.BaseSpeller;
 import  org.teherba.numword.NumwordCommand;
 import  org.teherba.numword.SpellerFactory;
 import  org.teherba.numword.Unicode;
+import  org.teherba.numword.view.IndexView;
+import  org.teherba.numword.view.MessageView;
+import  org.teherba.numword.view.MetaInfView;
+import  org.teherba.numword.view.UniblockView;
+import  org.teherba.numword.view.UnicodeView;
+import  org.teherba.numword.view.UnilistView;
 import  java.io.IOException;
 import  javax.servlet.RequestDispatcher;
 import  javax.servlet.ServletConfig;
@@ -51,17 +58,20 @@ import  org.apache.log4j.Logger;
 public class NumwordServlet extends HttpServlet {
     public final static String CVSID = "@(#) $Id: NumwordServlet.java 820 2011-11-07 21:59:07Z gfis $";
     // public final static long serialVersionUID = 19470629004L;
-    
+
     /** log4j logger (category) */
     private Logger log;
-    /** instance of the number converter */
+    /** instance of the {@link NumwordCommand} commandline interface */
     private NumwordCommand command;
-    
-    /** Delivers <em>Transformer</em>s */
-    private SpellerFactory factory;
 
     /** Commandline interface to Unix command <em>unicode</em> */
     private Unicode unicode;
+
+    /** Delivers a subclass of {@link BaseSpeller} */
+    private SpellerFactory factory;
+
+    /** Instance for message output */
+    private MessageView messageView;
 
     /** Called by the servlet container to indicate to a servlet
      *  that the servlet is being placed into service.
@@ -73,7 +83,12 @@ public class NumwordServlet extends HttpServlet {
         log = Logger.getLogger(NumwordServlet.class.getName());
         command = new NumwordCommand();
         unicode = new Unicode();
-        System.out.println("NumwordServlet.init");
+
+        messageView = new MessageView();
+        messageView.add("en.001", "invalid function {parm}");
+        messageView.add("en.003", "invalid language code");
+        messageView.add("en.005", "invalid length - more than {parm} digits");
+        messageView.add("en.505", "unknown message code {parm}");
     } // init
 
     /** Creates the response for a HTTP GET request.
@@ -99,12 +114,13 @@ public class NumwordServlet extends HttpServlet {
     /** Gets the value of an HTML input field, maybe as empty string
      *  @param request request for the HTML form
      *  @param name name of the input field
+     *  @param defaultValue default value if the field is not present in the request
      *  @return non-null (but possibly empty) string value of the input field
      */
-    private String getInputField(HttpServletRequest request, String name) {
+    private String getInputField(HttpServletRequest request, String name, String defaultValue) {
         String value = request.getParameter(name);
         if (value == null) {
-            value = "";
+            value = defaultValue;
         }
         return value;
     } // getInputField
@@ -117,15 +133,16 @@ public class NumwordServlet extends HttpServlet {
     public void generateResponse(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
             HttpSession session = request.getSession();
-            // NumwordCommand command = new NumwordCommand();
-            String view     = getInputField(request, "view");
-            String language = getInputField(request, "language");
+            String view     = getInputField(request, "view"    , "");
+            String language = getInputField(request, "language", "deu");
             if (language.equals("")) {
                 language = "de";
             }
-            String function = getInputField(request, "function");
-            String digits   = getInputField(request, "digits"  );
+            String function = getInputField(request, "function", "c");
+            String digits   = getInputField(request, "digits"  , "1981");
             session.setAttribute("command"  , command);
             session.setAttribute("language" , language);
             session.setAttribute("digits"   , digits  );
@@ -137,69 +154,67 @@ public class NumwordServlet extends HttpServlet {
                 factory = (SpellerFactory) obj;
             }
             BaseSpeller speller = factory.getSpeller(language);
-
-            String newPage = "index";
-            if (false) {
-            } else if (view.equals("unilist")) {
-                newPage = view;
-            } else if (view.equals("uniblock")) {
-                newPage = view;
-                try {
-                    if (digits.length() > 2) {
-                        newPage = "message";
-                        session.setAttribute("messno", "005"); // ... exactly 2 hex digits
-                    } else {
-                        session.setAttribute("digits", digits);
-                    }
-                } catch (Exception exc) {
-                    newPage = "message";
-                    session.setAttribute("messno", "004"); // ... invalid hex digit
-                }
-            } else if (view.equals("unicode")) {
-                newPage = view;
-                try {
-                    if (digits.length() > 4) {
-                        newPage = "message";
-                        session.setAttribute("messno", "005"); // ... exactly 2 hex digits
-                    } else {
-                        session.setAttribute("text", unicode.describe(digits));
-                    }
-                } catch (Exception exc) {
-                    newPage = "message";
-                    session.setAttribute("messno", "004"); // ... invalid hex digit
-                }
-            } else if (speller == null               ) {
-                newPage = "message";
+            if (speller == null) {
                 session.setAttribute("messno", "003"); // invalid language code
-            } else if (function.equals("c")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("C")    ) {
-                // check for alphabetic "digits" input field
-                session.setAttribute("function", function);
-            } else if (function.equals("d")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("g")    ) {
-                session.setAttribute("function", function);
-            } else if (function.startsWith("h")) {
-                session.setAttribute("function", function);
-            } else if (function.equals("m")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("m3")   ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("p")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("s")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("w")    ) {
-                session.setAttribute("function", function);
-            } else if (function.equals("w2")   ) {
-                session.setAttribute("function", function);
-            } else { // invalid function
-                newPage = "message";
-                session.setAttribute("messno"  , "001");
-            }
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/" + newPage + ".jsp");
-            dispatcher.forward(request, response);
+                messageView.forward(request, response);
+
+            } else if (view.equals("index")) { // main input form
+                //                  =====
+                if (false) {
+                } else if (function.equals      ("c")
+                       ||  function.equals      ("C")    // check for alphabetic "digits" input field
+                       ||  function.equals      ("d")
+                       ||  function.equals      ("g")
+                       ||  function.startsWith  ("h")
+                       ||  function.equals      ("m")
+                       ||  function.equals      ("m3")
+                       ||  function.equals      ("p")
+                       ||  function.equals      ("s")
+                       ||  function.equals      ("w")
+                       ||  function.equals      ("w2")
+                       ) { // known function code
+                    session.setAttribute("function", function);
+                    (new IndexView()).forward(request, response);
+                } else { 
+                    session.setAttribute("messno", "001"); // invalid function
+                    session.setAttribute("parm"  , function);
+                    messageView.forward(request, response);
+                }
+                
+            } else if (view.equals("uniblock")) {
+            	//                  ========
+                if (digits.length() > 2) {
+                    session.setAttribute("messno", "005"); // invalid length
+                    session.setAttribute("parm"  , "2");
+                    messageView.forward(request, response);
+                } else {
+                    session.setAttribute("digits", digits);
+                    (new UniblockView()).forward(request, response);
+                }
+
+            } else if (view.equals("unicode")) {
+            	//                  =======
+                if (digits.length() > 4) {
+                    session.setAttribute("messno", "005"); // invalid length
+                    session.setAttribute("parm"  , "4");
+                    messageView.forward(request, response);
+                } else {
+                    session.setAttribute("text", unicode.describe(digits));
+                    (new UnicodeView()).forward(request, response);
+                }
+
+            } else if (view.equals("unilist")) {
+                //                  =======
+                (new UnilistView()).forward(request, response);
+
+
+            } else if (view.equals("manifest")
+                    || view.equals("license" )
+                    || view.equals("notice"  )
+                    ) { //          ========
+                (new MetaInfView()).forward(request, response);
+
+            } // switch view
         } catch (Exception exc) {
             response.getWriter().write(exc.getMessage());
             System.out.println(exc.getMessage());

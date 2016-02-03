@@ -1,5 +1,6 @@
 /*  Spell Numbers in Different Languages (write the number words)
     @(#) $Id: NumwordCommand.java 820 2011-11-07 21:59:07Z gfis $
+    2016-01-18: Wikipedia links only for HTML
     2012-09-15: WikipediaHelper extracted from SpellerFactory
     2011-10-14: spellClock, spellCompass
     2009-12-04: append additional words on commandline
@@ -527,7 +528,7 @@ final public class NumwordCommand {
                                             : number.replaceAll("\\.",  "");
                                     if (temp.length() <= speller.getMaxLog()) {
                                         word = speller.spellCardinal(number);
-                                        if (number.length() <= 2) {
+                                        if (number.length() <= 2 && (mode == MODE_HTML || mode == MODE_HTML_EM)) {
                                             printRow(out, helper.getWikipediaLink(speller, number, word), word);
                                         } else {
                                             printRow(out, temp, word);

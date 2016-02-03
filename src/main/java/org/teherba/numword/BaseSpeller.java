@@ -1,6 +1,6 @@
 /*  Abstract class for spelling of numbers in different languages
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
-    2016-01-18: parseString.liard depends on m3="void"
+    2016-01-18: parseString.liard depends on m3="NO_LIARDS"
     2011-10-14: spellClock
     2011-03-14: private -> protected
     2009-11-24: spellGreeting
