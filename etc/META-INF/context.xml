@@ -23,6 +23,8 @@
 -->
 <Context
         path="/numword" docBase="numword" 
+        reloadable="true" 
+        crossContext="true"
         debug="5"
         mapperContextRootRedirectEnabled="true"
         >

@@ -158,29 +158,6 @@ public class NumwordServlet extends HttpServlet {
                 session.setAttribute("messno", "003"); // invalid language code
                 messageView.forward(request, response);
 
-            } else if (view.equals("index")) { // main input form
-                //                  =====
-                if (false) {
-                } else if (function.equals      ("c")
-                       ||  function.equals      ("C")    // check for alphabetic "digits" input field
-                       ||  function.equals      ("d")
-                       ||  function.equals      ("g")
-                       ||  function.startsWith  ("h")
-                       ||  function.equals      ("m")
-                       ||  function.equals      ("m3")
-                       ||  function.equals      ("p")
-                       ||  function.equals      ("s")
-                       ||  function.equals      ("w")
-                       ||  function.equals      ("w2")
-                       ) { // known function code
-                    session.setAttribute("function", function);
-                    (new IndexView()).forward(request, response);
-                } else { 
-                    session.setAttribute("messno", "001"); // invalid function
-                    session.setAttribute("parm"  , function);
-                    messageView.forward(request, response);
-                }
-                
             } else if (view.equals("uniblock")) {
             	//                  ========
                 if (digits.length() > 2) {
@@ -214,6 +191,29 @@ public class NumwordServlet extends HttpServlet {
                     ) { //          ========
                 (new MetaInfView()).forward(request, response);
 
+            } else if (view.equals("index") || true) { // main input form
+                //                  =====
+                if (false) {
+                } else if (function.equals      ("c")
+                       ||  function.equals      ("C")    // check for alphabetic "digits" input field
+                       ||  function.equals      ("d")
+                       ||  function.equals      ("g")
+                       ||  function.startsWith  ("h")
+                       ||  function.equals      ("m")
+                       ||  function.equals      ("m3")
+                       ||  function.equals      ("p")
+                       ||  function.equals      ("s")
+                       ||  function.equals      ("w")
+                       ||  function.equals      ("w2")
+                       ) { // known function code
+                    session.setAttribute("function", function);
+                    (new IndexView()).forward(request, response);
+                } else { 
+                    session.setAttribute("messno", "001"); // invalid function
+                    session.setAttribute("parm"  , function);
+                    messageView.forward(request, response);
+                }
+                
             } // switch view
         } catch (Exception exc) {
             response.getWriter().write(exc.getMessage());
