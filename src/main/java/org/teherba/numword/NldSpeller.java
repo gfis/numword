@@ -40,7 +40,7 @@ public class NldSpeller extends BaseSpeller {
      */
     public NldSpeller() {
         super();
-        setIso639("nl");
+        setIso639("nld,nl");
         setDescription("Dutch (Nederlands)");
         setMaxLog(true);
         setSeparator(true);

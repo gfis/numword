@@ -121,73 +121,49 @@ public class IndexView {
             field = session.getAttribute("digits");
             String digits   = (field != null) ? (String) field : "1947";
             out.write("<body>\n");
-            out.write("    <!--\n");
-            out.write("    function ");
-            out.print(function);
-            out.write(", language ");
-            out.print(language);
-            out.write(", digits=\"");
-            out.print(digits);
-            out.write("\"\n");
-            out.write("    -->\n");
-            out.write("    <h2>Number Words</h2>\n");
-            out.write("    <form action=\"servlet\" method=\"post\">\n");
-            out.write("        <input type = \"hidden\" name=\"view\" value=\"index\" />\n");
-            out.write("        <table cellpadding=\"8\">\n");
-            out.write("            <tr>\n");
-            out.write("                <td width=\"100\">Language<br />\n");
-            out.write("                    <select name=\"language\" size=\"");
-            out.print( factory.getCount() );
-            out.write('"');
-            out.write('>');
-            out.write(' ');
-            out.write("\n");
+            out.write("<!-- function " + function + ", language "+ language + ", digits=\"" + digits + "-->\n");
+            out.write("<h2>Number Words</h2>\n");
+            out.write("<form action=\"servlet\" method=\"post\">\n");
+            out.write("    <input type = \"hidden\" name=\"view\" value=\"index\" />\n");
+            out.write("    <table cellpadding=\"8\">\n");
+            out.write("      <tr><td width=\"100\">Language<br />\n");
+            out.write("          <select name=\"language\" size=\"" + factory.getCount() + "\">\n");
             Iterator/*<1.5*/<BaseSpeller>/*1.5>*/ iter = factory.getIterator();
             while (iter.hasNext()) {
                 BaseSpeller speller = (BaseSpeller) iter.next();
                 String iso = speller.getFirstIso639();
-                out.write("<option value=\""
-                        + iso + "\""
+                out.write("<option value=\"" + iso + "\""
                         + (iso.equals(language) ? " selected" : "")
-                        + ">"
-                        + speller.getDescription() + "</option>\n");
+                        + ">" + speller.getDescription() + "</option>\n");
             } // while iter
-            out.write("                    </select>\n");
-            out.write("                </td>\n");
-            out.write("                <td width=\"100\">Spell<br />\n");
-            out.write("                    <select name=\"function\" size=\"");
-            out.print( optFunction.length );
-            out.write("\">\n");
+            out.write("          </select>\n");
+            out.write("        </td>\n");
+            out.write("        <td width=\"100\">Spell<br />\n");
+            out.write("          <select name=\"function\" size=\"" + optFunction.length + "\">\n");
             int ind = 0;
             while (ind < optFunction.length) {
-                out.write("<option value=\""
-                        + optFunction[ind] + "\""
+                out.write("<option value=\"" + optFunction[ind] + "\""
                         + (optFunction[ind].equals(function) ? " selected" : "")
-                        + ">"
-                        + enFunction[ind] + "</option>\n");
+                        + ">" + enFunction[ind] + "</option>\n");
                 ind ++;
             } // while ind
-            out.write("                    </select>\n");
-            out.write("                    <br />&nbsp;\n");
-            out.write("                    <br /><a href=\"docs/documentation.html\">Documentation</a>,\n");
-            out.write("                          <a href=\"docs/api/index.html\">API</a>\n");
-            out.write("                    <br /><a href=\"docs/developer.html\">Developer Hints, </a>\n");
-            out.write("                          <a href=\"docs/bugs.html\">Bugs</a>\n");
-            out.write("                    <br /><a href=\"servlet?view=uniblock&digits=01\">Unicode Tables</a>\n");
-            out.write("                    <br /><a href=\"servlet?view=manifest\">Manifest</a>,\n");
-            out.write("                          <a href=\"servlet?view=license\" >License</a>\n");
-            out.write("                    <br /><a href=\"servlet?view=notice\"  >References</a>\n");
-            out.write("                    <p  />If the <em>Digits/Word</em> field is left empty, all months, weekdays etc. are shown,\n");
-            out.write("                    and for \"Digits as Word\" a list of representative test numbers is spelled.\n");
-            out.write("                </td>\n");
-            out.write("                <td width=\"100\" valign=\"top\">Digits / Word<br />\n");
-            out.write("                    <input name=\"digits\" size=\"80\" value=\"");
-            out.print( digits );
-            out.write("\" />\n");
-            out.write("                    <br />&nbsp;\n");
-            out.write("                    <br /><input type=\"submit\" value=\"Submit\" />\n");
-            out.write("                    <p />\n");
-            // this is the result output code
+            out.write("          </select>\n");
+            out.write("          <br />&nbsp;\n");
+            out.write("          <br /><a href=\"docs/documentation.html\">Documentation</a>,\n");
+            out.write("                <a href=\"docs/api/index.html\">API</a>\n");
+            out.write("          <br /><a href=\"docs/developer.html\">Developer Hints, </a>\n");
+            out.write("                <a href=\"docs/bugs.html\">Bugs</a>\n");
+            out.write("          <br /><a href=\"servlet?view=uniblock&digits=01\">Unicode Tables</a>\n");
+            out.write("          <br /><a href=\"servlet?view=manifest\">Manifest</a>,\n");
+            out.write("                <a href=\"servlet?view=license\" >License</a>\n");
+            out.write("          <br /><a href=\"servlet?view=notice\"  >References</a>\n");
+            out.write("          <p  />If the <em>Digits/Word</em> field is left empty, all months, weekdays etc. are shown,\n");
+            out.write("          and for \"Digits as Word\" a list of representative test numbers is spelled.\n");
+            out.write("        </td>\n");
+            out.write("        <td width=\"100\" valign=\"top\">Digits / Word<br />\n");
+            out.write("          <input name=\"digits\" size=\"60\" value=\"" +  digits + "\" /><br />");
+            out.write("          <input type=\"submit\" value=\"Submit\" />\n");
+            // this is the result output code in the 3rd (rightmost) cell
             NumwordCommand command = new NumwordCommand();
             String commandLine = "-l " + language + " -" + function + " " + digits;
             command.setMode(command.MODE_HTML_EM);
@@ -195,38 +171,17 @@ public class IndexView {
                 command.setMode(command.MODE_HTML);
             }
             out.write(command.process(commandLine));
-            /*
-                if (factory.getSpeller(language).getDirection().equals("rtl")) {
-                    // swap around tab
-                    int pos = result.indexOf("\t");
-                    out.write(result.substring(pos + 1)); // 2nd element - word
-                    out.write("\t");
-                    out.write(result.substring(0, pos)); // 1st element - digits
-                    //    result =  "<bdo dir=\"ltr\">"
-                    //            + result.replace("\t", "</bdo>\t<bdo dir=\"ltr\">")
-                    //            + "</bdo>";
-                }
-                else {
-                    out.write(result);
-                }
-            */
-
             out.write("\n");
-            out.write("                </td>\n");
-            out.write("                <td width=\"*\">\n");
-            out.write("                    &nbsp;\n");
-            out.write("                </td>\n");
-            out.write("            </tr>\n");
-            out.write("        </table>\n");
-            out.write("    </form>\n");
-            out.write("    <p>\n");
-            out.write("    <font size=\"-2\">\n");
-            out.write("    Questions, remarks to: <a href=\"mailto:punctum@punctum.com\">Dr. Georg Fischer</a>\n");
-            out.write("    </font>\n");
-            out.write("    </p>\n");
-            out.write("\n");
-            out.write("</body>\n");
-            out.write("</html>\n");
+            out.write("        </td>\n");
+        //  out.write("        <td width=\"*\">&nbsp;</td>\n");
+            out.write("      </tr>\n");
+            out.write("    </table>\n");
+            out.write("</form>\n");
+            out.write("<p><font size=\"-1\">\n");
+            out.write("Questions, remarks to: <a href=\"mailto:punctum@punctum.com\">Dr. Georg Fischer</a>\n");
+            out.write("   </font>\n");
+            out.write("</p>\n");
+            out.write("</body></html>\n");
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } finally {

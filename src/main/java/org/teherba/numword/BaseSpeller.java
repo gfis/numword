@@ -1,5 +1,6 @@
 /*  Abstract class for spelling of numbers in different languages
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2016-02-15: spellIdeographic(number): with the digit symbols of that language
     2016-01-18: parseString.liard depends on m3="NO_LIARDS"
     2011-10-14: spellClock
     2011-03-14: private -> protected
@@ -1016,6 +1017,18 @@ public abstract class BaseSpeller {
                 ?   result.substring(1).toString()
                 :   result.toString());
     } // spellCardinal
+
+    /** Returns a sequence of digits as symbols in that language's script.
+     *  Usually the digits are big-endian, that is the 
+     *  digit with lowest value is rightmost.
+     *  @param number a sequence of digit characters, maybe
+     *  interspersed with non-digits (spaces, punctuation).
+     *  @return null if the language does not spport ideographic numbers,
+     *  or a sequence of digits in that language's script.
+     */
+    public String spellIdeographic(String number) {
+        return null;
+    } // spellIdeographic
 
     //================================================================
     /** Returns a denotation of the day's time, possibly in several variants

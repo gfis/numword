@@ -37,7 +37,7 @@ public class EstSpeller extends FinSpeller {
      */
     public EstSpeller() {
         super();
-        setIso639("et,est");
+        setIso639("est,et");
         setDescription("Estonian");
         setMaxLog(true);
         setSeparator(false);

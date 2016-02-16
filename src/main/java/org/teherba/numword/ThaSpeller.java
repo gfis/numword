@@ -2,6 +2,7 @@
     spoken in Thailand
     @(#) $Id: ThaSpeller.java 521 2010-07-26 07:06:10Z gfis $
     Copyright (c) 2006 Dr. Georg Fischer <punctum@punctum.com>
+    2016-02-15: spellIdeographic(number)
     2008-12-30: Georg Fischer, copied from KorSpeller 
     
     not correct for numbers >= 10000, and combinations of digits
@@ -126,6 +127,24 @@ public class ThaSpeller extends SinoSpeller {
         enumerateMorphems();
     } // Constructor
     
+    /** Returns a sequence of digits as symbols in that language's script.
+     *  Usually the digits are big-endian, that is the 
+     *  digit with lowest value is rightmost.
+     *  @param number a sequence of digit characters, maybe
+     *  interspersed with non-digits (spaces, punctuation).
+     *  @return null if the language does not spport ideographic numbers,
+     *  or a sequence of digits in that language's script.
+     */
+    public String spellIdeographic(String number) {
+        result.setLength(0);
+        int chpos = 0;
+        while (chpos < number.length()) {
+            result.append((char) ('\u0e50' + Character.digit(number.charAt(chpos), 10)));
+            chpos ++;
+        } // while chpos
+        return result.toString();
+    } // spellIdeographic
+
     /** Returns the month's name
      *  @param month month's number, >= 1 and <= 12
      *  @return word denoting the month

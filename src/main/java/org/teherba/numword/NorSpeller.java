@@ -38,7 +38,7 @@ public class NorSpeller extends BaseSpeller {
      */
     public NorSpeller() {
         super();
-        setIso639("no");
+        setIso639("nor,no");
         setDescription("Norwegian (Norsk)");
         setMaxLog(true);
         setSeparator(true);

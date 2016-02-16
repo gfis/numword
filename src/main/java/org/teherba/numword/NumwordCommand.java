@@ -147,7 +147,7 @@ final public class NumwordCommand {
     /** Puts the start of an output table.
      *  @param out writer, where to print the tag
      */
-    public void printStartTable(Writer out) {
+    public void printStartTable(Writer out, BaseSpeller speller) {
         try {
             switch (mode) {
                 default:
@@ -157,6 +157,7 @@ final public class NumwordCommand {
                 case MODE_XML:
                 case MODE_HTML:
                 case MODE_HTML_EM:
+                    out.write("<h2>" + speller.getDescription() + "</h2>\n");
                     out.write("<table>" + nl);
                     break;
             } // switch mode
@@ -371,9 +372,9 @@ final public class NumwordCommand {
                     }
                 } // while options
 
-                printStartTable(out);
                 BaseSpeller speller = factory.getSpeller(language);
                 if (speller != null) { // language code was found
+                    printStartTable(out, speller);
                     if (iarg < args.length) { // with argument
                         String number = args[iarg ++];
                         while (iarg < args.length) { // append additional words on commandline
@@ -429,8 +430,12 @@ final public class NumwordCommand {
                             } else { // cardinal
                                 word = speller.spellCardinal(number);
                                 printRow(out, helper.getWikipediaLink(speller, number, word), word);
+                                word = speller.spellIdeographic(number);
+                                if (word != null) {
+                                    printRow(out, word, "");
+                                }
                             }
-                        }
+                        } 
                         // with argument
                     } else { // no argument - take predefined test cases
                             String fileString = fileName.toString();

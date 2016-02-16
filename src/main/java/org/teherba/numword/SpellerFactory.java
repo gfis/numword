@@ -1,5 +1,6 @@
 /* Selects the applicable speller
     @(#) $Id: SpellerFactory.java 657 2011-03-17 07:56:38Z gfis $
+    2016-02-15: Morse code
     2012-09-13: dynamic speller array with Class.forName().newInstance
     2011-03-14: RomanSpeller
     2008-12-30: Thai
@@ -103,6 +104,7 @@ public class SpellerFactory {
             addSpeller("Vie");  // Vietnamese
 
             addSpeller("Braille");
+            addSpeller("Morse");
             addSpeller("Roman");
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);

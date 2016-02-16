@@ -2,6 +2,7 @@
     spoken in Far East Asia 六
     @(#) $Id: SinoSpeller.java 521 2010-07-26 07:06:10Z gfis $
     Copyright (c) 2006 Dr. Georg Fischer <punctum@punctum.com>
+    2016-02-15: spellIdeographic(number)
     2006-01-06: Georg Fischer, copied from ChiSpeller 
     
     caution: UTF-8 is essential! compile with "-encoding UTF-8"
@@ -140,6 +141,36 @@ public abstract class SinoSpeller extends BaseSpeller {
                 break;
         } // switch logTuple
     } // spellTuple
+
+    /** Returns a sequence of digits as symbols in that language's script.
+     *  Usually the digits are big-endian, that is the 
+     *  digit with lowest value is rightmost.
+     *  @param number a sequence of digit characters, maybe
+     *  interspersed with non-digits (spaces, punctuation).
+     *  @return null if the language does not spport ideographic numbers,
+     *  or a sequence of digits in that language's script.
+     */
+    public String spellIdeographic(String number) {
+        result.setLength(0);
+        int chpos = 0;
+        while (chpos < number.length()) {
+            switch (Character.digit(number.charAt(chpos), 10)) {
+                default:
+                case 0: result.append('\u96f6'); break;
+                case 1: result.append('\u4e00'); break;
+                case 2: result.append('\u4e8c'); break;
+                case 3: result.append('\u4e09'); break;
+                case 4: result.append('\u56db'); break;
+                case 5: result.append('\u4e94'); break;
+                case 6: result.append('\u516d'); break;
+                case 7: result.append('\u4e03'); break;
+                case 8: result.append('\u516b'); break;
+                case 9: result.append('\u4e5d'); break;
+            } // switch
+            chpos ++;
+        } // while chpos
+        return result.toString();
+    } // spellIdeographic
 
     /** Returns the month's name
      *  @param month month's number, >= 1 and <= 12

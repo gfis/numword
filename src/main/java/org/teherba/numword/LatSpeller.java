@@ -4,6 +4,7 @@
     and by priests of the Roman Catholic Church until today
     @(#) $Id: LatSpeller.java 657 2011-03-17 07:56:38Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
+    2016-02-15: spellIdeographic(number) 
     2006-01-06: super, "lat"
     2005-06-01, Georg Fischer
     
@@ -26,6 +27,7 @@
  */
 package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
+import  org.teherba.numword.LatSpeller;
 
 /** Spells numbers in Latin (Latinum)
  *  @author Dr. Georg Fischer
@@ -170,6 +172,18 @@ public class LatSpeller extends BaseSpeller {
             } // switch logTuple
         } // thousands ...
     } // spellTuple
+
+    /** Returns a sequence of digits as symbols in that language's script.
+     *  Usually the digits are big-endian, that is the 
+     *  digit with lowest value is rightmost.
+     *  @param number a sequence of digit characters, maybe
+     *  interspersed with non-digits (spaces, punctuation).
+     *  @return null if the language does not spport ideographic numbers,
+     *  or a sequence of digits in that language's script.
+     */
+    public String spellIdeographic(String number) {
+        return (new RomanSpeller()).spellCardinal(number);
+    } // spellIdeographic
 
     /** Returns the month's name
      *  @param month month's number, >= 1 and <= 12

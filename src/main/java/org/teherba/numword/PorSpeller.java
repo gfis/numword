@@ -38,7 +38,7 @@ public class PorSpeller extends BaseSpeller {
      */
     public PorSpeller() {
         super();
-        setIso639("pt,por");
+        setIso639("por,pt");
         setDescription("Portuguese (Português)");
         setMaxLog(true); // for PT: mil milhões
         setSeparator(true);
