@@ -1,4 +1,4 @@
-/*  UnilistView.java - show a list of Unicode blocks
+/*  UnilistPage.java - show a list of Unicode blocks
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
  *  2016-01-18, Georg Fischer: copied from MessageView.java
  */
@@ -17,7 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.teherba.numword.view;
+package org.teherba.numword.web;
+import  org.teherba.common.web.BasePage;
 import  java.io.PrintWriter;
 import  java.util.HashMap;
 import  java.util.regex.Pattern;
@@ -31,7 +32,7 @@ import  org.apache.log4j.Logger;
  *  The code is extracted from the former <em>unilist.jsp</em>.
  *  @author Dr. Georg Fischer
  */
-public class UnilistView {
+public class UnilistPage {
     public final static String CVSID = "@(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $";
     public final static long serialVersionUID = 19470629;
 
@@ -40,28 +41,26 @@ public class UnilistView {
 
     /** No-argument constructor
      */
-    public UnilistView() {
-        log = Logger.getLogger(UnilistView.class.getName());
+    public UnilistPage() {
+        log = Logger.getLogger(UnilistPage.class.getName());
     } // constructor()
 
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @throws IOException
+     *  @param basePage refrence to common methods and error messages
+     *  @param language 2-letter code en, de etc.
      */
-    public void forward(HttpServletRequest request, HttpServletResponse response) {
+    public void forward(HttpServletRequest request, HttpServletResponse response
+            , BasePage basePage
+            , String language
+             ) {
         try {
             HttpSession session = request.getSession();
-            PrintWriter out = response.getWriter();
-            out.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-            out.write("    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-            out.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
-            out.write("<head>\n");
-            out.write("    <title>Unicode List</title>\n");
-            out.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\">\n");
-            out.write("</head>\n");
-            String CVSID = "@(#) $Id: unilist.jsp 819 2011-11-01 14:06:06Z gfis $";
-            out.write("<body>\n");
+            PrintWriter out = basePage.writeHeader(request, response, language);
+            out.write("<title>" + basePage.getAppName() + " Unilist</title>\n");
+            out.write("</head>\n<body>\n");
+
             out.write("    <span class=\"large\">Unicode Blocks</span>\n");
             out.write("    <table>\n");
             out.write("        <tr><th>Start</th><th>Description</th></tr>\n");
@@ -87,13 +86,11 @@ public class UnilistView {
                 code += 0x100; // next block
             } // while code
             out.write("    </table>\n");
-            out.write("    Back to the <strong><a href=\"servlet?view=index\">Numword</a></strong> input form;\n");
-            out.write("</body>\n");
-            out.write("</html>\n");
+            basePage.writeTrailer(language, "back,quest");
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } finally {
         }
     } // forward
 
-} // UnilistView
+} // UnilistPage

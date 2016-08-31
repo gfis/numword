@@ -2,6 +2,7 @@
 <!--
     @(#) $Id: web.xml 113 2009-04-06 14:57:07Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer
+    2016-08-31: welcome-file-list without index.jsp
     2016-01-18: welcome-file-list with index.jsp
     2009-04-06: renamed from NumberServlet
     2005-07-28: minimal version
@@ -44,6 +45,5 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
-        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

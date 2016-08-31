@@ -1,4 +1,4 @@
-/*  UniblockView.java - show a block of Unicode characters
+/*  UniblockPage.java - show a block of Unicode characters
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
  *  2016-02-14: error in table column counting
  *  2016-01-18, Georg Fischer: copied from MessageView.java
@@ -18,7 +18,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.teherba.numword.view;
+package org.teherba.numword.web;
+import  org.teherba.common.web.BasePage;
 import  java.io.PrintWriter;
 import  java.util.HashMap;
 import  java.util.regex.Pattern;
@@ -32,7 +33,7 @@ import  org.apache.log4j.Logger;
  *  The code is extracted from the former <em>uniblock.jsp</em>.
  *  @author Dr. Georg Fischer
  */
-public class UniblockView {
+public class UniblockPage {
     public final static String CVSID = "@(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $";
     public final static long serialVersionUID = 19470629;
 
@@ -41,28 +42,26 @@ public class UniblockView {
 
     /** No-argument constructor
      */
-    public UniblockView() {
-        log = Logger.getLogger(UniblockView.class.getName());
+    public UniblockPage() {
+        log = Logger.getLogger(UniblockPage.class.getName());
     } // constructor()
 
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @throws IOException
+     *  @param basePage refrence to common methods and error messages
+     *  @param language 2-letter code en, de etc.
      */
-    public void forward(HttpServletRequest request, HttpServletResponse response) {
+    public void forward(HttpServletRequest request, HttpServletResponse response
+            , BasePage basePage
+            , String language
+             ) {
         try {
             HttpSession session = request.getSession();
-            PrintWriter out = response.getWriter();
-            out.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-            out.write("    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-            out.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
-            out.write("<head>\n");
-            out.write("    <title>Unicode Block</title>\n");
-            out.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\">\n");
-            out.write("</head>\n");
+            PrintWriter out = basePage.writeHeader(request, response, language);
+            out.write("<title>" + basePage.getAppName() + " Uniblock</title>\n");
+            out.write("</head>\n<body>\n");
 
-            String CVSID = "@(#) $Id: uniblock.jsp 819 2011-11-01 14:06:06Z gfis $";
             Object field = session.getAttribute("digits");
             String digits = (field != null) ? (String) field : "01";
             int highByte = 0;
@@ -71,7 +70,6 @@ public class UniblockView {
             } catch (Exception exc) {
             }
             int pageNo = highByte * 256;
-            out.write("<body>\n");
             out.write("<form action=\"servlet\" method=\"post\">\n");
             out.write("<span class=\"large\">Unicode Block U+");
             out.print(Integer.toHexString(0x100 + highByte).substring(1).toUpperCase());
@@ -92,6 +90,7 @@ public class UniblockView {
             }
             out.write(name);
             out.write("\t\t</span>\n\t</form>\n");
+            out.write("<a href=\"servlet?view=unilist\">List</a> of all Unicode blocks &lt; 0x10000\n");
 
             int maxCol = 16;
             int maxRow = 16;
@@ -125,13 +124,12 @@ public class UniblockView {
                 row ++;
             } // while row
             out.write("</table>\n");
-            out.write("Back to the <strong><a href=\"servlet?view=index\">Numword</a></strong> input form;\n");
-            out.write("&#xa0; &#xa0;<a href=\"servlet?view=unilist\">List</a> of all Unicode blocks &lt; 0x10000\n");
-            out.write("</body></html>\n");
+            
+            basePage.writeTrailer(language, "back,quest");
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } finally {
         }
     } // forward
 
-} // UniblockView
+} // UniblockPage

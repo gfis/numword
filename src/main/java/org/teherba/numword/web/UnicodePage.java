@@ -1,4 +1,4 @@
-/*  UnicodeView.java - show a single Unicode character
+/*  UnicodePage.java - show a single Unicode character
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
  *  2016-01-18, Georg Fischer: copied from MessageView.java
  */
@@ -17,7 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.teherba.numword.view;
+package org.teherba.numword.web;
+import  org.teherba.common.web.BasePage;
 import  java.io.PrintWriter;
 import  java.util.HashMap;
 import  java.util.regex.Pattern;
@@ -31,7 +32,7 @@ import  org.apache.log4j.Logger;
  *  The code is extracted from the former <em>unicode.jsp</em>.
  *  @author Dr. Georg Fischer
  */
-public class UnicodeView {
+public class UnicodePage {
     public final static String CVSID = "@(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $";
     public final static long serialVersionUID = 19470629;
 
@@ -40,35 +41,53 @@ public class UnicodeView {
 
     /** No-argument constructor
      */
-    public UnicodeView() {
-        log = Logger.getLogger(UnicodeView.class.getName());
+    public UnicodePage() {
+        log = Logger.getLogger(UnicodePage.class.getName());
     } // constructor()
+
+    /** Gets up to 5 lines of descriptive information about the character,
+     *  as a replacement for the deprecated method {@link #describe_99}.
+     *  @param code hexadecimal character code
+     *  @return sample output (only the first line is currently implemented):
+     *  <pre>
+U+25B6 BLACK RIGHT-POINTING TRIANGLE
+UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &#9654;
+
+Category: So (Symbol, Other)
+Bidi: ON (Other Neutrals)
+     *  </pre>
+     */
+    public String[] describe(String code) {
+        String[] result = new String[1];
+        int iline = 0;
+        int unicode = 0;
+        try {
+            unicode = Integer.parseInt(code, 16);
+        } catch (Exception exc) {
+            log.error(exc.getMessage(), exc);
+        } // try
+        result[iline ++] = "U+" + code + " " + Character.getName(unicode);
+        return result;
+    } // describe
 
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @throws IOException
+     *  @param basePage refrence to common methods and error messages
+     *  @param language 2-letter code en, de etc.
+     *  @param code hexadecimal representation of the Unicode character
      */
-    public void forward(HttpServletRequest request, HttpServletResponse response) {
+    public void forward(HttpServletRequest request, HttpServletResponse response
+            , BasePage basePage
+            , String language
+            , String code 
+            ) {
         try {
-            HttpSession session = request.getSession();
-            PrintWriter out = response.getWriter();
-            out.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n");
-            out.write("    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
-            out.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
-            out.write("<head>\n");
-            out.write("    <title>Unicode</title>\n");
-            out.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\">\n");
-            out.write("</head>\n");
+            PrintWriter out = basePage.writeHeader(request, response, language);
+            out.write("<title>" + basePage.getAppName() + " Unicode</title>\n");
+            out.write("</head>\n<body>\n");
 
-            String CVSID = "@(#) $Id: unicode.jsp 819 2011-11-01 14:06:06Z gfis $";
-            Object
-            field = session.getAttribute("text");
-            String[] text = new String[] {""};
-            if (field != null) {
-                text = (String[]) field;
-            }
-            out.write("<body>\n");
+            String[] text = describe(code);
             int nline = text.length;
             int iline = 0;
             if (iline < nline && text[iline] != null) {
@@ -100,12 +119,11 @@ public class UnicodeView {
                 out.print(  text[iline] );
                 out.write("</span>\n");
             }
-            out.write("</body>\n");
-            out.write("</html>\n");
+            basePage.writeTrailer(language, "back,quest");
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } finally {
         }
     } // forward
 
-} // UnicodeView
+} // UnicodePage

@@ -1,6 +1,7 @@
 /*  Spell Numbers in Different Languages
     (write the number words, weekday, month and season names)
     @(#) $Id: NumwordServlet.java 820 2011-11-07 21:59:07Z gfis $
+    2016-08-31: subdir web, BasePage
     2016-02-03: JSPs replaced by teherba.numword.view.*View.java; UTF-8 response
     2011-10-17: spellClock
     2009-04-06: renamed from NumberServlet
@@ -31,13 +32,13 @@ package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
 import  org.teherba.numword.NumwordCommand;
 import  org.teherba.numword.SpellerFactory;
-import  org.teherba.numword.Unicode;
-import  org.teherba.numword.view.IndexView;
-import  org.teherba.numword.view.MessageView;
-import  org.teherba.numword.view.MetaInfView;
-import  org.teherba.numword.view.UniblockView;
-import  org.teherba.numword.view.UnicodeView;
-import  org.teherba.numword.view.UnilistView;
+import  org.teherba.numword.web.IndexPage;
+import  org.teherba.numword.web.Messages;
+import  org.teherba.numword.web.UniblockPage;
+import  org.teherba.numword.web.UnicodePage;
+import  org.teherba.numword.web.UnilistPage;
+import  org.teherba.common.web.BasePage;
+import  org.teherba.common.web.MetaInfPage;
 import  java.io.IOException;
 import  javax.servlet.RequestDispatcher;
 import  javax.servlet.ServletConfig;
@@ -46,7 +47,6 @@ import  javax.servlet.ServletException;
 import  javax.servlet.http.HttpServlet;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  javax.servlet.http.HttpSession;
 import  org.apache.log4j.Logger;
 
 /** Spell numbers in some language.
@@ -61,17 +61,14 @@ public class NumwordServlet extends HttpServlet {
 
     /** log4j logger (category) */
     private Logger log;
-    /** instance of the {@link NumwordCommand} commandline interface */
-    private NumwordCommand command;
-
-    /** Commandline interface to Unix command <em>unicode</em> */
-    private Unicode unicode;
 
     /** Delivers a subclass of {@link BaseSpeller} */
     private SpellerFactory factory;
 
-    /** Instance for message output */
-    private MessageView messageView;
+    /** common code and messages for auxiliary web pages */
+    private BasePage basePage;
+    /** name of this application */
+    private static final String APP_NAME = "Numword";
 
     /** Called by the servlet container to indicate to a servlet
      *  that the servlet is being placed into service.
@@ -81,14 +78,9 @@ public class NumwordServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config); // ???
         log = Logger.getLogger(NumwordServlet.class.getName());
-        command = new NumwordCommand();
-        unicode = new Unicode();
-
-        messageView = new MessageView();
-        messageView.add("en.001", "invalid function {parm}");
-        messageView.add("en.003", "invalid language code");
-        messageView.add("en.005", "invalid length - more than {parm} digits");
-        messageView.add("en.505", "unknown message code {parm}");
+        basePage = new BasePage(APP_NAME);
+        Messages.addMessageTexts(basePage);
+        factory = new SpellerFactory();
     } // init
 
     /** Creates the response for a HTTP GET request.
@@ -96,8 +88,7 @@ public class NumwordServlet extends HttpServlet {
      *  @param response data to be sent back the user's browser
      *  @throws IOException
      */
-    public void doGet(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
         generateResponse(request, response);
     } // doGet
 
@@ -106,24 +97,9 @@ public class NumwordServlet extends HttpServlet {
      *  @param response data to be sent back the user's browser
      *  @throws IOException
      */
-    public void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         generateResponse(request, response);
     } // doPost
-
-    /** Gets the value of an HTML input field, maybe as empty string
-     *  @param request request for the HTML form
-     *  @param name name of the input field
-     *  @param defaultValue default value if the field is not present in the request
-     *  @return non-null (but possibly empty) string value of the input field
-     */
-    private String getInputField(HttpServletRequest request, String name, String defaultValue) {
-        String value = request.getParameter(name);
-        if (value == null) {
-            value = defaultValue;
-        }
-        return value;
-    } // getInputField
 
     /** Creates the response for a HTTP GET or POST request.
      *  @param request fields from the client input form
@@ -133,65 +109,14 @@ public class NumwordServlet extends HttpServlet {
     public void generateResponse(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         try {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
-            HttpSession session = request.getSession();
-            String view     = getInputField(request, "view"    , "");
-            String language = getInputField(request, "language", "deu");
-            if (language.equals("")) {
-                language = "de";
-            }
-            String function = getInputField(request, "function", "c");
-            String digits   = getInputField(request, "digits"  , "1981");
-            session.setAttribute("command"  , command);
-            session.setAttribute("language" , language);
-            session.setAttribute("digits"   , digits  );
-            Object obj = session.getAttribute("factory");
-            if (obj == null) {
-                factory = new SpellerFactory();
-                session.setAttribute("factory", factory);
-            } else {
-                factory = (SpellerFactory) obj;
-            }
-            BaseSpeller speller = factory.getSpeller(language);
-            if (speller == null) {
-                session.setAttribute("messno", "003"); // invalid language code
-                messageView.forward(request, response);
+            String language = "en";
+            String view     = BasePage.getInputField(request, "view"    , "index");
+            String function = BasePage.getInputField(request, "function", "c");
+            String lang3    = BasePage.getInputField(request, "lang3"   , "deu");
+            String digits   = BasePage.getInputField(request, "digits"  , "1981");
 
-            } else if (view.equals("uniblock")) {
-            	//                  ========
-                if (digits.length() > 2) {
-                    session.setAttribute("messno", "005"); // invalid length
-                    session.setAttribute("parm"  , "2");
-                    messageView.forward(request, response);
-                } else {
-                    session.setAttribute("digits", digits);
-                    (new UniblockView()).forward(request, response);
-                }
-
-            } else if (view.equals("unicode")) {
-            	//                  =======
-                if (digits.length() > 4) {
-                    session.setAttribute("messno", "005"); // invalid length
-                    session.setAttribute("parm"  , "4");
-                    messageView.forward(request, response);
-                } else {
-                    session.setAttribute("text", unicode.describe(digits));
-                    (new UnicodeView()).forward(request, response);
-                }
-
-            } else if (view.equals("unilist")) {
-                //                  =======
-                (new UnilistView()).forward(request, response);
-
-
-            } else if (view.equals("manifest")
-                    || view.equals("license" )
-                    || view.equals("notice"  )
-                    ) { //          ========
-                (new MetaInfView()).forward(request, response);
-
-            } else if (view.equals("index") || true) { // main input form
+            if (false) {
+            } else if (view.equals("index")) { // main input form
                 //                  =====
                 if (false) {
                 } else if (function.equals      ("c")
@@ -206,19 +131,46 @@ public class NumwordServlet extends HttpServlet {
                        ||  function.equals      ("w")
                        ||  function.equals      ("w2")
                        ) { // known function code
-                    session.setAttribute("function", function);
-                    (new IndexView()).forward(request, response);
-                } else { 
-                    session.setAttribute("messno", "001"); // invalid function
-                    session.setAttribute("parm"  , function);
-                    messageView.forward(request, response);
+                    BaseSpeller speller = factory.getSpeller(lang3);
+                    if (speller == null) { // invalid target lang3
+                        basePage.writeMessage(request, response, language, new String[] { "401", "lang3 code", lang3 });
+                    } else {
+                       (new IndexPage()).forward(request, response, basePage, language, function, lang3, digits);
+                    }
+                } else { // invalid function 
+                    basePage.writeMessage(request, response, language, new String[] { "401", "function", function });
                 }
+
+            } else if (view.equals("uniblock")) {
+                //                  ========
+                if (digits.length() > 2) {
+                    basePage.writeMessage(request, response, language, new String[] { "401", "length", String.valueOf(digits.length()) });
+                } else {
+                    (new UniblockPage()).forward(request, response, basePage, language);
+                }
+
+            } else if (view.equals("unicode")) {
+                //                  =======
+                if (digits.length() > 4) {
+                    basePage.writeMessage(request, response, language, new String[] { "401", "length", String.valueOf(digits.length()) });
+                } else {
+                    (new UnicodePage()).forward(request, response, basePage, language, digits);
+                }
+
+            } else if (view.equals("unilist")) {
+                //                  =======
+                (new UnilistPage()).forward(request, response, basePage, language);
+
+            } else if (view.equals("manifest")
+                    || view.equals("license" )
+                    || view.equals("notice"  )
+                    ) { //          ========
+                (new MetaInfPage    ()).showMetaInf (request, response, basePage, language, view);
                 
             } // switch view
         } catch (Exception exc) {
             response.getWriter().write(exc.getMessage());
-            System.out.println(exc.getMessage());
-            throw new IOException(exc.getMessage());
+            log.error(exc.getMessage(), exc);
         }
     } // generateResponse
 
