@@ -165,7 +165,7 @@ public class NumwordServlet extends HttpServlet {
                     || view.equals("license" )
                     || view.equals("notice"  )
                     ) { //          ========
-                (new MetaInfPage    ()).showMetaInf (request, response, basePage, language, view);
+                (new MetaInfPage    ()).showMetaInf (request, response, basePage, language, view, this);
                 
             } // switch view
         } catch (Exception exc) {

@@ -45,8 +45,7 @@ public class UnicodePage {
         log = Logger.getLogger(UnicodePage.class.getName());
     } // constructor()
 
-    /** Gets up to 5 lines of descriptive information about the character,
-     *  as a replacement for the deprecated method {@link #describe_99}.
+    /** Gets up to 5 lines of descriptive information about the character.
      *  @param code hexadecimal character code
      *  @return sample output (only the first line is currently implemented):
      *  <pre>
