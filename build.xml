@@ -3,7 +3,7 @@
     ant-buildfile for commandline, web application and web service
     @(#) $Id: build.xml 304 2009-12-04 07:54:19Z gfis $
     Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
-    2016-08-31: properties ${tomcat.*}
+    2016-09-02: properties ${tomcat.*}, core.jar
     2009-12-04: generate Braille SVG images
     2007-02-13: use ant file build-import.xml
     2007-02-01: refactored to org.teherba.numword
@@ -33,6 +33,17 @@
     <import file="build-import.xml" />
 
     <target name="generate">
+    </target>
+
+    <target name="core.jar">
+        <!-- without libraries, without web files 
+        -->
+        <jar jarfile="${dist.home}/${ant.project.name}-core.jar"
+                basedir="${build.classes}"
+                manifest="${build.classes}/META-INF/MANIFEST.MF"
+                excludes="web/** **/web/*.class **/*Servlet.class"
+                >
+        </jar>
     </target>
 
     <target name="gen_once">
