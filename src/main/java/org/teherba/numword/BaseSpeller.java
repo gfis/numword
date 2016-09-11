@@ -1019,7 +1019,7 @@ public abstract class BaseSpeller {
     } // spellCardinal
 
     /** Returns a sequence of digits as symbols in that language's script.
-     *  Usually the digits are big-endian, that is the 
+     *  Usually the digits are big-endian, that is the
      *  digit with lowest value is rightmost.
      *  @param number a sequence of digit characters, maybe
      *  interspersed with non-digits (spaces, punctuation).
@@ -1062,7 +1062,8 @@ public abstract class BaseSpeller {
 
     /** a representative set of test day times */
     public final static String [] TESTTIMES = new String[]
-            {  "0:00", "0:15", "0:20", "1:00",  "2:10",  "3:15",  "4:29",  "5:30",  "6:31",  "7:45",  "8:50",  "9:00"
+            {  "0:00", "0:15", "0:20", "0:45", "1:00", "1:15", "1:45", "2:15", "3:15", "4:29"
+            ,  "5:30",  "6:31",  "7:45",  "8:50",  "9:00"
             ,  "12:00",  "12:15", "12:30", "12:45", "13:10",  "13:15", "13:30", "13:45"
             ,  "21:20"
             ,  "23:30", "23:45", "23:55", "24:00"

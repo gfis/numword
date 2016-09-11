@@ -2,6 +2,7 @@
     spoken in Germany, Austria
     and parts of Switzerland(Deutsch-Schweiz), France (Elsaß), Italy (Südtirol)
     @(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2016-09-11: viertel dreizehn corrected
     2011-10-26: spellClock; Mar.L. = 92
     2009-11-24: spellGreeting
     2006-07-27: alias morphems for "drit", 5, 12, 15, 30, 50 (expanded umlauts)
@@ -10,7 +11,6 @@
     2005-06-01, Georg Fischer
 
     caution: UTF-8 is essential! compile with "-encoding UTF-8"
-
 */
 /*
  * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
@@ -247,8 +247,8 @@ public class DeuSpeller extends BaseSpeller {
             // aliases and other abbreviations
             , "01", "Jänner"
             , "01", "Jaenner"
-            , "03", "Maerz"
             , "02", "Febr"
+            , "03", "Maerz"
             , "09", "Sept"
             };
 
@@ -388,6 +388,7 @@ public class DeuSpeller extends BaseSpeller {
                         break;
                     case 1:
                         hour12 ++;
+                        hour12 = hour12 > 12 ? hour12 - 12 : hour12;
                         spellHour = spellCardinal(String.valueOf(hour12));
                         result  = "viertel "        + spellHour;
                         break;
@@ -465,13 +466,13 @@ public class DeuSpeller extends BaseSpeller {
             case -1:    result = "Mond";        break;
             case 0:     result = "Sonne";       break;
             case 1:     result = "Merkur";      break;
-			case 2:		result = "Venus";		break;
+            case 2:     result = "Venus";       break;
             case 3:     result = "Erde";        break;
-			case 4:		result = "Mars";		break;
-			case 5:		result = "Jupiter";		break;
-			case 6:		result = "Saturn";		break;
-			case 7:		result = "Uranus";		break;
-			case 8:		result = "Neptun";		break;
+            case 4:     result = "Mars";        break;
+            case 5:     result = "Jupiter";     break;
+            case 6:     result = "Saturn";      break;
+            case 7:     result = "Uranus";      break;
+            case 8:     result = "Neptun";      break;
         } // switch
         return result;
     } // spellPlanet(int)

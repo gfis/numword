@@ -1,0 +1,17 @@
+0.00	Nord
+22.50	Nordnordost
+45.00	Nordost
+67.50	Ostnordost
+90.00	Ost
+112.50	Ostsüdost
+135.00	Südost
+157.50	Südsüdost
+180.00	Süd
+202.50	Südsüdwest
+225.00	Südwest
+247.50	Westsüdwest
+270.00	West
+292.50	Westnordwest
+315.00	Nordwest
+337.50	Nordnordwest
+360.00	Nord

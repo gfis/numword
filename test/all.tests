@@ -1,0 +1,78 @@
+# Collection of Testcases for numword
+# @(#) $Id$
+# 2016-09-11, Dr. Georg Fischer
+#-----------------------------------
+# Caution:
+# (1) Adjust the following line: URL where FloDskIm was deployed
+URL=http://localhost:8080/numword/servlet
+# (2) Adjust the following line: default commandline arguments
+ARGS=-l de
+#======================================================================
+PACKAGE=org.teherba.numword
+
+TEST US01 
+CALL NumwordCommand
+
+#--------
+# Commandline functions
+
+TEST FM01
+CALL NumwordCommand -c
+TEST FM02
+CALL NumwordCommand -m
+TEST FM03
+CALL NumwordCommand -m3
+TEST FM04
+CALL NumwordCommand -s
+TEST FM05
+CALL NumwordCommand -w
+TEST FM06
+CALL NumwordCommand -w2
+TEST FM07
+CALL NumwordCommand -p eintausendneunhundertsiebenundvierzig
+TEST FM08
+CALL NumwordCommand -d
+TEST FM09
+CALL NumwordCommand -g
+TEST FM10
+CALL NumwordCommand -h0
+TEST FM11
+CALL NumwordCommand -h1
+TEST FM12
+CALL NumwordCommand -h2
+TEST FM13
+CALL NumwordCommand -h3
+#--------
+# Web functions
+
+TEST WW01
+HTTP lang3=deu digits= function=c
+TEST WW02
+HTTP lang3=deu digits= function=m
+TEST WW03
+HTTP lang3=deu digits= function=m3
+TEST WW04
+HTTP lang3=deu digits= function=s
+TEST WW05
+HTTP lang3=deu digits= function=w
+TEST WW06
+HTTP lang3=deu digits= function=w2
+TEST WW07
+HTTP lang3=deu digits= function=C digits=eintausendneunhundertsiebenundvierzig
+TEST WW08
+HTTP lang3=deu digits= function=d
+TEST WW09
+HTTP lang3=deu digits= function=g
+TEST WW10
+HTTP lang3=deu digits= function=h0
+TEST WW11
+HTTP lang3=deu digits= function=h1
+TEST WW12
+HTTP lang3=deu digits= function=h2
+TEST WW13
+HTTP lang3=deu digits= function=h3
+TEST WW14
+HTTP lang3=deu digits= function=p
+
+TEST WW17
+DIFF -C0 test/WW11.this.tst test/WW12.this.tst
