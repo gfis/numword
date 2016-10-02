@@ -1,5 +1,6 @@
 # Collection of Testcases for numword
 # @(#) $Id$
+# 2016-10-02: WW17 removed
 # 2016-09-11, Dr. Georg Fischer
 #-----------------------------------
 # Caution:
@@ -73,6 +74,3 @@ TEST WW13
 HTTP lang3=deu digits= function=h3
 TEST WW14
 HTTP lang3=deu digits= function=p
-
-TEST WW17
-DIFF -C0 test/WW11.this.tst test/WW12.this.tst
