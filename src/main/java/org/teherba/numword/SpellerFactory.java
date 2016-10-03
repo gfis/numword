@@ -1,5 +1,6 @@
 /* Selects the applicable speller
     @(#) $Id: SpellerFactory.java 657 2011-03-17 07:56:38Z gfis $
+    2016-10-03: Locale("en") for user interface (cardinal directions with decimal point)
     2016-02-15: Morse code
     2012-09-13: dynamic speller array with Class.forName().newInstance
     2011-03-14: RomanSpeller
@@ -27,6 +28,7 @@ import  org.teherba.numword.BaseSpeller;
 import  java.util.ArrayList;
 import  java.util.HashMap;
 import  java.util.Iterator;
+import  java.util.Locale;
 import  java.util.StringTokenizer;
 import  org.apache.log4j.Logger;
 
@@ -65,6 +67,7 @@ public class SpellerFactory {
     public SpellerFactory() {
         log = Logger.getLogger(SpellerFactory.class.getName());
         try {
+        	Locale.setDefault(new Locale("en"));
             spellers    = new ArrayList<BaseSpeller>(64);
             addSpeller("Ara");  // Arabic
             addSpeller("Ces");  // Czech

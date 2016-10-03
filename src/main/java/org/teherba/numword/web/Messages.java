@@ -1,5 +1,6 @@
 /*  Messages.java - Static help texts and other language specific messages.
  *  @(#) $Id: 57d01d0860aef0c2f2783647be70c3c381710c86 $
+ *  2016-10-03: wiki link was NumWord
  *  2016-08-31: Dr. Georg Fischer: copied from Xtool; Rainer=74
  */
 /*
