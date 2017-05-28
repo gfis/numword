@@ -46,6 +46,11 @@ public class Messages implements Serializable {
         String appLink = "<a href=\"servlet?view=index\">" + basePage.getAppName() + "</a>";
         //--------
         basePage.add("en", "001", appLink);
+        basePage.add("en", "002"
+                , " <a href=\"mailto:punctum@punctum.com"
+                + "?&subject=" + basePage.getAppName()
+                + "\">Dr. Georg Fischer</a>"
+                );
         //--------
         String laux = basePage.LANG_AUX;  // pseudo language code for links to auxiliary information
         int imess   = basePage.START_AUX; // start of messages    for links to auxiliary information

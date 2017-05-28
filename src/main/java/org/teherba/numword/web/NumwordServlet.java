@@ -30,14 +30,14 @@
  */
 
 package org.teherba.numword.web;
-import  org.teherba.numword.BaseSpeller;
-import  org.teherba.numword.NumwordCommand;
-import  org.teherba.numword.SpellerFactory;
 import  org.teherba.numword.web.IndexPage;
 import  org.teherba.numword.web.Messages;
 import  org.teherba.numword.web.UniblockPage;
 import  org.teherba.numword.web.UnicodePage;
 import  org.teherba.numword.web.UnilistPage;
+import  org.teherba.numword.BaseSpeller;
+import  org.teherba.numword.NumwordCommand;
+import  org.teherba.numword.SpellerFactory;
 import  org.teherba.common.web.BasePage;
 import  org.teherba.common.web.MetaInfPage;
 import  java.io.IOException;
