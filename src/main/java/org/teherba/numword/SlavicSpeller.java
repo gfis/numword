@@ -128,7 +128,7 @@ public class SlavicSpeller extends BaseSpeller {
     /**
      *  Returns the season's name - no seasons known for slavic languages
      *  @param season number of the quarter in the year:
-     *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
+     *  1 -&gt; Spring, 2 -&gt; Summer, 3 -&gt; Autumn, 4 = Winter
      *  @return word denoting the season
      */
     public String spellSeason(int season) {

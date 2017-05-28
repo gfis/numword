@@ -1,5 +1,6 @@
 /* Selects the applicable speller
     @(#) $Id: SpellerFactory.java 657 2011-03-17 07:56:38Z gfis $
+    2017-05-28: javadoc 1.8
     2016-10-03: Locale("en") for user interface (cardinal directions with decimal point)
     2016-02-15: Morse code
     2012-09-13: dynamic speller array with Class.forName().newInstance
@@ -67,7 +68,7 @@ public class SpellerFactory {
     public SpellerFactory() {
         log = Logger.getLogger(SpellerFactory.class.getName());
         try {
-        	Locale.setDefault(new Locale("en"));
+            Locale.setDefault(new Locale("en"));
             spellers    = new ArrayList<BaseSpeller>(64);
             addSpeller("Ara");  // Arabic
             addSpeller("Ces");  // Czech
@@ -131,6 +132,7 @@ public class SpellerFactory {
     /** Determines whether the language code denotes this speller class.
      *  @param speller the speller to be tested
      *  @param language code for the desired language
+     *  @return whether the speller can handle the language
      */
     public boolean isApplicable(BaseSpeller speller, String language) {
         boolean result = false;

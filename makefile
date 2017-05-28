@@ -48,6 +48,9 @@ jfind:
 rmbak:
 	find src -iname "*.bak"  | xargs -l rm -v
 #---------------------------------------------------
+ltgt:
+	find src -iname "*Speller.java" | xargs -l -iqqq perl -i.bak etc/ltgt.pl qqq
+#---------------------------------------------------
 ws_container:
 	mkdir -p tmp
 	rm -rf tmp/*

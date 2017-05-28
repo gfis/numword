@@ -1,5 +1,6 @@
 /*  Call Unix command "unicode -x" to get a description
     @(#) $Id: Unicode.java 852 2012-01-06 08:07:08Z gfis $
+    2017-05-28: javadoc 1.8
     2016-01-18: comment the sources
     2012-08-05: reader.close()
     2011-11-01: Georg Fischer
@@ -50,12 +51,13 @@ public class Unicode {
      *  @return for example
      *  <pre>
 U+25B6 BLACK RIGHT-POINTING TRIANGLE
-UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &#9654;
+UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &amp;#9654;
 
 Category: So (Symbol, Other)
 Bidi: ON (Other Neutrals)
      *  </pre>
-     *  The data can also be found in <http://www.unicode.org/Public/UNIDATA/UnicodeData.txt> in the form
+     *  The data can also be found in <a href="http://www.unicode.org/Public/UNIDATA/UnicodeData.txt">
+http://www.unicode.org/Public/UNIDATA/UnicodeData.txt</a> in the form
      *  <pre>
 0020;SPACE;Zs;0;WS;;;;;N;;;;;
 0021;EXCLAMATION MARK;Po;0;ON;;;;;N;;;;;
@@ -91,7 +93,7 @@ Bidi: ON (Other Neutrals)
      *  @return sample output (only the first line is currently implemented):
      *  <pre>
 U+25B6 BLACK RIGHT-POINTING TRIANGLE
-UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &#9654;
+UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &amp;#9654;
 
 Category: So (Symbol, Other)
 Bidi: ON (Other Neutrals)

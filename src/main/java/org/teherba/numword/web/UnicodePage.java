@@ -1,5 +1,6 @@
 /*  UnicodePage.java - show a single Unicode character
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
+ *  2017-05-28: javadoc 1.8
  *  2016-01-18, Georg Fischer: copied from MessageView.java
  */
 /*
@@ -50,7 +51,7 @@ public class UnicodePage {
      *  @return sample output (only the first line is currently implemented):
      *  <pre>
 U+25B6 BLACK RIGHT-POINTING TRIANGLE
-UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &#9654;
+UTF-8: e2 96 b6  UTF-16BE: 25b6  Decimal: &amp;#9654;
 
 Category: So (Symbol, Other)
 Bidi: ON (Other Neutrals)
@@ -79,7 +80,7 @@ Bidi: ON (Other Neutrals)
     public void forward(HttpServletRequest request, HttpServletResponse response
             , BasePage basePage
             , String language
-            , String code 
+            , String code
             ) {
         try {
             PrintWriter out = basePage.writeHeader(request, response, language);

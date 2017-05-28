@@ -1,6 +1,7 @@
 /*  Spell Numbers in Different Languages
     (write the number words, weekday, month and season names)
     @(#) $Id: NumwordServlet.java 820 2011-11-07 21:59:07Z gfis $
+    2017-05-28: javadoc 1.8; was 1 dir level higher
     2016-08-31: subdir web, BasePage
     2016-02-03: JSPs replaced by teherba.numword.view.*View.java; UTF-8 response
     2011-10-17: spellClock
@@ -28,7 +29,7 @@
  * limitations under the License.
  */
 
-package org.teherba.numword;
+package org.teherba.numword.web;
 import  org.teherba.numword.BaseSpeller;
 import  org.teherba.numword.NumwordCommand;
 import  org.teherba.numword.SpellerFactory;
@@ -73,7 +74,7 @@ public class NumwordServlet extends HttpServlet {
     /** Called by the servlet container to indicate to a servlet
      *  that the servlet is being placed into service.
      *  @param config object containing the servlet's configuration and initialization parameters
-     *  @throws ServletException
+     *  @throws ServletException for servlet errors
      */
     public void init(ServletConfig config) throws ServletException {
         super.init(config); // ???
@@ -86,7 +87,7 @@ public class NumwordServlet extends HttpServlet {
     /** Creates the response for a HTTP GET request.
      *  @param request fields from the client input form
      *  @param response data to be sent back the user's browser
-     *  @throws IOException
+     *  @throws IOException for IO errors
      */
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
         generateResponse(request, response);
@@ -95,7 +96,7 @@ public class NumwordServlet extends HttpServlet {
     /** Creates the response for a HTTP POST request.
      *  @param request fields from the client input form
      *  @param response data to be sent back the user's browser
-     *  @throws IOException
+     *  @throws IOException for IO errors
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         generateResponse(request, response);
@@ -104,7 +105,7 @@ public class NumwordServlet extends HttpServlet {
     /** Creates the response for a HTTP GET or POST request.
      *  @param request fields from the client input form
      *  @param response data to be sent back the user's browser
-     *  @throws IOException
+     *  @throws IOException for IO errors
      */
     public void generateResponse(HttpServletRequest request,
             HttpServletResponse response) throws IOException {

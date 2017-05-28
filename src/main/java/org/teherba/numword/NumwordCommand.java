@@ -1,5 +1,6 @@
 /*  Spell Numbers in Different Languages (write the number words)
     @(#) $Id: NumwordCommand.java 820 2011-11-07 21:59:07Z gfis $
+    2017-05-28: javadoc 1.8
     2016-01-18: Wikipedia links only for HTML
     2012-09-15: WikipediaHelper extracted from SpellerFactory
     2011-10-14: spellClock, spellCompass
@@ -146,6 +147,7 @@ final public class NumwordCommand {
 
     /** Puts the start of an output table.
      *  @param out writer, where to print the tag
+     *  @param speller for the description
      */
     public void printStartTable(Writer out, BaseSpeller speller) {
         try {
@@ -435,7 +437,7 @@ final public class NumwordCommand {
                                     printRow(out, word, "");
                                 }
                             }
-                        } 
+                        }
                         // with argument
                     } else { // no argument - take predefined test cases
                             String fileString = fileName.toString();

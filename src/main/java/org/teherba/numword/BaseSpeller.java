@@ -1,5 +1,7 @@
 /*  Abstract class for spelling of numbers in different languages
+    Caution: UTF-8 is essential! ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2017-05-28: javadoc 1.8
     2016-02-15: spellIdeographic(number): with the digit symbols of that language
     2016-01-18: parseString.liard depends on m3="NO_LIARDS"
     2011-10-14: spellClock
@@ -12,7 +14,6 @@
     2005-07-21: generalizations for input
     2005-06-01, Georg Fischer
 
-    caution: UTF-8 is essential! ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
     words for "month": http://en.wiktionary.org/wiki/Month
     month names in various languages: http://eo.wikipedia.org/wiki/Monato
 
@@ -162,6 +163,7 @@ public abstract class BaseSpeller {
     } // setLogTuple
 
     /** Gets the maximum number of digits that can be spelled
+     *  @return max. length of a number
      */
     public int getMaxLog() {
         return maxLog;
@@ -207,7 +209,7 @@ public abstract class BaseSpeller {
     /** description for the language */
     protected String description;
 
-    /** remaining exponent of thousands, = 0 for number < 1000 */
+    /** remaining exponent of thousands, = 0 for number &lt; 1000 */
     protected int logTuple;
 
     /** separating space for most languages */
@@ -261,7 +263,7 @@ public abstract class BaseSpeller {
     /** Constructor
      */
     public BaseSpeller() {
-        morphMap = new HashMap/*<1.5*/<String, String>/*1.5>*/(128);
+        morphMap = new HashMap<String, String>(128);
         setSeparator(true); // default: with separator
         setDirection("ltr");
         result = new StringBuffer(2048);
@@ -374,6 +376,7 @@ public abstract class BaseSpeller {
 
     /** Gets the result of the conversion: a number word for spellXYZ,
      *  or a digit sequence for parseXYZ.
+     *  @return word or digits
      */
     public String getResult() {
         return result.toString();
@@ -383,22 +386,22 @@ public abstract class BaseSpeller {
      *  keys are described under <em>setMorphem</em>,
      *  mainly used for <em>parseString</em>
      */
-    protected HashMap/*<1.5*/<String, String>/*1.5>*/ morphMap;
+    protected HashMap<String, String> morphMap;
 
     /** Sets morphems of number words
      *  @param key meaning of the morphem (starting with a lowercase letter):
-     *  <table>
+     *  <table><caption>List of Morphems</caption>
      *  <tr><td>"h1"</td><td>morphem for    1 hundred  (use individual words for hundreds if missing)</td></tr>
-     *  <tr><td>"h2"</td><td>morphem for >= 2 hundreds (same as "h1" if not set)</td></tr>
-     *  <tr><td>"h3"</td><td>morphem for >= 3 hundreds (same as "h2" if not set)</td></tr>
+     *  <tr><td>"h2"</td><td>morphem for &gt;= 2 hundreds (same as "h1" if not set)</td></tr>
+     *  <tr><td>"h3"</td><td>morphem for &gt;= 3 hundreds (same as "h2" if not set)</td></tr>
      *  <tr><td>"t1"</td><td>morphem for    1 thousand</td></tr>
-     *  <tr><td>"t2"</td><td>morphem for >= 2 thousands (same as "t2" if not set)</td></tr>
-     *  <tr><td>"t3"</td><td>morphem for >= 3 thousands (same as "t3" if not set)</td></tr>
+     *  <tr><td>"t2"</td><td>morphem for &gt;= 2 thousands (same as "t2" if not set)</td></tr>
+     *  <tr><td>"t3"</td><td>morphem for &gt;= 3 thousands (same as "t3" if not set)</td></tr>
      *  <tr><td>"z1"</td><td>optional morphem for 10    (Sino)</td></tr>
      *  <tr><td>"tz"</td><td>optional morphem for 10000 (Sino, Klingon)</td></tr>
      *  <tr><td>"mh"</td><td>optional morphem for 100 Mio (Sino)</td></tr>
      *  <tr><td>"l1"</td><td>morphem for    1 million  (pre- and postfix)</td></tr>
-     *  <tr><td>"l2"</td><td>morphem for >= 2 millions (pre- and postfix)</td></tr>
+     *  <tr><td>"l2"</td><td>morphem for &gt;= 2 millions (pre- and postfix)</td></tr>
      *  <tr><td>"m0"</td><td>morphem for one     million (prefix, special treatment if same as "t1")</td></tr>
      *  <tr><td>"m1"</td><td>morphem for one     million, billion, trillion ... (only the postfix)</td></tr>
      *  <tr><td>"m2"</td><td>morphem for several millions ... (same as "m1" if not set)</td></tr>
@@ -433,6 +436,7 @@ public abstract class BaseSpeller {
 
     /** Gets a morphem set by <em>setMorphem</em>
      *  @param key meaning of the morphem (starting with a lowercase letter):
+     *  @return morphem code
      */
     protected String getMorphem(String key) {
         return (String) morphMap.get(key);
@@ -468,7 +472,7 @@ public abstract class BaseSpeller {
                     // "enn", nn with leading zero
         }
         if (false && DEBUG) {
-            Iterator/*<1.5*/<String>/*1.5>*/ iter = morphMap.keySet().iterator();
+            Iterator<String> iter = morphMap.keySet().iterator();
             while (iter.hasNext()) {
                 String key = (String) iter.next();
                 System.out.println("enumerateMorphems: " + key + " -> " + (String) morphMap.get(key));
@@ -495,7 +499,7 @@ public abstract class BaseSpeller {
         while (prefixLen > 0) { // any number morphem found
             prefixLen = 0;
             String prefixKey = "";
-            Iterator/*<1.5*/<String>/*1.5>*/ iter = morphMap.keySet().iterator();
+            Iterator<String> iter = morphMap.keySet().iterator();
             while (iter.hasNext()) { // search over all defined morphems
                 String key   = (String) iter.next();
                 String value = (String) morphMap.get(key);
@@ -645,6 +649,7 @@ public abstract class BaseSpeller {
     /** Tries to find a word in a table of String pairs of the form
      *  (index, word). The index of the first entry found is returned.
      *  @param word string to be looked up in the table
+     *  @param pairs string pairs (index. word)
      *  @return index value from the table as String,
      *  or null if the word was not found
      */
@@ -664,6 +669,7 @@ public abstract class BaseSpeller {
     /** Tries to find a word in a table of String pairs of the form
      *  (index, word).
      *  @param word string to be looked up in the table
+     *  @param pairs string pairs (index. word)
      *  @return index value from the table converted to int,
      *  or -1 if the word was not found
      */
@@ -1112,6 +1118,7 @@ public abstract class BaseSpeller {
      *  180 = south,
      *  270 = west,
      *  and also intermediate directions like 45 = north-east, 22.5 = north-north-east, or even 11.25
+     *  @param angle degree, full cirlce is 360
      *  @return words corresponding to the cardinal direction (of the compass)
      */
     public String spellCompass(float angle) {
@@ -1131,6 +1138,7 @@ public abstract class BaseSpeller {
      *  180 = south,
      *  270 = west,
      *  and also intermediate directions like 45 = north-east, 22.5 = north-north-east, or even 11.25
+     *  @param angle degree, full cirlce is 360
      *  @return words corresponding to the cardinal direction (of the compass)
      */
     private String spellCompass2(float angle) {
@@ -1234,6 +1242,7 @@ from: http://de.wikipedia.org/wiki/Himmelsrichtung
 Seit längerer Zeit zieht man aber die Angabe von [[Grad (Winkel)|Gradzahlen]] vor,
 die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° entspricht etwa der Genauigkeit, mit der ein kleines Schiff gesteuert werden kann.
     </pre>
+     *  @return a sequence of letters N E S W
      */
     protected String spellCompassCode(String code) {
         String result = code;
@@ -1286,9 +1295,9 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
             , " "
             };
 
-    /** Get a standard word (here: abbreviation) for one the 4 cardinal directions,
-     *  and for the particle for 32th fractions
+    /** Get a standard word (here: abbreviation) for one the 4 cardinal directions
      *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
+     *  @return one of the letters N E S W
      */
     protected String getCompassWord(int cardDir) {
         String result = "";
@@ -1301,7 +1310,9 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
         return result;
     } // getCompassWord
 
-    /** Standard separator for the cardinal direction words */
+    /** Standard separator for the cardinal direction words
+     *  @return empty string
+     */
     protected String getCompassSeparator() {
         return ""; // none for abbreviations
     } // getCompassSeparator
@@ -1315,6 +1326,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
      *  18 = Good evening
      *  24 = Good night
      *  </pre>
+     *  @param timeOfDay 0..24, divisible by 6
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
@@ -1325,7 +1337,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
 
     //================================================================
     /** Returns the month's name
-     *  @param month month's number, >= 1 and <= 12
+     *  @param month month's number, &gt;= 1 and &lt;= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
@@ -1333,7 +1345,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
     } // spellMonth(int)
 
     /** Returns an abbreviation of the month's name
-     *  @param month month number, >= 1 and <= 12
+     *  @param month month number, &gt;= 1 and &lt;= 12
      *  @param abbreviation length of the abbreviation (usually 3)
      *  @return the month's abbreviation, or the full month name
      *  if len = 0
@@ -1388,7 +1400,7 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
     //================================================================
     /** Returns the season's name
      *  @param season number of the quarter in the year:
-     *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
+     *  1 -&gt; Spring, 2 -&gt; Summer, 3 -&gt; Autumn, 4 -&gt; Winter
      *  @return word denoting the season
      */
     public String spellSeason(int season) {
@@ -1397,8 +1409,8 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
 
     //================================================================
     /** Returns the week day's name
-     *  @param weekDay number of day in week, >= 0 and <= 7,
-     *  1 -> Monday, 7 (and 0) -> Sunday
+     *  @param weekDay number of day in week, &gt;= 0 and &lt;= 7,
+     *  1 -&gt; Monday, 7 (and 0) -&gt; Sunday
      *  @return word denoting the day in the week
      */
     public String spellWeekDay(int weekDay) {
@@ -1406,8 +1418,9 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
     } // spellWeekDay(int)
 
     /** Returns an abbreviation of the week day's name
-     *  @param weekDay number of day in week, >= 0 and <= 7,
-     *  1 -> Monday, 7 (and 0) -> Sunday
+     *  @param weekDay number of day in week, &gt;= 0 and &lt;= 7,
+     *  1 -&gt; Monday, 7 (and 0) -&gt; Sunday
+     *  @param abbreviation length of result, if abbreviated
      *  @return word denoting the day in the week, or the full week day
      *  if len = 0
      */

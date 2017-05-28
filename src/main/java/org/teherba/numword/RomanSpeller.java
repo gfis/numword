@@ -222,7 +222,7 @@ public class RomanSpeller extends BaseSpeller {
     } // spellCardinal
 
     /** Returns the month's name
-     *  @param month month's number, >= 1 and <= 12
+     *  @param month month's number, &gt;= 1 and &lt;= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
@@ -231,7 +231,7 @@ public class RomanSpeller extends BaseSpeller {
 
     /** Returns the season's name
      *  @param season number of the quarter in the year:
-     *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
+     *  1 -&gt; Spring, 2 -&gt; Summer, 3 -&gt; Autumn, 4 = Winter
      *  @return word denoting the season
      */
     public String spellSeason(int season) {
@@ -239,8 +239,8 @@ public class RomanSpeller extends BaseSpeller {
     } // spellSaison(int)
 
     /** Returns the week day's name
-     *  @param weekDay number of day in week, >= 0 and <= 7,
-     *  1 -> Monday, 7 (and 0) -> Sunday
+     *  @param weekDay number of day in week, &gt;= 0 and &lt;= 7,
+     *  1 -&gt; Monday, 7 (and 0) -&gt; Sunday
      *  @return word denoting the day in the week
      */
     public String spellWeekDay(int weekDay) {

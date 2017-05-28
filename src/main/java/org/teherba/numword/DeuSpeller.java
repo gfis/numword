@@ -1,16 +1,16 @@
 /*  Spelling of numbers in Deutsch (German)
     spoken in Germany, Austria
     and parts of Switzerland(Deutsch-Schweiz), France (Elsaß), Italy (Südtirol)
+    Caution: UTF-8 is essential! compile with "-encoding UTF-8"
     @(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2017-05-28: javadoc 1.8
     2016-09-11: viertel dreizehn corrected
     2011-10-26: spellClock; Mar.L. = 92
     2009-11-24: spellGreeting
     2006-07-27: alias morphems for "drit", 5, 12, 15, 30, 50 (expanded umlauts)
-                overlay of method 'parseString' for equalized declination endings
+    2006-07-27: overlay of method 'parseString' for equalized declination endings
     2006-01-04: encoding UTF-8 "fünf"
     2005-06-01, Georg Fischer
-
-    caution: UTF-8 is essential! compile with "-encoding UTF-8"
 */
 /*
  * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
@@ -261,7 +261,7 @@ public class DeuSpeller extends BaseSpeller {
     } // parseMonth
 
     /** Returns the month's name
-     *  @param month month's number, >= 1 and <= 12
+     *  @param month month's number, &gt;= 1 and &lt;= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
@@ -273,7 +273,7 @@ public class DeuSpeller extends BaseSpeller {
     //================================================================
     /** Returns the season's name
      *  @param season number of the quarter in the year:
-     *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
+     *  1 -&gt; Spring, 2 -&gt; Summer, 3 -&gt; Autumn, 4 = Winter
      *  @return word denoting the season
      */
     public String spellSeason(int season) {
@@ -311,8 +311,8 @@ public class DeuSpeller extends BaseSpeller {
             };
 
     /** Returns the week day's name
-     *  @param weekDay number of day in week, >= 0 and <= 7,
-     *  1 -> Monday, 7 -> Sunday
+     *  @param weekDay number of day in week, &gt;= 0 and &lt;= 7,
+     *  1 -&gt; Monday, 7 -&gt; Sunday
      *  @return word denoting the day in the week
      */
     public String spellWeekDay(int weekDay) {
@@ -427,6 +427,8 @@ public class DeuSpeller extends BaseSpeller {
 
     /** Returns the language specific words for a cardinal direction
      *  @param code abbreviation, a sequence of the letters N,E,S,W.
+     *  @param words (not used)
+     *  @return word for direction
      */
     protected String spellCompassCode(String code, String words[]) {
         String result = super.spellCompassCode(code);

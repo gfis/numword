@@ -48,7 +48,7 @@ public class ChiSpeller extends SinoSpeller {
 
     /**
      *  Returns the month's name
-     *  @param month month's number, >= 1 and <= 12
+     *  @param month month's number, &gt;= 1 and &lt;= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
@@ -84,7 +84,7 @@ public class ChiSpeller extends SinoSpeller {
     /**
      *  Returns the season's name
      *  @param season number of the quarter in the year:
-     *  1 -> Spring, 2 -> Summer, 3 -> Autumn, 4 = Winter
+     *  1 -&gt; Spring, 2 -&gt; Summer, 3 -&gt; Autumn, 4 = Winter
      *  @return word denoting the season
      */
     public String spellSeason(int season) {

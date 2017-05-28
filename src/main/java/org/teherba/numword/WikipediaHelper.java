@@ -1,5 +1,6 @@
 /*  Gets language designations and links from a Wikipedia article
     @(#) $Id: WikipediaHelper.java 657 2011-03-17 07:56:38Z gfis $
+    2017-05-28: javadoc 1.8
     2016-01-18: Javadoc links corrected; URIReader moved to org.teherba.common
     2012-09-15: extracted from org.teherba.numword.SpellerFactory
 */
@@ -156,7 +157,7 @@ public class WikipediaHelper {
      *  @param number digit sequence
      *  @param word numeral word
      *  @return complete element of the form
-     *  &lt;a href=&quot;http://en.wikipedia.org/wiki/18_(number)&quot; target=&quot;new&quot;>18&lt;/a&gt;
+     *  &lt;a href=&quot;http://en.wikipedia.org/wiki/18_(number)&quot; target=&quot;new&quot;&gt;18&lt;/a&gt;
      */
     protected String getWikipediaLink(BaseSpeller speller, String number, String word) {
         StringTokenizer tokenizer = new StringTokenizer(speller.getIso639(), ",");
