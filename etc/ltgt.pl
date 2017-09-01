@@ -26,13 +26,15 @@ my $file = shift (@ARGV);
 print STDERR "process $file\n";
 open (IN, "<", $file) || die "cannot read $file";
 while (<IN>) {
-	if (m{\A\s{0,10}\*}) { # in comment
-		s{\<\-}{\&lt;\-}g;
-		s{\-\>}{\-\&gt;}g;
-		s{\<\=}{\&lt;\=}g;
-		s{\>\=}{\&gt;\=}g;
-	}
-	push(@buffer, $_);
+    if (m{\A\s{0,10}\*}) { # in comment
+        s{\<\-}{\&lt;\-}g;
+        s{\-\>}{\-\&gt;}g;
+        s{\<\=}{\&lt;\=}g;
+        s{\>\=}{\&gt;\=}g;
+        s{\<\=}{\&lt;\=}g;
+        s{\=\>}{\=\&gt;}g;
+    }
+    push(@buffer, $_);
 } # while
 close IN;
 

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    J2EE application descriptor
+    @(#) $Id: application.xml 902 2012-03-11 19:29:44Z gfis $
+    2016-01-18, Georg Fischer
+-->
 <application
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://java.sun.com/xml/ns/javaee"
@@ -6,11 +11,6 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/j2ee/application_5.xsd"
         version="5"
         >
-<!--
-    J2EE application descriptor
-    @(#) $Id: application.xml 902 2012-03-11 19:29:44Z gfis $
-    2016-01-18, Georg Fischer
--->
     <description>Number Words</description>
     <display-name>Numword</display-name>
 
