@@ -1,6 +1,7 @@
 /*  UniblockPage.java - show a block of Unicode characters
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
  *  2018-06-10: session not used anymore
+    2017-11-15: parameter digits for UniblockPage; Jakarta halftime
  *  2016-02-14: error in table column counting
  *  2016-01-18, Georg Fischer: copied from MessageView.java
  */
@@ -51,17 +52,17 @@ public class UniblockPage {
      *  @param response response with writer
      *  @param basePage reference to common methods and error messages
      *  @param language 2-letter code en, de etc.
+     *  @param digits number (upper byte) of the code block, 01 for LATIN_EXTENDED_A
      */
     public void forward(HttpServletRequest request, HttpServletResponse response
             , BasePage basePage
             , String language
+            , String digits
              ) {
         try {
             PrintWriter out = basePage.writeHeader(request, response, language);
             out.write("<title>" + basePage.getAppName() + " Uniblock</title>\n");
             out.write("</head>\n<body>\n");
-            
-            String digits   = BasePage.getInputField(request, "digits"  , "01");
             int highByte = 0;
             try {
                 highByte = Integer.parseInt(digits, 16);

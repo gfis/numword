@@ -103,31 +103,31 @@ Bidi: ON (Other Neutrals)
             }
             iline ++;
             if (iline < nline && text[iline] != null) {
-                out.write("<br /><span>");
+                out.write("<p><span>");
                 out.print(  text[iline].replaceAll("&", "&amp") );
-                out.write("</span>\n");
+                out.write("</p>\n");
             }
             iline ++;
             if (iline < nline && text[iline] != null) {
-                out.write("<br />");
-                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode - 1) + "\">&lt;-</a>");
+                out.write("<p>");
+                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode - 1) + "\">&lt;-</a>\n");
                 out.write("<table><tr><td><span style=\"font-size:240pt\">&#x");
                 out.write(text[iline]);
-                out.write(";</span></td></tr></table>");
-                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode + 1) + "\">-&gt;</a>");
-                out.write("\n");
+                out.write(";</span></td></tr></table>\n");
+                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode + 1) + "\">-&gt;</a>\n		");
+                out.write("</p>\n");
             }
             iline ++;
             if (iline < nline && text[iline] != null) {
-                out.write("<br /><span>");
+                out.write("<p><span>");
                 out.print(  text[iline] );
-                out.write("</span>\n");
+                out.write("</p>\n");
             }
             iline ++;
             if (iline < nline && text[iline] != null) {
-                out.write("<br /><span>");
+                out.write("<p><span>");
                 out.print(  text[iline] );
-                out.write("</span>\n");
+                out.write("</p>\n");
             }
             basePage.writeTrailer(language, "back,quest");
         } catch (Exception exc) {
