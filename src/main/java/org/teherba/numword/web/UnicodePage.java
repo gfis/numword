@@ -25,7 +25,6 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  javax.servlet.http.HttpSession;
 import  org.apache.log4j.Logger;
 
 /** This class shows a single
@@ -58,22 +57,24 @@ Bidi: ON (Other Neutrals)
      *  </pre>
      */
     public String[] describe(String code) {
-        String[] result = new String[1];
-        int iline = 0;
         int unicode = 0;
         try {
             unicode = Integer.parseInt(code, 16);
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
         } // try
+        String[] result = new String[3];
+        int iline = 0;
         result[iline ++] = "U+" + code + " " + Character.getName(unicode);
+        result[iline ++] = "Decimal &#" + String.format("%d", unicode) + ";";
+        result[iline ++] = code;
         return result;
     } // describe
 
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @param basePage refrence to common methods and error messages
+     *  @param basePage reference to common methods and error messages
      *  @param language 2-letter code en, de etc.
      *  @param code hexadecimal representation of the Unicode character
      */
@@ -83,6 +84,11 @@ Bidi: ON (Other Neutrals)
             , String code
             ) {
         try {
+	        int unicode = 0;
+	        try {
+    	        unicode = Integer.parseInt(code, 16);
+        	} catch (Exception exc) {
+        	} // try
             PrintWriter out = basePage.writeHeader(request, response, language);
             out.write("<title>" + basePage.getAppName() + " Unicode</title>\n");
             out.write("</head>\n<body>\n");
@@ -103,9 +109,13 @@ Bidi: ON (Other Neutrals)
             }
             iline ++;
             if (iline < nline && text[iline] != null) {
-                out.write("<br /><span style=\"font-size:240pt\">&#x");
-                out.print( Integer.toHexString(0x10000 + text[iline].charAt(0)).substring(1) );
-                out.write(";</span>\n");
+                out.write("<br />");
+                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode - 1) + "\">&lt;-</a>");
+                out.write("<table><tr><td><span style=\"font-size:240pt\">&#x");
+                out.write(text[iline]);
+                out.write(";</span></td></tr></table>");
+                out.write("<a href=\"servlet?view=unicode&digits=" + String.format("%04x", unicode + 1) + "\">-&gt;</a>");
+                out.write("\n");
             }
             iline ++;
             if (iline < nline && text[iline] != null) {

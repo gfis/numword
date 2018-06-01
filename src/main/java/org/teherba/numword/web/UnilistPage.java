@@ -24,7 +24,6 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  javax.servlet.http.HttpSession;
 import  org.apache.log4j.Logger;
 
 /** This class shows the list of avaliable blocks
@@ -48,7 +47,7 @@ public class UnilistPage {
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @param basePage refrence to common methods and error messages
+     *  @param basePage reference to common methods and error messages
      *  @param language 2-letter code en, de etc.
      */
     public void forward(HttpServletRequest request, HttpServletResponse response
@@ -56,7 +55,6 @@ public class UnilistPage {
             , String language
              ) {
         try {
-            HttpSession session = request.getSession();
             PrintWriter out = basePage.writeHeader(request, response, language);
             out.write("<title>" + basePage.getAppName() + " Unilist</title>\n");
             out.write("</head>\n<body>\n");

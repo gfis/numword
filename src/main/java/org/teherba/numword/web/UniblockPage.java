@@ -1,5 +1,6 @@
 /*  UniblockPage.java - show a block of Unicode characters
  *  @(#) $Id: 058b6a55bb7a7383cb32ef795569872161b7e1bf $
+ *  2018-06-10: session not used anymore
  *  2016-02-14: error in table column counting
  *  2016-01-18, Georg Fischer: copied from MessageView.java
  */
@@ -25,7 +26,6 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  javax.servlet.http.HttpSession;
 import  org.apache.log4j.Logger;
 
 /** This class shows a blokc of Unicode characters
@@ -49,7 +49,7 @@ public class UniblockPage {
     /** Processes an http GET request
      *  @param request request with header fields
      *  @param response response with writer
-     *  @param basePage refrence to common methods and error messages
+     *  @param basePage reference to common methods and error messages
      *  @param language 2-letter code en, de etc.
      */
     public void forward(HttpServletRequest request, HttpServletResponse response
@@ -57,13 +57,11 @@ public class UniblockPage {
             , String language
              ) {
         try {
-            HttpSession session = request.getSession();
             PrintWriter out = basePage.writeHeader(request, response, language);
             out.write("<title>" + basePage.getAppName() + " Uniblock</title>\n");
             out.write("</head>\n<body>\n");
-
-            Object field = session.getAttribute("digits");
-            String digits = (field != null) ? (String) field : "01";
+            
+            String digits   = BasePage.getInputField(request, "digits"  , "01");
             int highByte = 0;
             try {
                 highByte = Integer.parseInt(digits, 16);
