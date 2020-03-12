@@ -60,4 +60,5 @@ ws_container:
 	cd tmp ; zip -r ../dist/ws_numword.jar *
 	cp -v etc/start_up etc/shut_down dist
 	echo now distribute 3 files from dist/ : "ws_*.jar", start_up, shut_down
+#----
 

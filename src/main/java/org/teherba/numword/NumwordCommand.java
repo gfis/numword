@@ -1,5 +1,6 @@
 /*  Spell Numbers in Different Languages (write the number words)
     @(#) $Id: NumwordCommand.java 820 2011-11-07 21:59:07Z gfis $
+    2020-03-10: -c min max  = range of numbers
     2017-05-28: javadoc 1.8
     2016-01-18: Wikipedia links only for HTML
     2012-09-15: WikipediaHelper extracted from SpellerFactory
@@ -430,11 +431,24 @@ final public class NumwordCommand {
                             } else if (weekDay) {
                                 printRow(out, number, speller.spellWeekDay(inum, abbrevLen));
                             } else { // cardinal
-                                word = speller.spellCardinal(number);
-                                printRow(out, helper.getWikipediaLink(speller, number, word), word);
-                                word = speller.spellIdeographic(number);
-                                if (word != null) {
-                                    printRow(out, word, "");
+                                int spacePos = number.indexOf(' ');
+                                if (spacePos < 0) { // no space
+                                    word = speller.spellCardinal(number);
+                                    printRow(out, helper.getWikipediaLink(speller, number, word), word);
+                                    word = speller.spellIdeographic(number);
+                                    if (word != null) {
+                                        printRow(out, word, "");
+                                    }
+                                } else { // range of min..max
+                                    int min = Integer.parseInt(number.substring(0, spacePos));
+                                    int max = Integer.parseInt(number.substring(spacePos+ 1));
+                                    for (int num = min; num <= max; num ++) {
+                                        number = String.valueOf(num);
+                                        out.write(number);
+                                        out.write(' ');
+                                        out.write(speller.spellCardinal(number));
+                                        out.write(nl);
+                                    } // for num
                                 }
                             }
                         }
