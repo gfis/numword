@@ -1,20 +1,10 @@
-/*  Spelling of numbers in Deutsch (German)
-    spoken in Germany, Austria
-    and parts of Switzerland(Deutsch-Schweiz), France (Elsaß), Italy (Südtirol)
-    Caution: UTF-8 is essential! compile with "-encoding UTF-8"
+/*  Spelling of numbers in Lojban
+    an artificial language
     @(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $
-    2020-12-17: vowels and consonants
-    2017-05-28: javadoc 1.8
-    2016-09-11: viertel dreizehn corrected
-    2011-10-26: spellClock; Mar.L. = 92
-    2009-11-24: spellGreeting
-    2006-07-27: alias morphems for "drit", 5, 12, 15, 30, 50 (expanded umlauts)
-    2006-07-27: overlay of method 'parseString' for equalized declination endings
-    2006-01-04: encoding UTF-8 "fünf"
-    2005-06-01, Georg Fischer
+    2020-12-17, Georg Fischer: copied from DeuSpeller
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2020 Dr. Georg Fischer <dr dot georg dot fischer@gmail dot com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,90 +22,53 @@
 package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
 
-/** Spells numbers in German (Deutsch)
+/** Spells numbers in Lojban
  *  @author Dr. Georg Fischer
  */
-public class DeuSpeller extends BaseSpeller {
+public class JboSpeller extends BaseSpeller {
     public final static String CVSID = "@(#) $Id: DeuSpeller.java 852 2012-01-06 08:07:08Z gfis $";
 
     /** Constructor
      */
-    public DeuSpeller() {
+    public JboSpeller() {
         super();
-        setIso639("deu,ger,de");
-        setDescription("German (Deutsch)");
+        setIso639("jbo");
+        setDescription("Lojban");
         setMaxLog(true);
         setSeparator(false);
 
         wordN = new String[]
-        { "null"
-        , "ein"
-        , "zwei"
-        , "drei"
-        , "vier"
-        , "fünf"
-        , "sechs"
-        , "sieben"
-        , "acht"
-        , "neun"
+        { "no" // 0
+        , "pa" // 1
+        , "re" // 2
+        , "ci" // 3
+        , "vo" // 4
+        , "mu" // 5
+        , "xa" // 6
+        , "ze" // 7
+        , "bi" // 8
+        , "so" // 9
         };
-        wordN0 = new String[]
-        { ""
-        , "zehn"
-        , "zwanzig"
-        , "dreißig"
-        , "vierzig"
-        , "fünfzig"
-        , "sechzig"
-        , "siebzig"
-        , "achtzig"
-        , "neunzig"
-        };
-        word1N = new String[]
-        { "zehn"
-        , "elf"
-        , "zwölf"
-        , "dreizehn"
-        , "vierzehn"
-        , "fünfzehn"
-        , "sechzehn"
-        , "siebzehn"
-        , "achtzehn"
-        , "neunzehn"
-        };
-
-        // adapt to German consonants k, z instead of c
-        for (int iw = 2; iw < wordN000.length; iw ++) {
-            wordN000[iw] = wordN000[iw]
-                            .replaceAll("deci", "dezi")
-                            .replaceAll("oct" , "okt" );
-            wordN000[iw] = Character.toUpperCase(wordN000[iw].charAt(0))
-                        + wordN000[iw].substring(1);
-        } // for iw
-
-        setMorphem("h1", "hundert");
-        setMorphem("t1", "tausend");
-        setMorphem("m1", "lion");
-        setMorphem("m2", "lionen");
-        setMorphem("m3", "liarde");
-        setMorphem("m4", "liarden");
-        setMorphem("p0", " ");
-        // setMorphem("p1", "s"); // for ein"s"?
-        setMorphem("p2", "e");
-        setMorphem("p3", "und");
-        enumerateMorphems();
-        // tricky: leading zeroes make alternate keys = aliases for the same numerical value
-        setMorphem("01" , "eins");
-        setMorphem("001", "erst"); // c.f. this.parseString(,)
-        setMorphem("02" , "zwo");
-        setMorphem("03" , "dritt"); // c.f. this.parseString(,)
-        setMorphem("05" , "fuenf");
-        setMorphem("07" , "sieb");
-        setMorphem("012", "zwoelf");
-        setMorphem("015", "fuenfzehn");
-        setMorphem("030", "dreissig");
-        setMorphem("050", "fuenfzig");
     } // Constructor
+
+    /** Returns the word for a number in some language.
+     *  This method is the heart of the package.
+     *  The digits are simply translated into their Lojban words.
+     *  @param number a sequence of digit characters, maybe
+     *  interspersed with non-digits (spaces, punctuation).
+     *  @return number word
+     */
+    public String spellCardinal(String number) {
+        result.setLength(0);
+        for (int ic = 0; ic < number.length(); ic ++) {
+            char ch = number.charAt(ic);
+            if (Character.isDigit(ch)) {
+                result.append(' ');
+                result.append(wordN[Character.digit(number.charAt(ic), 10)]);
+            }
+        } // for ic
+        return (result.substring(1));
+    } // spellCardinal
 
     /** Overlay for special treatment of "dritt(el)" and "acht(el)"
      *  and for "s" after "zwanzig";
@@ -163,94 +116,57 @@ public class DeuSpeller extends BaseSpeller {
      *  @param number the remaining part of the whole number
      */
     public void spellTuple(String number) {
-        // hundreds
-        switch (digitN00) {
-            case 0:
-                break;
-            default:
-                spellN(digitN00);
-                putMorphem("h1");
-                break;
-        } // switch 100
-
-        // tens and ones
-        switch (digitN0) {
-            case 0:
-                if (nullOnly) {
-                    spellN(0);
-                } else if (digitN >= 1) {
-                    spellN(digitN);
-                    if (number.length() == 0 && digitN == 1) {
-                        append("s"); // dreihundertein"s"
-                    }
-                }
-                break;
-            case 1: // 10..19 with some exceptions
-                spell1N(digitN);
-                break;
-            default:
-                if (digitN >= 1) {
-                    spellN(digitN);
-                    putMorphem("p3");
-                }
-                spellN0(digitN0);
-                break;
-        } // switch digitN0
-
-        if (! zeroTuple) { // append thousand, million ... */
-            switch (logTuple) {
-                case 0: // no thousands
-                    break;
-                case 1:
-                    putMorphem("t1");
-                    break;
-                default:
-                    if (singleTuple) {
-                        append("e"); // ein"e"million ...
-                    }
-                    append(" ");
-                    spellN000Morphem(logTuple);
-                    append(" ");
-                    break;
-            } // switch logTuple
-        } // thousands ...
+        // not used
     } // spellTuple
 
     //================================================================
-    /** Pairs of German month numbers, month names and their abbreviations */
+    /** Pairs of Lobjan month numbers, month names and their abbreviations 
+     *  http://lojban.org/publications/level0/lessons/less5days.html
+     */
     private String months[] = new String[]
-            { "00", "Monat"       // 0
-            , "01", "Januar"      // 1
-            , "02", "Februar"     // 2
-            , "03", "März"        // 3
-            , "04", "April"       // 4
-            , "05", "Mai"         // 5
-            , "06", "Juni"        // 6
-            , "07", "Juli"        // 7
-            , "08", "August"      // 8
-            , "09", "September"   // 9
-            , "10", "Oktober"     // 10
-            , "11", "November"    // 11
-            , "12", "Dezember"    // 12
-            // abbreviations (3 letters)
-            , "01", "Jan"
-            , "02", "Feb"
-            , "03", "Mär"
-            , "04", "Apr"
-            , "05", "Mai"
-            , "06", "Jun"
-            , "07", "Jul"
-            , "08", "Aug"
-            , "09", "Sep"
-            , "10", "Okt"
-            , "11", "Nov"
-            , "12", "Dez"
+            { "00", "nonmast."  // 0
+            , "01", "pavmast."  // 1
+            , "02", "relmast."  // 2
+            , "03", "cibmast."  // 3
+            , "04", "vonmast."  // 4
+            , "05", "mumymast." // 5
+            , "06", "xavmast."  // 6
+            , "07", "zelmast."  // 7
+            , "08", "bivmast."  // 8
+            , "09", "sozmast."  // 9
+            , "10", "daumast."  // 10
+            , "11", "feimast."  // 11
+            , "12", "gaimast."  // 12
+            // abbreviations (2 letters)
+            , "01", "pa"
+            , "02", "re"
+            , "03", "ci"
+            , "04", "vo"
+            , "05", "mu"
+            , "06", "xa"
+            , "07", "ze"
+            , "08", "bi"
+            , "09", "so"
+            , "10", "da"
+            , "11", "fe"
+            , "12", "ga"
             // aliases and other abbreviations
-            , "01", "Jänner"
-            , "01", "Jaenner"
-            , "02", "Febr"
-            , "03", "Maerz"
-            , "09", "Sept"
+            , "00", "nonma'i"  // 0
+            , "01", "pavma'i"  // 1
+            , "02", "relma'i"  // 2
+            , "03", "cibma'i"  // 3
+            , "04", "vonma'i"  // 4
+            , "05", "mumyma'i."// 5
+            , "06", "xavma'i"  // 6
+            , "07", "zelma'i"  // 7
+            , "08", "bivma'i"  // 8
+            , "09", "sozma'i"  // 9
+            , "10", "pavnonma'i"  // 10
+            , "11", "pavypavma'i" // 11
+            , "12", "pavrelma'i"  // 12
+            , "10", "pavnonmast."  // 10
+            , "11", "pavypavmast." // 11
+            , "12", "pavrelmast."  // 12
             };
 
     /** Returns the month's number as String (between "01" and "12")
@@ -258,7 +174,7 @@ public class DeuSpeller extends BaseSpeller {
      *  @return number between "01" and "12", or null if not found
      */
     public String parseMonth(String name) {
-        return lookupWord(name, months);
+       return lookupWord(name, months);
     } // parseMonth
 
     /** Returns the month's name
@@ -281,34 +197,34 @@ public class DeuSpeller extends BaseSpeller {
         String result = Integer.toString(season);
         if (season >= 0 && season <= 4) {
             result = (new String []
-                    { "Jahreszeit"
-                    , "Frühling"
-                    , "Sommer"
-                    , "Herbst"
-                    , "Winter"
+                    { ""
+                    , "vensa"
+                    , "crisa"
+                    , "critu"
+                    , "dunra"
                     })[season];
         }
         return result;
     } // spellSeason
 
     //================================================================
-    /** Pairs of German weekday numbers, weekday names and their abbreviations */
+    /** Pairs of weekday numbers, weekday names and their abbreviations */
     private String weekdays[] = new String[]
-            { "00", "Wochentag"
-            , "01", "Montag"
-            , "02", "Dienstag"
-            , "03", "Mittwoch"
-            , "04", "Donnerstag"
-            , "05", "Freitag"
-            , "06", "Samstag"
-            , "07", "Sonntag"
-            , "01", "Mo"
-            , "02", "Di"
-            , "03", "Mi"
-            , "04", "Do"
-            , "05", "Fr"
-            , "06", "Sa"
-            , "07", "So"
+            { "00", "nondjed."
+            , "01", "pavdjed."
+            , "02", "reldjed."
+            , "03", "cibdjed."
+            , "04", "vondjed."
+            , "05", "mumdjed."
+            , "06", "xavdjed."
+            , "07", "zeldjed."
+            , "01", "pa"
+            , "02", "re"
+            , "03", "ci"
+            , "04", "vo"
+            , "05", "mu"
+            , "06", "xa"
+            , "07", "ze"
             };
 
     /** Returns the week day's name
@@ -320,14 +236,14 @@ public class DeuSpeller extends BaseSpeller {
         String result = Integer.toString(weekDay);
         if (weekDay >= 0 && weekDay <= 7) {
             result = (new String []
-                    { "Wochentag"
-                    , "Montag"
-                    , "Dienstag"
-                    , "Mittwoch"
-                    , "Donnerstag"
-                    , "Freitag"
-                    , "Samstag"
-                    , "Sonntag"
+                    { "nondjed."
+                    , "pavdjed."
+                    , "reldjed."
+                    , "cibdjed."
+                    , "vondjed."
+                    , "mumdjed."
+                    , "xavdjed."
+                    , "zeldjed."
                     })[weekDay];
         }
         return result;
@@ -411,17 +327,18 @@ public class DeuSpeller extends BaseSpeller {
 
     //================================================================
     /** Get a word for one the 4 cardinal directions,
-     *  and for the particle for 32th fractions
+     *  and for the particle for 32th fractions.
+     *  Cf. https://en.wikibooks.org/wiki/Lojban/Directions
      *  @param cardDir a cardinal direction, 0 = North, 1 = East, 2 = South, 3 = West
      */
     protected String getCompassWord(int cardDir) {
         String result = "";
         switch (cardDir) {
-            case 0: result = "nord"     ; break;
-            case 1: result = "ost"      ; break;
-            case 2: result = "süd"      ; break;
-            case 3: result = "west"     ; break;
-            case 4: result = "zu"       ; break;
+            case 0: result = ""          ; break;
+            case 1: result = "berti"     ; break;
+            case 2: result = "stuna"     ; break;
+            case 3: result = "snanu"     ; break;
+            case 4: result = "stici"     ; break;
         } // switch
         return result;
     } // getCompassWord
@@ -443,15 +360,15 @@ public class DeuSpeller extends BaseSpeller {
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
-        String result = "Guten Tag";
+        String result = "coi";
         timeOfDay /= 6;
         if (timeOfDay >= 0 && timeOfDay <= 4) {
             result = (new String[]
-                    { "Auf Wiedersehen"
-                    , "Guten Morgen"
-                    , "Guten Tag"
-                    , "Guten Abend"
-                    , "Gute Nacht"
+                    { "co'o"
+                    , "coi"
+                    , "coi"
+                    , "coi"
+                    , "coi"
                     }
                     )[timeOfDay];
         } // in range
@@ -466,16 +383,16 @@ public class DeuSpeller extends BaseSpeller {
     public String spellPlanet(int planet) {
         String result = super.spellPlanet(planet);
         switch (planet) {
-            case -1:    result = "Mond";        break;
-            case 0:     result = "Sonne";       break;
-            case 1:     result = "Merkur";      break;
-            case 2:     result = "Venus";       break;
-            case 3:     result = "Erde";        break;
-            case 4:     result = "Mars";        break;
-            case 5:     result = "Jupiter";     break;
-            case 6:     result = "Saturn";      break;
-            case 7:     result = "Uranus";      break;
-            case 8:     result = "Neptun";      break;
+            case -1:    result = "mluni";       break;
+            case 0:     result = "solri";       break;
+            case 1:     result = "pavyplini";   break;
+            case 2:     result = "relplini";    break;
+            case 3:     result = "cibyplini";   break;
+            case 4:     result = "vonplini";    break;
+            case 5:     result = "mumplini";    break;
+            case 6:     result = "xavyplini";   break;
+            case 7:     result = "zelplini";    break;
+            case 8:     result = "bivplini";    break;
         } // switch
         return result;
     } // spellPlanet(int)
@@ -483,8 +400,8 @@ public class DeuSpeller extends BaseSpeller {
     //================================================================
 
     /** Letters which are used as vowels */
-    protected String vowels     = "aeiouyäöü";
+    protected String vowels     = "aeiou";
     /** Letters which are used as consonants */
-    protected String consonants = "bcdfghjklmnpqrstvwxyzß";
-    
+    protected String consonants = "bcdfgjklmnprstvxz";
+
 } // DeuSpeller

@@ -76,7 +76,7 @@ public class SpellerFactory {
             addSpeller("Dan");  // Danish
             addSpeller("Deu");  // German
             addSpeller("Eng");  // English
-            addSpeller("Epo");  // Esperanto
+            addSpeller("Epo");  // Esperanto (artificial)
             addSpeller("Est");  // Estonian
             addSpeller("Fin");  // Finnish
             addSpeller("Fra");  // French
@@ -86,6 +86,7 @@ public class SpellerFactory {
             addSpeller("Hun");  // Hungarian = Magyar
             addSpeller("Ice");  // Icelandic
             addSpeller("Ita");  // Italian
+            addSpeller("Jbo");  // Lojban (artificial)
             addSpeller("Jpn");  // Japanese
             addSpeller("Kor");  // Korean
             addSpeller("Lat");  // Latin
@@ -103,7 +104,7 @@ public class SpellerFactory {
             addSpeller("Spa");  // Spanish
             addSpeller("Swe");  // Swedish
             addSpeller("Tha");  // Thai
-            addSpeller("Tlh");  // Klingon
+            addSpeller("Tlh");  // Klingon (artificial)
             addSpeller("Tur");  // Turkish
             addSpeller("Vie");  // Vietnamese
 

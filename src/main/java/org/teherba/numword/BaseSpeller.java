@@ -1,6 +1,7 @@
 /*  Abstract class for spelling of numbers in different languages
-    Caution: UTF-8 is essential! ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
+    Caution: UTF-8 is essential! ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2020-12-17: isConsonant|Vowel
     2017-05-28: javadoc 1.8
     2016-02-15: spellIdeographic(number): with the digit symbols of that language
     2016-01-18: parseString.liard depends on m3="NO_LIARDS"
@@ -25,7 +26,7 @@
     - variants for regional differences (e.g. Switzerland) and dialects
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2006 Dr. Georg Fischer <Dr dot Georg dot Fischer at gmail dot kom>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1436,5 +1437,58 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
         } // else = 0: take it unabbreviated
         return result;
     } // spellWeekDay(int, int)
+
+    //================================================================
+
+    /** Letters which are used as vowels */
+    protected String vowels     = "aeiou";
+    /** Letters which are used as consonants */
+    protected String consonants = "bcdfghjklmnpqrstvwxyz";
+
+    /** Determines whether a character is a consonant in this language.
+     *  There may be letters which can seen as vowels and as consonant ('y' in German).
+     *  @param ch character to be investigated
+     *  @return true i consonant, false otherwise
+     */
+    public boolean isConsonant(char ch) {
+        return consonants.indexOf(ch) >= 0;
+    }
+
+    /** Determines whether a character is a vowel in this language.
+     *  There may be letters which can seen as vowels and as consonant ('y' in German).
+     *  @param ch character to be investigated
+     *  @return true if vowel, false otherwise
+     */
+    public boolean isVowel(char ch) {
+        return vowels.indexOf(ch) >= 0;
+    }
+
+    /** Returns the number of consonants in a word
+     *  @param word word to be investigated, assumed to be lowercase
+     *  @return number of consonants
+     */
+    public int countConsonants(String word) {
+        int result = 0;
+        for (int ic = word.length() - 1; ic >= 0; ic --) {
+            if (isConsonant(word.charAt(ic))) {
+                result ++;
+            }
+        } // for ic
+        return result;
+    } // countConsonants
+
+    /** Returns the number of vowels in a word
+     *  @param word word to be investigated, assumed to be lowercase
+     *  @return number of vowels
+     */
+    public int countVowels(String word) {
+        int result = 0;
+        for (int ic = word.length() - 1; ic >= 0; ic --) {
+            if (isVowel(word.charAt(ic))) {
+                result ++;
+            }
+        } // for ic
+        return result;
+    } // countVowels
 
 } // BaseSpeller
