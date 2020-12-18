@@ -70,11 +70,7 @@ public class JboSpeller extends BaseSpeller {
         return (result.substring(1));
     } // spellCardinal
 
-    /** Overlay for special treatment of "dritt(el)" and "acht(el)"
-     *  and for "s" after "zwanzig";
-     *  in order to equalize "er", "tens", "ter", "te",
-     *  "ten", "tem", "tes" endings;
-     *  parses a string, and returns a digit sequence if
+    /** Parses a string, and returns a digit sequence if
      *  it starts with a number word;
      *  always tries to match a longest prefix;
      *  @param text string to be parsed
@@ -83,31 +79,24 @@ public class JboSpeller extends BaseSpeller {
      *  and sequence of digit characters in global <em>result</em>
      */
     public int parseString(String text, int offset) {
-        offset = super.parseString(text, offset);
-        if (offset > 0) {
-            // an additional "e" was eaten as "p2" morphem (to be ignored)
-            if  (text.substring(0, offset).endsWith("e")) {
-                offset --; // keep "e" behind number word
+    	boolean busy = true;
+        while (busy && offset < text.length()) {
+            if (! Character.isLetter(text.charAt(offset))) {
+                offset ++; // ignore whitespace
+            } else {
+                int digit = 0;
+                boolean found = false;
+                while (digit < wordN.length && ! found && offset <= text.length() - 2) {
+                    if (text.substring(offset, offset + 2).equals(wordN[digit])) {
+                        found = true;
+                        result.append(String.valueOf(digit));
+                        offset += 2;
+                    }
+                    digit ++;
+                } // while ! found
+                busy = found;
             }
-            if  (   text.substring(offset).startsWith("e")
-                &&  (   text.substring(0, offset).endsWith("dritt")
-                    ||  text.substring(0, offset).endsWith("acht")
-                    ||  text.substring(0, offset).endsWith("erst")
-                    )                           // but not "hundert"
-                )
-            {
-                offset --; // keep "t" behind number word
-            }
-            else
-            if  (   text.substring(offset).startsWith("ste")
-                &&  (   text.substring(0, offset).endsWith("ig")
-                    ||  getResult().length() > 2 // numeric value >= 100
-                    )
-                )
-            {
-                offset ++; // eat "s"
-            }
-        }
+        } // while offset
         return offset;
     } // parseString
 

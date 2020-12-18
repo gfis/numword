@@ -1,5 +1,6 @@
-/*  Abstract class for spelling of numbers in different languages
-    Caution: UTF-8 is essential! ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
+/*  äöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ
+    Abstract class for spelling of numbers in different languages
+    Caution: UTF-8 is essential!
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
     2020-12-17: isConsonant|Vowel
     2017-05-28: javadoc 1.8
@@ -1491,4 +1492,4 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
         return result;
     } // countVowels
 
-} // BaseSpeller
+} // BaseSpeller^
