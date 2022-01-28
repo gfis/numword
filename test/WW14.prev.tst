@@ -16,7 +16,7 @@
     <input type = "hidden" name="view" value="index" />
     <table cellpadding="8">
       <tr><td width="100">Language<br />
-          <select name="lang3" size="39">
+          <select name="lang3" size="40">
 <option value="ara">ara - Arabic (ديسمبر)</option>
 <option value="cze">cze - Czech (čeština)</option>
 <option value="chi">chi - Chinese 中文 (zhōngwén)</option>
@@ -33,6 +33,7 @@
 <option value="hun">hun - Hungarian (Magyar)</option>
 <option value="ice">ice - Icelandic (íslenska)</option>
 <option value="ita">ita - Italian (Italiano)</option>
+<option value="jbo">jbo - Lojban</option>
 <option value="jpn">jpn - Japanese</option>
 <option value="kor">kor - Korean</option>
 <option value="lat">lat - Latin (Latinum)</option>
