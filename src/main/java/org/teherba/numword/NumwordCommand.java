@@ -44,7 +44,8 @@ import  java.text.NumberFormat;
 import  java.util.Iterator;
 import  java.util.regex.Matcher;
 import  java.util.regex.Pattern;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Spells a number (or some other enumerable word) in some language.
  *  This class is the commandline interface to <em>BaseSpeller</em>.
@@ -88,7 +89,7 @@ final public class NumwordCommand {
     /** No-args Constructor
      */
     public NumwordCommand() {
-        log = Logger.getLogger(NumwordCommand.class.getName());
+        log = LogManager.getLogger(NumwordCommand.class.getName());
         nl = System.getProperty("line.separator");
         setMode(MODE_PLAIN);
     } // Constructor()

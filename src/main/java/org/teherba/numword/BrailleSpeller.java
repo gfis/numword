@@ -50,7 +50,8 @@ import  org.teherba.numword.BaseSpeller;
 import  java.io.File;
 import  java.io.PrintWriter;
 import  java.util.HashMap;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Spells numbers in Braille code.
  *  Uses the SVG files created by org.teherba.numword.BrailleSpeller.main.
@@ -242,7 +243,7 @@ public class BrailleSpeller extends BaseSpeller {
      *  @param args elements of the commandline separated by whitespace
      */
     public static void main(String args[]) {
-        Logger log = Logger.getLogger(BrailleSpeller.class.getName());
+        Logger log = LogManager.getLogger(BrailleSpeller.class.getName());
         BrailleSpeller speller = new BrailleSpeller();
         if (args.length >= 1) { // show the SVG for all characters in the word
             String word = args[0];

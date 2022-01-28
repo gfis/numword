@@ -30,7 +30,8 @@ import  java.io.PrintWriter;
 import  java.util.Iterator;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** This class prints the main page with the input form of the application.
  *  @author Dr. Georg Fischer
@@ -45,7 +46,7 @@ public class IndexPage {
     /** No-argument constructor
      */
     public IndexPage() {
-        log = Logger.getLogger(IndexPage.class.getName());
+        log = LogManager.getLogger(IndexPage.class.getName());
     } // constructor()
 
     /** Output the main dialog page for RaMath

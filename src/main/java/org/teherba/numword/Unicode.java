@@ -26,7 +26,8 @@ import  java.io.BufferedReader;
 import  java.io.InputStreamReader;
 import  java.lang.Process;
 import  java.lang.Runtime;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Gets the description of a Unicode character from the Unix command <em>unicode -x</em>.
  *  @author Dr. Georg Fischer
@@ -41,7 +42,7 @@ public class Unicode {
     /** Empty constructor
      */
     public Unicode () {
-        log = Logger.getLogger(Unicode.class.getName());
+        log = LogManager.getLogger(Unicode.class.getName());
     } // constructor
 
     /** Gets 5 lines of output of the Unix command <em>unicode -x C off code</em>,

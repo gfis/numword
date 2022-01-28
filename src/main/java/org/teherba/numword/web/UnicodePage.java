@@ -25,7 +25,8 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** This class shows a single
  *  Unicode character &lt;= u+ffff.
@@ -42,7 +43,7 @@ public class UnicodePage {
     /** No-argument constructor
      */
     public UnicodePage() {
-        log = Logger.getLogger(UnicodePage.class.getName());
+        log = LogManager.getLogger(UnicodePage.class.getName());
     } // constructor()
 
     /** Gets up to 5 lines of descriptive information about the character.

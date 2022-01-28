@@ -27,7 +27,8 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** This class shows a blokc of Unicode characters
  *  with their codes and glyphs.
@@ -44,7 +45,7 @@ public class UniblockPage {
     /** No-argument constructor
      */
     public UniblockPage() {
-        log = Logger.getLogger(UniblockPage.class.getName());
+        log = LogManager.getLogger(UniblockPage.class.getName());
     } // constructor()
 
     /** Processes an http GET request

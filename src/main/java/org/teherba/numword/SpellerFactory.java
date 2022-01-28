@@ -31,7 +31,8 @@ import  java.util.HashMap;
 import  java.util.Iterator;
 import  java.util.Locale;
 import  java.util.StringTokenizer;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Selects a specific speller, and iterates over the descriptions
  *  of all spellers and their codes.
@@ -66,7 +67,7 @@ public class SpellerFactory {
      *  The order of the languages here defines the order in the user interfaces.
      */
     public SpellerFactory() {
-        log = Logger.getLogger(SpellerFactory.class.getName());
+        log = LogManager.getLogger(SpellerFactory.class.getName());
         try {
             Locale.setDefault(new Locale("en"));
             spellers    = new ArrayList<BaseSpeller>(64);

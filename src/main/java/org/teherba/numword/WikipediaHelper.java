@@ -29,7 +29,8 @@ import  java.util.HashMap;
 import  java.util.StringTokenizer;
 import  java.util.regex.Matcher;
 import  java.util.regex.Pattern;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Reads language designations and links from a Wikipedia article,
  *  and stores them in a hash map.
@@ -52,7 +53,7 @@ public class WikipediaHelper {
      *  The order of the languages here defines the order in the user interfaces.
      */
     public WikipediaHelper() {
-        log = Logger.getLogger(WikipediaHelper.class.getName());
+        log = LogManager.getLogger(WikipediaHelper.class.getName());
         try {
         } catch (Exception exc) {
             log.error(exc.getMessage(), exc);
@@ -197,7 +198,7 @@ public class WikipediaHelper {
      *  default is "http://en.wikipedia.org/wiki/18_(number)".
      */
     public static void main(String args[]) {
-        Logger log = Logger.getLogger(WikipediaHelper.class.getName());
+        Logger log = LogManager.getLogger(WikipediaHelper.class.getName());
         WikipediaHelper speller = new WikipediaHelper();
         String referenceURL = "http://en.wikipedia.org/wiki/18_(number)";
         int iarg = 0;

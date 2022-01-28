@@ -24,7 +24,8 @@ import  java.util.HashMap;
 import  java.util.regex.Pattern;
 import  javax.servlet.http.HttpServletRequest;
 import  javax.servlet.http.HttpServletResponse;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** This class shows the list of avaliable blocks
  *  of Unicode characters &lt;= u+ffff.
@@ -41,7 +42,7 @@ public class UnilistPage {
     /** No-argument constructor
      */
     public UnilistPage() {
-        log = Logger.getLogger(UnilistPage.class.getName());
+        log = LogManager.getLogger(UnilistPage.class.getName());
     } // constructor()
 
     /** Processes an http GET request

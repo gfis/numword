@@ -24,7 +24,8 @@ import  org.teherba.numword.BaseSpeller;
 import  java.io.File;
 import  java.io.PrintWriter;
 import  java.util.HashMap;
-import  org.apache.log4j.Logger;
+import  org.apache.logging.log4j.Logger;
+import  org.apache.logging.log4j.LogManager;
 
 /** Spells numbers in Morse code.
  *  @author Dr. Georg Fischer
