@@ -1,5 +1,6 @@
 /* Selects the applicable speller
     @(#) $Id: SpellerFactory.java 657 2011-03-17 07:56:38Z gfis $
+    2022-06-23: Java 11, newInstance
     2017-05-28: javadoc 1.8
     2016-10-03: Locale("en") for user interface (cardinal directions with decimal point)
     2016-02-15: Morse code
@@ -56,7 +57,7 @@ public class SpellerFactory {
      */
     private void addSpeller(String lang) {
         try {
-            BaseSpeller speller = (BaseSpeller) Class.forName("org.teherba.numword." + lang + "Speller").newInstance();
+            BaseSpeller speller = (BaseSpeller) Class.forName("org.teherba.numword." + lang + "Speller").getDeclaredConstructor().newInstance();
             spellers.add(speller);
         } catch (Exception exc) {
             // ignore any error silently - this language will not be known

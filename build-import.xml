@@ -2,6 +2,7 @@
 <!--
     ant-buildfile for commandline, web application and web service
     @(#) $Id: 08b49ddc73ef271c7054bb70acb278bcff247562 $
+    2022-06-23: jdk.version=11
     2022-01-28: prepare: also copy etc/*.xml into the classpath
     2016-09-16: manifest("-core"), core.jar, manifest("") for dbat.Configuration.versionString
     2016-09-12: fill.lib depends on clean
@@ -75,7 +76,7 @@
     <property name="test.home"          value="${basedir}/test" />
     <property name="javac.debug"        value="on" />
     <property name="javac.debuglevel"   value="lines,vars,source" />
-    <property name="jdk.version"        value="1.6" />
+    <property name="jdk.version"        value="11" />
 
     <path id="compile.classpath">
         <fileset dir="${dist.home}">
