@@ -1,5 +1,6 @@
 /*  Spell Numbers in Different Languages (write the number words)
     @(#) $Id: NumwordCommand.java 820 2011-11-07 21:59:07Z gfis $
+    2025-09-10: ara in ISO list; *CH
     2020-03-10: -c min max  = range of numbers
     2017-05-28: javadoc 1.8
     2016-01-18: Wikipedia links only for HTML
@@ -18,7 +19,7 @@
     pure ASCII encoding
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2006 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +38,10 @@ package org.teherba.numword;
 import  org.teherba.numword.BaseSpeller;
 import  org.teherba.numword.SpellerFactory;
 import  org.teherba.numword.WikipediaHelper;
+import  java.io.PrintWriter;
 import  java.io.StringWriter;
 import  java.io.Writer;
+import  java.nio.channels.Channels;
 import  java.text.DecimalFormat;
 import  java.text.NumberFormat;
 import  java.util.Iterator;
@@ -242,10 +245,11 @@ final public class NumwordCommand {
         try {
             int iarg = 0; // index for command line arguments
             if (iarg >= args.length) { // usage, with known ISO codes and languages
-                out.write("usage:\tjava org.teherba.numword.NumwordCommand [-l iso [-c|-m[3]|-s|-w[2]|-g] [number]]" + nl);
+                out.write("Usage:\tjava org.teherba.numword.NumwordCommand [-l iso [-c|-m[3]|-s|-w[2]|-g] [number]]" + nl);
                 out.write("      \tjava org.teherba.numword.NumwordCommand -l iso (-f|-t) filename" + nl);
                 out.write("      \tjava org.teherba.numword.NumwordCommand -l iso -p number-word" + nl);
                 out.write("      \tjava org.teherba.numword.NumwordCommand -l iso [-m[3]|-s|-w[2]] -p [month|weekday|season]" + nl);
+                out.write("Options:" + nl);
                 out.write("  -f  \tfind and replace number words in text file" + nl);
                 out.write("  -c  \tprint cardianal number word (default)" + nl);
                 out.write("  -d  \tprint compass direction (parameter is degrees, 270 = West)" + nl);
@@ -258,7 +262,7 @@ final public class NumwordCommand {
                 out.write("  -w2 \tprint 7 weekdays' abbreviations (2 letters)" + nl);
                 out.write("  -p  \tparse word, return digits or cardinal number" + nl);
                 out.write("  -t  \ttest against file consisting of lines with: digits tab number-word" + nl);
-                out.write("  -l");
+                out.write("ISO language codes:" + nl);
                 Iterator/*<1.5*/<BaseSpeller>/*1.5>*/ iter = factory.getIterator();
                 while (iter.hasNext()) {
                     BaseSpeller speller = (BaseSpeller) iter.next();
@@ -580,7 +584,11 @@ final public class NumwordCommand {
      */
     public static void main(String args[]) {
         NumwordCommand speller = new NumwordCommand();
-        System.out.print(speller.process(args));
+        String resultEncoding = "UTF-8";
+        PrintWriter charWriter = new PrintWriter(Channels.newWriter(Channels.newChannel(System.out), resultEncoding));
+        charWriter.print(speller.process(args));
+        charWriter.flush();
+        charWriter.close();
     } // main
 
 } // NumwordCommand

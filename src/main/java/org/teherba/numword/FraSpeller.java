@@ -1,9 +1,7 @@
 /*  Spelling of numbers in French (Français) 
     spoken in France, Monaco, Mauritius, parts of Belgium,
-    Switzerland, Canada, some countries in Africa and in 
-    former french colonies
+    Switzerland, Canada, some countries in Africa and in former french colonies
     @(#) $Id: FraSpeller.java 820 2011-11-07 21:59:07Z gfis $
-    Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
     2011-10-26: spellClock
     2009-11-24: spellGreeting
     2006-01-04: UTF-8 précédé
@@ -50,7 +48,7 @@
     http://www.franzoesisch-online.com/grammatik/franzosisch-uhrzeiten/
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2006 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

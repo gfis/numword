@@ -1,15 +1,13 @@
 /*  Spelling of numbers in Chinese 中文 (zhōngwén) simplified
-    spoken in China 六
-    and other parts of Asia
+    spoken in China 六 and other parts of Asia
     @(#) $Id: ChiSpeller.java 521 2010-07-26 07:06:10Z gfis $
-    Copyright (c) 2006 Dr. Georg Fischer <punctum@punctum.com>
-    2006-01-06: Georg Fischer, copied from GreSpeller 
-    
+    2006-01-06: Georg Fischer, copied from GreSpeller
+
     caution: UTF-8 is essential! compile with "-encoding UTF-8"
     Retrieved from "http://home.unilang.org/main/wiki2/index.php/Translations:_Numbers_-_Greek"
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2006 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,14 +30,14 @@ import  org.teherba.numword.SinoSpeller;
  */
 public class ChiSpeller extends SinoSpeller {
     public final static String CVSID = "@(#) $Id: ChiSpeller.java 521 2010-07-26 07:06:10Z gfis $";
-    
+
     /**
      *  Constructor
      */
     public ChiSpeller() {
         super();
-        setIso639("chi,zho,zh"); 
-        setDescription("Chinese 中文 (zhōngwén)");
+        setIso639("chi,zho,zh");
+        setDescription("Chinese (中文)");
         setMorphem("tz", "万");    // (yī-wàn)
         setMorphem("mh", "亿");    // (yī-yì)
         setMorphem("wm", "月");    // yuè
@@ -54,7 +52,7 @@ public class ChiSpeller extends SinoSpeller {
     public String spellMonth(int month) {
         String result = "";
         switch (month) {
-            case 10: 
+            case 10:
                 result = getMorphem("z1") + getMorphem("wm");
                 break;
             case 11:
@@ -90,7 +88,7 @@ public class ChiSpeller extends SinoSpeller {
     public String spellSeason(int season) {
         String result = Integer.toString(season);
         if (season >= 0 && season <= 4) {
-            result = (new String [] 
+            result = (new String []
                     { "0"
                     , "春天"
                     , "夏天"

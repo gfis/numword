@@ -1,7 +1,6 @@
 /*  Spelling of numbers in Italian (Italiano)
     spoken in Italy
     @(#) $Id: ItaSpeller.java 521 2010-07-26 07:06:10Z gfis $
-    Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
     2006-04-15: corr. with Vladimiro Macchi
     2006-01-04: weekdays and months; UTF-8 "tré"
     2005-06-07, Georg Fischer

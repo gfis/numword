@@ -1,7 +1,6 @@
-/*  Common Methods for Spelling of numbers in Chines, Japanese, Korean, Thai
+/*  Common Methods for Spelling of numbers in Chinese, Japanese, Korean, Thai
     spoken in Far East Asia 六
     @(#) $Id: SinoSpeller.java 521 2010-07-26 07:06:10Z gfis $
-    Copyright (c) 2006 Dr. Georg Fischer <punctum@punctum.com>
     2016-02-15: spellIdeographic(number)
     2006-01-06: Georg Fischer, copied from ChiSpeller 
     
@@ -10,7 +9,7 @@
     Retrieved from "http://home.unilang.org/main/wiki2/index.php/Translations:_Numbers_-_Greek"
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2006 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

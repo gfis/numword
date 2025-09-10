@@ -38,7 +38,7 @@ public class JpnSpeller extends SinoSpeller {
     public JpnSpeller() {
         super();
         setIso639("jpn,ja"); 
-        setDescription("Japanese");
+        setDescription("Japanese (日本語)");
         setMorphem("tz", "万");    // 
         setMorphem("mh", "億");    // (ichi-oku)
         setMorphem("wm", "月");    // [hachigatsu]
