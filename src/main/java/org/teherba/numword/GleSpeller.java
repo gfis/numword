@@ -1,7 +1,6 @@
 /*  Spelling of numbers in Irish (Gaeilge)
     spoken in Ireland
     @(#) $Id: GleSpeller.java 521 2010-07-26 07:06:10Z gfis $
-    Copyright (c) 2005 Dr. Georg Fischer <punctum@punctum.com>
     2006-04-15: month names from <http://eo.wikipedia.org/wiki/Monato>
     2006-01-04: weekdays and months; UTF-8 "cúig"
     2005-06-06, Georg Fischer: copied from NorSpeller
@@ -14,7 +13,7 @@
         the tens are noted behind the nomen.
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2005 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

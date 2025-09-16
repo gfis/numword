@@ -5,7 +5,7 @@
  *  2012-02-11, Georg Fischer: copied from metaInf.jsp
  */
 /*
- * Copyright 2012 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2012 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

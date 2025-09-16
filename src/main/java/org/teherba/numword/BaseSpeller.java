@@ -1,7 +1,7 @@
-/*  äöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ
-    Abstract class for spelling of numbers in different languages
+/*  Abstract class for spelling of numbers in different languages
     Caution: UTF-8 is essential!
     @(#) $Id: BaseSpeller.java 852 2012-01-06 08:07:08Z gfis $
+    2025-09-16: allGreetings HashMap; *DP=7
     2020-12-17: isConsonant|Vowel
     2017-05-28: javadoc 1.8
     2016-02-15: spellIdeographic(number): with the digit symbols of that language
@@ -60,6 +60,10 @@ public abstract class BaseSpeller {
 
     /** whether to write debugging output */
     protected final static boolean DEBUG = true;
+
+    { // static block
+        initialize();
+    }
 
     /** words for unit digits: 10**(3n+0), n = 0, 1, 2 ...
      *  digits used if no number words are known for a language
@@ -219,6 +223,30 @@ public abstract class BaseSpeller {
 
     /** buffer for the final number word or digit sequence */
     protected StringBuffer result;
+
+    /** constant lists of greetings */
+    private static HashMap<String, String[]> allGreetings = new HashMap<>(64);
+    /** Fill hte list of greetings.
+     * @param iso 3-letter ISO-639 code for the language
+     * @param comma separated list of the 5 greetings: 0=Good bye, 6=Good morning, 12=Good day, 18=Good evening, 24=Good night
+     */
+    private static void fillGreetings(String iso, String list) {
+        allGreetings.put(iso, list.split("\\, *"));
+    } // fillGreetings
+
+    /** Fill the constant word lists for minor languages
+     */
+    private static void initialize () {
+        fillGreetings("cze", "Na shledanou, Dobré ráno, Dobrý den, Dobrý večer, Dobrou noc");
+        fillGreetings("dan", "Farvel, Godmorgen, Goddag, Godaften, Godnat");
+        fillGreetings("epo", "Ĝis la revido, Bonan matenon, Bonan tagon, Bonan vesperon, Bonan nokton");
+        fillGreetings("est", "Nägemiseni, Tere hommikust, Tere, Tere õhtust, Head ööd");
+        fillGreetings("fin", "Näkemiin, Hyvää huomenta, Hyvää päivää, Hyvää iltaa, Hyvää yötä");
+        fillGreetings("geo", "ნახვამდის, დილა მშვიდობისა, შუადღე მშვიდობისა, საღამო მშვიდობისა, ღამე მშვიდობისა");
+        fillGreetings("gle", "Slán, Maidin mhaith, Lá maith, Tráthnóna maith, Oíche mhaith");
+        fillGreetings("gre", "Γεια σας, Καλημέρα, Καλημέρα, Καλησπέρα, Καληνύχτα");
+        fillGreetings("ice", "Bless, Góðan daginn, Góðan daginn, Gott kvöld, Góða nótt");
+    } // initialize
 
     /** a representative set of test numbers (with dots between thousands for readability) */
     public final static String [] TESTNUMBERS = new String[]
@@ -748,7 +776,7 @@ public abstract class BaseSpeller {
     public void parseFile(String fileName) {
         String line = null; // current line from text file
         Pattern gapPattern = Pattern.compile
-                ("[^a-zA-ZäöüÄÖÜßáéíóúÉÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛåøçãõ]+");
+                ("[^a-zA-ZÃ¤Ã¶Ã¼Ã„Ã–ÃœÃŸÃ¡Ã©Ã­Ã³ÃºÃ‰Ã“ÃšÃ Ã¨Ã¬Ã²Ã¹Ã€ÃˆÃŒÃ’Ã™Ã¢ÃªÃ®Ã´Ã»Ã‚ÃŠÃŽÃ”Ã›Ã¥Ã¸Ã§Ã£Ãµ]+");
                 // a gap consists of characters not in this list
         int posGap  = 0;  // start of current match
         int endGap  = 0;  // end   behind current match
@@ -1080,37 +1108,37 @@ public abstract class BaseSpeller {
     //================================================================
     private static String[] CARDDIRS = new String[]
             { "N"       //  00000b  0       Noord
-            , "NNNE"    //  00001b  11¼     Noord ten oosten
-            , "NNE"     //  00010b  22½     Noordnoordoost
-            , "ENNE"    //  00011b  33¾     Noordoost ten noorden
+            , "NNNE"    //  00001b  11Â¼     Noord ten oosten
+            , "NNE"     //  00010b  22Â½     Noordnoordoost
+            , "ENNE"    //  00011b  33Â¾     Noordoost ten noorden
             , "NE"      //  00100b  45      Noordoost
-            , "NENE"    //  00101b  56¼     Noordoost ten oosten
-            , "ENE"     //  00110b  67½     Oostnoordoost
-            , "EENE"    //  00111b  78¾     Oost ten noorden
+            , "NENE"    //  00101b  56Â¼     Noordoost ten oosten
+            , "ENE"     //  00110b  67Â½     Oostnoordoost
+            , "EENE"    //  00111b  78Â¾     Oost ten noorden
             , "E"       //  01000b  90      Oost
-            , "EESE"    //  01001b  101¼    Oost ten zuiden
-            , "ESE"     //  01010b  112½    Oostzuidoost
-            , "SESE"    //  01011b  123¾    Zuidoost ten oosten
+            , "EESE"    //  01001b  101Â¼    Oost ten zuiden
+            , "ESE"     //  01010b  112Â½    Oostzuidoost
+            , "SESE"    //  01011b  123Â¾    Zuidoost ten oosten
             , "SE"      //  01100b  135     Zuidoost
-            , "ESSE"    //  01101b  146¼    Zuidoost ten zuiden
-            , "SSE"     //  01110b  157½    Zuidzuidoost
-            , "SSSE"    //  01111b  168¾    Zuid ten oosten
+            , "ESSE"    //  01101b  146Â¼    Zuidoost ten zuiden
+            , "SSE"     //  01110b  157Â½    Zuidzuidoost
+            , "SSSE"    //  01111b  168Â¾    Zuid ten oosten
             , "S"       //  10000b  180     Zuid
-            , "SSSW"    //  10001b  191¼    Zuid ten westen
-            , "SSW"     //  10010b  202½    Zuidzuidwest
-            , "WSSW"    //  10011b  213¾    Zuidwest ten zuiden
+            , "SSSW"    //  10001b  191Â¼    Zuid ten westen
+            , "SSW"     //  10010b  202Â½    Zuidzuidwest
+            , "WSSW"    //  10011b  213Â¾    Zuidwest ten zuiden
             , "SW"      //  10100b  225     Zuidwest
-            , "SWSW"    //  10101b  236¼    Zuidwest ten westen
-            , "WSW"     //  10110b  247½    Westzuidwest
-            , "WWSW"    //  10111b  258¾    West ten zuiden
+            , "SWSW"    //  10101b  236Â¼    Zuidwest ten westen
+            , "WSW"     //  10110b  247Â½    Westzuidwest
+            , "WWSW"    //  10111b  258Â¾    West ten zuiden
             , "W"       //  11000b  270     West
-            , "WWNW"    //  11001b  281¼    West ten noorden
-            , "WNW"     //  11010b  292½    Westnoordwest
-            , "NWNW"    //  11011b  303¾    Noordwest ten westen
+            , "WWNW"    //  11001b  281Â¼    West ten noorden
+            , "WNW"     //  11010b  292Â½    Westnoordwest
+            , "NWNW"    //  11011b  303Â¾    Noordwest ten westen
             , "NW"      //  11100b  315     Noordwest
-            , "WNNW"    //  11101b  326¼    Noordwest ten noorden
-            , "NNW"     //  11110b  337½    Noordnoordwest
-            , "NNNW"    //  11111b  348¾    Noord ten westen
+            , "WNNW"    //  11101b  326Â¼    Noordwest ten noorden
+            , "NNW"     //  11110b  337Â½    Noordnoordwest
+            , "NNNW"    //  11111b  348Â¾    Noord ten westen
             , "N"       // 100000b  360     Noord
             };
 
@@ -1158,37 +1186,37 @@ public abstract class BaseSpeller {
             /*  ddd13
                 24862
                 00000b  0       N       Noord
-                00001b  11¼     NNNO    Noord ten oosten
-                00010b  22½     NNO     Noordnoordoost
-                00011b  33¾     ONNO    Noordoost ten noorden
+                00001b  11Â¼     NNNO    Noord ten oosten
+                00010b  22Â½     NNO     Noordnoordoost
+                00011b  33Â¾     ONNO    Noordoost ten noorden
                 00100b  45      NO      Noordoost
-                00101b  56¼     NONO    Noordoost ten oosten
-                00110b  67½     ONO     Oostnoordoost
-                00111b  78¾     OONO    Oost ten noorden
+                00101b  56Â¼     NONO    Noordoost ten oosten
+                00110b  67Â½     ONO     Oostnoordoost
+                00111b  78Â¾     OONO    Oost ten noorden
                 01000b  90      O       Oost
-                01001b  101¼    OOZO    Oost ten zuiden
-                01010b  112½    OZO     Oostzuidoost
-                01011b  123¾    ZOZO    Zuidoost ten oosten
+                01001b  101Â¼    OOZO    Oost ten zuiden
+                01010b  112Â½    OZO     Oostzuidoost
+                01011b  123Â¾    ZOZO    Zuidoost ten oosten
                 01100b  135     ZO      Zuidoost
-                01101b  146¼    OZZO    Zuidoost ten zuiden
-                01110b  157½    ZZO     Zuidzuidoost
-                01111b  168¾    ZZZO    Zuid ten oosten
+                01101b  146Â¼    OZZO    Zuidoost ten zuiden
+                01110b  157Â½    ZZO     Zuidzuidoost
+                01111b  168Â¾    ZZZO    Zuid ten oosten
                 10000b  180     Z       Zuid
-                10001b  191¼    ZZZW    Zuid ten westen
-                10010b  202½    ZZW     Zuidzuidwest
-                10011b  213¾    WZZW    Zuidwest ten zuiden
+                10001b  191Â¼    ZZZW    Zuid ten westen
+                10010b  202Â½    ZZW     Zuidzuidwest
+                10011b  213Â¾    WZZW    Zuidwest ten zuiden
                 10100b  225     ZW      Zuidwest
-                10101b  236¼    ZWZW    Zuidwest ten westen
-                10110b  247½    WZW     Westzuidwest
-                10111b  258¾    WWZW    West ten zuiden
+                10101b  236Â¼    ZWZW    Zuidwest ten westen
+                10110b  247Â½    WZW     Westzuidwest
+                10111b  258Â¾    WWZW    West ten zuiden
                 11000b  270     W       West
-                11001b  281¼    WWNW    West ten noorden
-                11010b  292½    WNW     Westnoordwest
-                11011b  303¾    NWNW    Noordwest ten westen
+                11001b  281Â¼    WWNW    West ten noorden
+                11010b  292Â½    WNW     Westnoordwest
+                11011b  303Â¾    NWNW    Noordwest ten westen
                 11100b  315     NW      Noordwest
-                11101b  326¼    WNNW    Noordwest ten noorden
-                11110b  337½    NNW     Noordnoordwest
-                11111b  348¾    NNNW    Noord ten westen
+                11101b  326Â¼    WNNW    Noordwest ten noorden
+                11110b  337Â½    NNW     Noordnoordwest
+                11111b  348Â¾    NNNW    Noord ten westen
                100000b  360     N       Noord
                 24862
             */
@@ -1233,16 +1261,16 @@ from: http://de.wikipedia.org/wiki/Himmelsrichtung
 === Systematik der Benennung {{Anker|Systematik}} ===
 [[Datei:Compass Card.png|miniatur|Die Himmelsrichtungen (32er-Teilung, mit Gradskala genordet)]]
 * Viertel haben ihre eigene Bezeichnung (N,&nbsp;O oder E,&nbsp;S,&nbsp;W)
-* Achtel werden aus den Namen der Vierteln zusammengesetzt, wobei Nord und Süd vor West und Ost (O oder&nbsp;E) stehen:
-  [[Nordwest]], [[Nordost]], [[Südost]], [[Südwest]] – abgekürzt NW,&nbsp;NO oder NE,&nbsp;SO oder&nbsp;SE,&nbsp;SW.
+* Achtel werden aus den Namen der Vierteln zusammengesetzt, wobei Nord und SÃ¼d vor West und Ost (O oder&nbsp;E) stehen:
+  [[Nordwest]], [[Nordost]], [[SÃ¼dost]], [[SÃ¼dwest]] â€“ abgekÃ¼rzt NW,&nbsp;NO oder NE,&nbsp;SO oder&nbsp;SE,&nbsp;SW.
 * Sechzehntel setzen sich aus den Namen der Viertel und des jeweils benachbarten Achtels zusammen (in dieser Reihenfolge).
-  Beispiele: WSW&nbsp;= Westsüdwest, SSW&nbsp;= Südsüdwest.
-* Zweiunddreißigstel werden gebildet, indem man dem jeweiligen angrenzenden Viertel oder Achtel mit einem „zu“
-  dem in die Richtung liegenden nächsten Viertel-Namen anhängt. Beispiele: WzS&nbsp;= West zu Süd, SWzW&nbsp;= Südwest zu West.
-* halbe Striche werden aus dem Namen des ganzen Strichs (gerade Striche) und einem „ein halb“ mit dem jeweiligen Viertel-Namen gebildet.
-  Zum Beispiel: Nord ein halb Ost (N&nbsp;1/2&nbsp;E = 5,625&nbsp;Grad) oder SüdOst ein halb Ost (SE&nbsp;1/2&nbsp;E) = 129,375&nbsp;Grad).
-Seit längerer Zeit zieht man aber die Angabe von [[Grad (Winkel)|Gradzahlen]] vor,
-die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° entspricht etwa der Genauigkeit, mit der ein kleines Schiff gesteuert werden kann.
+  Beispiele: WSW&nbsp;= WestsÃ¼dwest, SSW&nbsp;= SÃ¼dsÃ¼dwest.
+* ZweiunddreiÃŸigstel werden gebildet, indem man dem jeweiligen angrenzenden Viertel oder Achtel mit einem â€žzuâ€œ
+  dem in die Richtung liegenden nÃ¤chsten Viertel-Namen anhÃ¤ngt. Beispiele: WzS&nbsp;= West zu SÃ¼d, SWzW&nbsp;= SÃ¼dwest zu West.
+* halbe Striche werden aus dem Namen des ganzen Strichs (gerade Striche) und einem â€žein halbâ€œ mit dem jeweiligen Viertel-Namen gebildet.
+  Zum Beispiel: Nord ein halb Ost (N&nbsp;1/2&nbsp;E = 5,625&nbsp;Grad) oder SÃ¼dOst ein halb Ost (SE&nbsp;1/2&nbsp;E) = 129,375&nbsp;Grad).
+Seit lÃ¤ngerer Zeit zieht man aber die Angabe von [[Grad (Winkel)|Gradzahlen]] vor,
+die beim Steuern von Kursen meistens auf 5Â° oder 10Â° gerundet werden. 5Â° entspricht etwa der Genauigkeit, mit der ein kleines Schiff gesteuert werden kann.
     </pre>
      *  @return a sequence of letters N E S W
      */
@@ -1332,9 +1360,12 @@ die beim Steuern von Kursen meistens auf 5° oder 10° gerundet werden. 5° ents
      *  @return greeting corresponding to the time of the day
      */
     public String spellGreeting(int timeOfDay) {
-        return (timeOfDay == 0)
-                ? "Good bye"
-                : "Hello"; // String.valueOf(timeOfDay);
+        String[] greetings = allGreetings.get(getFirstIso639());
+        if (greetings != null) {
+            return greetings[timeOfDay / 6];
+        } else {
+            return String.valueOf(timeOfDay);
+        }
     } // spellGreeting(int)
 
     //================================================================

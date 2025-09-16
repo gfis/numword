@@ -4,7 +4,7 @@
     2016-02-15: spellIdeographic(number)
     2006-01-06: Georg Fischer, copied from ChiSpeller 
     
-    caution: UTF-8 is essential! compile with "-encoding UTF-8"
+    Caution: UTF-8 is essential! compile with "-encoding UTF-8"
     tested < 1 000 000 000 000
     Retrieved from "http://home.unilang.org/main/wiki2/index.php/Translations:_Numbers_-_Greek"
 */

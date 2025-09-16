@@ -19,7 +19,7 @@
     pure ASCII encoding
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
+ * Copyright 2005 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
