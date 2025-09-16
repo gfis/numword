@@ -14,7 +14,7 @@
 	http://www.learningthai.com/numbers.html Numbers 0-10000
 */
 /*
- * Copyright 2008 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2008 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

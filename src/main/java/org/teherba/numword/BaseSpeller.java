@@ -237,6 +237,8 @@ public abstract class BaseSpeller {
     /** Fill the constant word lists for minor languages
      */
     private static void initialize () {
+        fillGreetings("ara", "مع السلامة, صباح الخير, يوم سعيد, مساء الخير,تصبحون على خير");
+        fillGreetings("chi", "再见,早上好,日安,晚上好,晚安");
         fillGreetings("cze", "Na shledanou, Dobré ráno, Dobrý den, Dobrý večer, Dobrou noc");
         fillGreetings("dan", "Farvel, Godmorgen, Goddag, Godaften, Godnat");
         fillGreetings("epo", "Ĝis la revido, Bonan matenon, Bonan tagon, Bonan vesperon, Bonan nokton");
@@ -245,7 +247,27 @@ public abstract class BaseSpeller {
         fillGreetings("geo", "ნახვამდის, დილა მშვიდობისა, შუადღე მშვიდობისა, საღამო მშვიდობისა, ღამე მშვიდობისა");
         fillGreetings("gle", "Slán, Maidin mhaith, Lá maith, Tráthnóna maith, Oíche mhaith");
         fillGreetings("gre", "Γεια σας, Καλημέρα, Καλημέρα, Καλησπέρα, Καληνύχτα");
-        fillGreetings("ice", "Bless, Góðan daginn, Góðan daginn, Gott kvöld, Góða nótt");
+        fillGreetings("hun", "Viszlát, Jó reggelt, Jó napot!, Jó estét, Jó éjszakát");
+        fillGreetings("ice", "Bless, Góðan daginn, Góðan daginn, Gott kvöld, Góða nótt"); 
+        fillGreetings("ita", "Arrivederci, Buongiorno, Buongiorno, Buonasera, Buonanotte"); 
+        fillGreetings("jpn", "さようなら, おはようございます, 良い一日を, こんばんは, おやすみなさい");
+        fillGreetings("kor", "안녕히 계세요, 좋은 아침입니다, 좋은 하루 보내세요, 좋은 저녁입니다, 좋은 밤 보내세요");
+        fillGreetings("lat", "Vale, Bonum mane, Bonum diem, Bonum vesperum, Bona nox");
+        fillGreetings("lav", "Uz redzēšanos, Labrīt, Labdien, Labvakar, Arlabunakti,");
+        fillGreetings("lit", "Viso gero, Labas rytas, Laba diena, Labas vakaras, Labos nakties");
+        fillGreetings("nld", "Tot ziens, Goedemorgen, Goedendag, Goedenavond, Welterusten");
+        fillGreetings("nor", "Ha det bra, God morgen, God dag, God kveld, God natt");
+        fillGreetings("pol", "Do widzenia, Dzień dobry, Dzień dobry, Dobry wieczór, Dobranoc");
+        fillGreetings("por", "Adeus, Bom dia, Bom dia, Boa tarde, Boa noite");
+        fillGreetings("roh", "Adia, Bien di, Bom dia, Boa tarde, Buna sera, Buna notg");
+        fillGreetings("ron", "La revedere, bună dimineața, bună ziua, bună seara, noapte bună");
+        fillGreetings("rus", "До свидания, доброе утро, добрый день, добрый вечер, спокойной ночи");
+        fillGreetings("slv", "Nasvidenje, Dobro jutro, Dober dan, Dober večer, Lahko noč");
+        fillGreetings("spa", "Adiós, Buenos días, Buenos días, Buenas tardes, Buenas noches,");
+        fillGreetings("swe", "Adjö, God morgon, God dag, God kväll, God natt");
+        fillGreetings("tha", "ลาก่อน,สวัสดีตอนเช้า,สวัสดีวันดีๆ,สวัสดีตอนเย็น,ราตรีสวัสดิ์");
+        fillGreetings("tur", "Hoşça kalın, Günaydın, İyi günler, İyi akşamlar, İyi geceler");
+        fillGreetings("vie", "Tạm biệt, Chào buổi sáng, Chào ngày mới, Chào buổi tối, Chúc ngủ ngon,");
     } // initialize
 
     /** a representative set of test numbers (with dots between thousands for readability) */

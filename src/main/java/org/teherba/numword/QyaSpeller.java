@@ -1,16 +1,16 @@
 /*  Spelling of numbers in Quenya, invented by J.R.R. Tolkien as a language for High Elves
-	in his books "The Lord of the Rings", "The Hobbit" etc.
+    in his books "The Lord of the Rings", "The Hobbit" etc.
     @(#) $Id: QyaSpeller.java 13 2008-09-05 05:58:51Z gfis $
     Copyright (c) 2007 Dr. Georg Fischer <punctum@punctum.com>
     2007-11-17, Georg Fischer: copied from DeuSpeller
 
     caution: UTF-8 is essential! compile with "-encoding UTF-8"
-    
+
     incomplete !
 
 */
 /*
- * Copyright 2006 Dr. Georg Fischer <punctum at punctum dot kom>
+ * Copyright 2005 Dr. Georg Fischer <dr dot georg dot fischer at gmail dot ...>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -226,7 +226,7 @@ public class QyaSpeller extends BaseSpeller {
     } // spellTuple
 
     /** Pairs of German month numbers, month names and their abbreviations */
-    private String months[] = new String[] 
+    private String months[] = new String[]
             { "00", "Monat"       // 0
             , "01", "Januar"      // 1
             , "02", "Februar"     // 2
@@ -241,24 +241,24 @@ public class QyaSpeller extends BaseSpeller {
             , "11", "November"    // 11
             , "12", "Dezember"    // 12
             // abbreviations (3 letters)
-            , "01", "Jan"         
-            , "02", "Feb"         
-            , "03", "Mär"         
-            , "04", "Apr"         
-            , "05", "Mai"         
-            , "06", "Jun"         
-            , "07", "Jul"         
-            , "08", "Aug"         
-            , "09", "Sep"         
-            , "10", "Okt"         
-            , "11", "Nov"         
+            , "01", "Jan"
+            , "02", "Feb"
+            , "03", "Mär"
+            , "04", "Apr"
+            , "05", "Mai"
+            , "06", "Jun"
+            , "07", "Jul"
+            , "08", "Aug"
+            , "09", "Sep"
+            , "10", "Okt"
+            , "11", "Nov"
             , "12", "Dez"
-            // aliases and other abbreviations         
-            , "01", "Jänner"      
-            , "01", "Jaenner"     
-            , "03", "Maerz"       
-            , "02", "Febr"        
-            , "09", "Sept"        
+            // aliases and other abbreviations
+            , "01", "Jänner"
+            , "01", "Jaenner"
+            , "03", "Maerz"
+            , "02", "Febr"
+            , "09", "Sept"
             };
 
     /** Returns the month's number as String (between "01" and "12")
@@ -268,13 +268,13 @@ public class QyaSpeller extends BaseSpeller {
     public String parseMonth(String name) {
         return lookupWord(name, months);
     }
-    
+
     /** Returns the month's name
      *  @param month month's number, &gt;= 1 and &lt;= 12
      *  @return word denoting the month
      */
     public String spellMonth(int month) {
-        return (month >= 0 && month <= 12) 
+        return (month >= 0 && month <= 12)
                 ? months[month * 2 + 1]
                 : Integer.toString(month);
     }
@@ -300,7 +300,7 @@ public class QyaSpeller extends BaseSpeller {
     }
 
     /** Pairs of German weekday numbers, weekday names and their abbreviations */
-    private String weekdays[] = new String[] 
+    private String weekdays[] = new String[]
             { "00", "Wochentag"
             , "01", "Montag"
             , "02", "Dienstag"
